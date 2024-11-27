@@ -1,0 +1,8 @@
+Terms of Service for Begu
+1. Acceptance of Terms By using the Begu bot, you agree to these Terms of Service and any future changes. If you do not agree to these terms, you should not use the bot.
+2. Permitted Use The Begu bot is designed to provide information about games and entertainment. Misuse of the bot, including spamming, harassment, illegal activities, or violation of third party rights, is prohibited.
+3. Privacy We do not collect personal data. The bot may store minimal information necessary for its operation, such as channel IDs. This data is provided by users and is never shared with third parties.
+4. Limitation of Liability Use of the Begu bot is at your own risk. We are not responsible for any damages or losses caused by the use of the bot.
+6. Suspension or Termination We reserve the right to suspend or terminate the access of any user who violates these Terms of Service.
+7. Modifications We reserve the right to modify these Terms of Service at any time. You will be notified of any significant changes.
+8. These Terms of Service are governed by the laws of Spain, and any disputes will be resolved in Spain.
