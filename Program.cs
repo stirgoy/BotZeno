@@ -771,7 +771,7 @@ namespace Begu
             time_stamp = h + ":" + m + ":" + s + " "; //format 00:00:00
 
             if (showname) { line = "Zeno♥ - " + line; }
-
+            Console.WriteLine(time_stamp + " " + line);
         }
 
 
