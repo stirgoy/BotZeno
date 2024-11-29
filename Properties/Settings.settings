@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="token" Type="System.String" Scope="User">
-      <Value Profile="(Default)">TOKEN HERE :D</Value>
+      <Value Profile="(Default)">TOKEN</Value>
     </Setting>
     <Setting Name="TalkChannel" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
