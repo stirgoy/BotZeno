@@ -45,5 +45,149 @@ namespace Begu.Properties {
                 this["TalkChannel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public ulong LogChannel {
+            get {
+                return ((ulong)(this["LogChannel"]));
+            }
+            set {
+                this["LogChannel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public ulong news_channel {
+            get {
+                return ((ulong)(this["news_channel"]));
+            }
+            set {
+                this["news_channel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public ulong update_channel {
+            get {
+                return ((ulong)(this["update_channel"]));
+            }
+            set {
+                this["update_channel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public ulong status_channel {
+            get {
+                return ((ulong)(this["status_channel"]));
+            }
+            set {
+                this["status_channel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public ulong maintenance_channel {
+            get {
+                return ((ulong)(this["maintenance_channel"]));
+            }
+            set {
+                this["maintenance_channel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string news_last_id {
+            get {
+                return ((string)(this["news_last_id"]));
+            }
+            set {
+                this["news_last_id"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string update_last_id {
+            get {
+                return ((string)(this["update_last_id"]));
+            }
+            set {
+                this["update_last_id"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string status_last_id {
+            get {
+                return ((string)(this["status_last_id"]));
+            }
+            set {
+                this["status_last_id"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string maintenance_last_game_id {
+            get {
+                return ((string)(this["maintenance_last_game_id"]));
+            }
+            set {
+                this["maintenance_last_game_id"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string maintenance_last_mog_id {
+            get {
+                return ((string)(this["maintenance_last_mog_id"]));
+            }
+            set {
+                this["maintenance_last_mog_id"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string maintenance_last_lodestone_id {
+            get {
+                return ((string)(this["maintenance_last_lodestone_id"]));
+            }
+            set {
+                this["maintenance_last_lodestone_id"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string maintenance_last_companion_id {
+            get {
+                return ((string)(this["maintenance_last_companion_id"]));
+            }
+            set {
+                this["maintenance_last_companion_id"] = value;
+            }
+        }
     }
 }

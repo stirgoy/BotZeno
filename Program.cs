@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
+using Discord.Rest;
 using Discord.WebSocket;
 using Newtonsoft.Json;
 using System;
@@ -7,9 +8,9 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Interop;
 
 namespace Begu
 {
@@ -55,7 +56,45 @@ namespace Begu
             _client.Ready += ReadyAsync;
             _client.MessageReceived += MessageReceivedAsync;
             _client.SlashCommandExecuted += SlashCommandHandlerAsync;
+            /*_client.Disconnected += async (exception) =>
+            {
+                if (exception is GatewayReconnectException)
+                {
+                    Console.WriteLine("Server wants restart");
+                    await ReiniciarBotAsync();
+                }
+                else
+                {
+                    Console.WriteLine($"Client.Disconnected: {exception?.Message}");
+                }
+            };
+            */
         }
+
+        /********************
+                ReiniciarBotAsync
+        *////////////////////
+        /*private async Task ReiniciarBotAsync()
+        {
+            try
+            {
+                await _client.LogoutAsync();
+                await _client.StopAsync();
+                Console.WriteLine("Bot go sleep :D  ZZzz.._");
+
+                
+                await Task.Delay(5000);
+
+                
+                await _client.LoginAsync(TokenType.Bot, Properties.Settings.Default.token);
+                await _client.StartAsync();
+                Console.WriteLine("Restarting bot...");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }*/
 
         /********************
                 MainAsync
@@ -63,6 +102,9 @@ namespace Begu
         public async Task MainAsync()
         {
             // Token == Private data, some ways to not hard code: put inside external file and read it
+#if DEBUG
+            Print("<<<<< -------\\\\\\\\\\\\ DEBUG MODE //////------->>>>>");
+#endif
             Print("<<<<< -------\\\\\\\\\\ Zeno♥ /////------->>>>>");
             Print("Logging in...");
             await _client.LoginAsync(TokenType.Bot, Properties.Settings.Default.token);
@@ -70,6 +112,8 @@ namespace Begu
             await Task.Delay(Timeout.Infinite);
 
         }
+
+
 
         /********************
                 LogAsync
@@ -85,32 +129,39 @@ namespace Begu
                 ReadyAsync
         *////////////////////
 
-        private Task ReadyAsync()
+        private async Task ReadyAsync()
         {
-            Print("Connected!");
             var guild = _client.Guilds.ToList()[0];
+            string tc = "";
+            foreach (string item in Properties.Settings.Default.TalkChannel)
+            {
+                tc += $"{guild.GetChannel(ulong.Parse(item))}({guild.GetChannel(ulong.Parse(item)).Id}), ";
+            }
+            tc = tc.Remove(tc.Length - 2);
+            tc += ".";
 
-            Print("Loading slash commands...");
-            _ = Task.Run(async () => { await ActualizarComandos(); });
-
+            Print("Connected!");
 
             Print($"Name:       {_client.CurrentUser.Username}");
             Print($"Id:         {_client.CurrentUser.Id}");
+            Print($"Latency:    {_client.Latency}");
             Print($"Token:      {_client.TokenType}");
             Print($"Veryfed:    {_client.CurrentUser.IsVerified}");
-            Print($"Online on:  {_client.Guilds.Count} servers");
-            Print($"Latency:    {_client.Latency}");
-            Print($"Talk channel:    {Properties.Settings.Default.TalkChannel}");
+            Print($"Online on:  {_client.Guilds.First().Name}({_client.Guilds.First().Id})");
+            Print($"Talk channel/s:    {tc}");
+            Print($"Log channel:    {Properties.Settings.Default.LogChannel} - {guild.GetChannel(Properties.Settings.Default.LogChannel)}");
 
+            Print("Loading slash commands on new thread...");
 
-
-
-#if DEBUG
-            Print("DEBUG MODE!!!!!!!!!!!!!!!!!\"");
-#endif
-            Print("I'm ready!\"");
-
-            return Task.CompletedTask;
+            //_ = Task.Run(async () => { await ActualizarComandos(); });
+            await ActualizarComandos();
+            //news test
+            //Properties.Settings.Default.update_last_id = "5978bd3462caa8e2f949327d8d13b54427af5808";
+            //Properties.Settings.Default.Save();
+            //Print(Properties.Settings.Default.news_last_id);
+            Print("Loading news updater...");
+            Check_FF_updates();
+            //return Task.CompletedTask;
 
         }
 
@@ -127,7 +178,11 @@ namespace Begu
             }
 
             var guild = _client.Guilds.First();
-            var comandos = new ApplicationCommandProperties[] {
+
+            try
+            {
+
+                var comandos = new ApplicationCommandProperties[] {
 
         new SlashCommandBuilder()
             .WithName("admin")
@@ -154,7 +209,7 @@ namespace Begu
         .Build(),
 
         new SlashCommandBuilder()
-            .WithName("news")
+            .WithName("ffnews")
             .WithDescription("Shows Lodestone news.")
             .AddOption(new SlashCommandOptionBuilder()
                 .WithName("number")
@@ -163,12 +218,101 @@ namespace Begu
                 .WithRequired(false)
                 )
             .Build(),
-        
+
+                new SlashCommandBuilder()
+            .WithName("ffstatus")
+            .WithDescription("Shows Lodestone news.")
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("number")
+                .WithDescription("How many news you want see?")
+                .WithType(ApplicationCommandOptionType.Integer)
+                .WithRequired(false)
+                )
+            .Build(),
+                /*
+                */
+            new SlashCommandBuilder()
+            .WithName("ffmaintenance")
+            .WithDescription("Shows Lodestone maintenance status.")
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("number")
+                .WithDescription("How many news you want see?")
+                .WithType(ApplicationCommandOptionType.Integer)
+                .WithRequired(false)
+                )
+            .Build(),
+            new SlashCommandBuilder()
+            .WithName("ffupdates")
+            .WithDescription("Shows Lodestone news.")
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("number")
+                .WithDescription("How many news you want see?")
+                .WithType(ApplicationCommandOptionType.Integer)
+                .WithRequired(false)
+                )
+            .Build(),
+
+
         new SlashCommandBuilder()
             .WithName("talkc")
             .WithDescription("Edits my answer channels, if channel is added i going remove ^^")
             .AddOption(new SlashCommandOptionBuilder()
                 .WithName("channel")
+                .WithDescription("Choose a text channel")
+                .WithType(ApplicationCommandOptionType.Channel)
+                .AddChannelType(ChannelType.Text)
+                .WithRequired(true))
+            .Build(),
+
+        new SlashCommandBuilder()
+            .WithName("logc")
+            .WithDescription("Edits my log channel, only can be one channel")
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("channell")
+                .WithDescription("Choose a text channel")
+                .WithType(ApplicationCommandOptionType.Channel)
+                .AddChannelType(ChannelType.Text)
+                .WithRequired(true))
+            .Build(),
+
+        new SlashCommandBuilder()
+            .WithName("newsc")
+            .WithDescription("Edits my ff news channel, only can be one channel")
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("newsc")
+                .WithDescription("Choose a text channel")
+                .WithType(ApplicationCommandOptionType.Channel)
+                .AddChannelType(ChannelType.Text)
+                .WithRequired(true))
+            .Build(),
+
+        new SlashCommandBuilder()
+            .WithName("updatec")
+            .WithDescription("Edits my ff updates channel, only can be one channel")
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("updatec")
+                .WithDescription("Choose a text channel")
+                .WithType(ApplicationCommandOptionType.Channel)
+                .AddChannelType(ChannelType.Text)
+                .WithRequired(true))
+            .Build(),
+
+        new SlashCommandBuilder()
+            .WithName("statusc")
+            .WithDescription("Edits my ff status channel, only can be one channel")
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("statusc")
+                .WithDescription("Choose a text channel")
+                .WithType(ApplicationCommandOptionType.Channel)
+                .AddChannelType(ChannelType.Text)
+                .WithRequired(true))
+            .Build(),
+
+        new SlashCommandBuilder()
+            .WithName("maintenancec")
+            .WithDescription("Edits my ff mainenance channel, only can be one channel")
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("maintenancec")
                 .WithDescription("Choose a text channel")
                 .WithType(ApplicationCommandOptionType.Channel)
                 .AddChannelType(ChannelType.Text)
@@ -186,12 +330,16 @@ namespace Begu
             .Build()
 
             };
-            
 
-            try
-            {
-                await guild.BulkOverwriteApplicationCommandAsync(comandos);
-                Print("Application Commands registered successfully!");
+                if (false)
+                {
+                    await guild.BulkOverwriteApplicationCommandAsync(comandos);
+                    Print("Application Commands registered successfully!");
+                }
+                else
+                {
+                    Print("ATENTION - BulkOverwriteApplicationCommandAsync skipped!!!!!!!!!!!!!!");
+                }
 
             }
             catch (Exception ex)
@@ -201,7 +349,9 @@ namespace Begu
 
         }
 
-        
+
+
+
         /********************
              SLASH COMMANDS
         *////////////////////
@@ -215,16 +365,20 @@ namespace Begu
             .WithTitle($"Admin commands.")
             .WithDescription("Because you looks lost.")
             .WithColor(Color.Orange)
-            .AddField("Edit my answer channel", "!talkc", false)
-            .AddField("Show allowed channels", "!listc", false)
+            .AddField("Edit my answer channel", "/talkc", false)
+            .AddField("Show allowed channels", "/listc", false)
+            .AddField("Edit log channel", "/logc", false)
+            .AddField("Shows server info from user", "/useri", false)
             .WithFooter("Take care.")
             .WithTimestamp(DateTimeOffset.Now)
             .Build();
-            await command.FollowupAsync("", embed: admin_emb, ephemeral: true);
+            var sm = await command.FollowupAsync("", embed: admin_emb, ephemeral: true);
+            borrar_msg(sm, 20);
         }
 
+
         //              /news
-        private async Task Command_news(SocketSlashCommand command)
+        private async Task Command_news(SocketSlashCommand command, string mode)
         {
             await command.DeferAsync(ephemeral: false);
 
@@ -237,53 +391,14 @@ namespace Begu
                 if (cantidad > max) { cantidad = max; }
                 if (cantidad <= 0) { cantidad = min; }
 
-                //SOURCE https://documenter.getpostman.com/view/1779678/TzXzDHVk#5bd3a0a5-43b1-408d-bb7a-1788f22662a8
-                //  topics
-                string apiUrl = "https://na.lodestonenews.com/news/topics";
+                //maintenance >> need struct
+                //news
+                //status
+                //updates
+                List<Embed> news = await LodestoneHandler(cantidad, command, mode);
 
-                //  maintenance   >> https://na.lodestonenews.com/news/maintenance/current
-                //string apiUrl = "https://na.lodestonenews.com/news/maintenance"; 
+                await command.FollowupAsync("", embeds: news.ToArray(), ephemeral: false);
 
-                //  need new struct and chech 
-                //string apiUrl = "https://na.lodestonenews.com/news/notices"; 
-
-                //  last update
-                //string apiUrl = "https://na.lodestonenews.com/news/updates"; 
-
-                //  https://na.lodestonenews.com/news/status
-
-                //string apiUrl = "https://na.lodestonenews.com/news/updates"; 
-
-                // status news
-                //string apiUrl = "https://na.lodestonenews.com/news/status"; 
-
-                HttpClient client = new HttpClient();
-                string jsonResponse = await client.GetStringAsync(apiUrl);
-                if (string.IsNullOrEmpty(jsonResponse)) { Print("NEWS ARE EMPTY OR NULL"); }
-
-                var newsList = JsonConvert.DeserializeObject<List<LodestoneNews>>(jsonResponse);
-
-                if (newsList == null || newsList.Count == 0)
-                {
-                    Print("NEW LIST IS NULL");
-                    await command.FollowupAsync("Something went wrong...");
-                    return;
-                }
-
-                foreach (var news in newsList.Take(cantidad))
-                {
-                    var embed2 = new EmbedBuilder()
-                        .WithTitle(news.Title)
-                        .WithUrl(news.Url)
-                        .WithTimestamp(news.Time)
-                        .WithImageUrl(news.Image)
-                        .WithDescription(news.Description)
-                        .WithColor(Color.Blue)
-                        .WithFooter("From: Lodestone News")
-                        .Build();
-                    await command.FollowupAsync(embed: embed2);
-                    await Task.Delay(500);
-                }
             }
             catch (Exception ex)
             {
@@ -332,6 +447,9 @@ namespace Begu
             string nik = sgu.Nickname;
             if (nik == null) { nik = "none"; }
             string avatarUrl = sgu.GetAvatarUrl(ImageFormat.Auto, 512);
+            // 🟢 green
+            //🔴 red
+            string admin = (sgu.GuildPermissions.Administrator) ? "🟢" : "🔴";
 
             var user_emb = new EmbedBuilder()
                 .WithTitle($"User information")
@@ -339,7 +457,7 @@ namespace Begu
                 .AddField("Discord name", $"{sgu.Username}", true)
                 .AddField("Global name", $"{sgu.GlobalName}", true)
                 .AddField("Server name", $"{nik}", true)
-                .AddField("Is admin", $"{sgu.GuildPermissions.Administrator}", true)
+                .AddField("Is admin", admin, true)
                 .AddField("Roles", $"{roleList}")
                 .WithThumbnailUrl(avatarUrl)
                 .WithFooter($" My enemy.")
@@ -347,8 +465,8 @@ namespace Begu
                 .WithTimestamp(DateTimeOffset.Now)
                 .Build();
 
-            await command.FollowupAsync("", embed: user_emb, ephemeral: true);
-
+            var m = await command.FollowupAsync("", embed: user_emb, ephemeral: true);
+            borrar_msg(m, 60);
         }
 
 
@@ -359,7 +477,7 @@ namespace Begu
 
             if (string.IsNullOrEmpty(user_msg))
             {
-                await command.RespondAsync("Please provide a valid date my friend and time in the format YYYY-MM-DD HH:mm:ss.", ephemeral: true);
+                await command.RespondAsync("Please provide a valid date time my friend in the format YYYY-MM-DD HH:mm:ss.", ephemeral: true);
                 return;
             }
 
@@ -387,7 +505,7 @@ namespace Begu
         }
 
 
-        //              /timec
+        //              /timers
         private async Task Command_timers(SocketSlashCommand command)
         {
             await command.DeferAsync(ephemeral: false);
@@ -467,7 +585,9 @@ namespace Begu
                 .WithColor(Color.Green)
                 .WithTimestamp(DateTimeOffset.Now)
                 .Build();
-                await command.FollowupAsync("", embed: talkc_embD, ephemeral: true);
+                var m = await command.FollowupAsync("", embed: talkc_embD, ephemeral: true);
+                borrar_msg(m);
+                await ZenosLog($"{command.User.Mention} removes {selectedChannel.ToString()} as talk channel.");
                 return;
             }
 
@@ -482,6 +602,7 @@ namespace Begu
                 .WithTimestamp(DateTimeOffset.Now)
                 .Build();
             await command.FollowupAsync("", embed: talkc_emb, ephemeral: true);
+            await ZenosLog($"{command.User.Mention} sets {selectedChannel.ToString()} as talk channel.");
 
         }
 
@@ -507,8 +628,10 @@ namespace Begu
             {
                 foreach (string item in Properties.Settings.Default.TalkChannel)
                 {
-                    string nme = _client.GetChannel(ulong.Parse(item)).ToString();
-                    cnls += nme;
+                    //string nme = _client.GetChannel(ulong.Parse(item)).ToString();
+                    var t = _client.Guilds.First().GetTextChannel(ulong.Parse(item));
+                    cnls += t.Mention;
+
                     if (item == Properties.Settings.Default.TalkChannel[Properties.Settings.Default.TalkChannel.Count - 1])
                     {
                         cnls += ".";
@@ -525,14 +648,323 @@ namespace Begu
             .WithTitle($"Admin commands.")
             .WithDescription("Because you looks lost.")
             .WithColor(Color.Orange)
-            .AddField("Current channel/s:", cnls, false)
+            .AddField("Current talk channel/s:", cnls, false)
+            .AddField("Current log channel:", (_client.Guilds.First().GetTextChannel(Properties.Settings.Default.LogChannel)).Mention, false)
+            .AddField("Current ff news channel:", (_client.Guilds.First().GetTextChannel(Properties.Settings.Default.news_channel)).Mention, false)
+            .AddField("Current ff update channel:", (_client.Guilds.First().GetTextChannel(Properties.Settings.Default.update_channel)).Mention, false)
+            .AddField("Current ff status channel:", (_client.Guilds.First().GetTextChannel(Properties.Settings.Default.status_channel)).Mention, false)
+            .AddField("Current ff maintenance channel:", (_client.Guilds.First().GetTextChannel(Properties.Settings.Default.maintenance_channel)).Mention, false)
             .WithFooter("Take care.")
             .WithTimestamp(DateTimeOffset.Now)
             .Build();
-            await command.FollowupAsync("", embed: admin_embc, ephemeral: true);
+            var m = await command.FollowupAsync("", embed: admin_embc, ephemeral: true);
+            borrar_msg(m, 20);
 
         }
 
+
+        //              /logc
+        private async Task Command_logc(SocketSlashCommand command, SocketChannel selectedChannel)
+        {
+            await command.DeferAsync(ephemeral: true);
+
+            if (selectedChannel == null)
+            {
+                var logc_embD = new EmbedBuilder()
+                .WithTitle("Settings Error")
+                .WithDescription("Something is wrong... <:bossicon:1311094313714974812>")
+                .WithColor(Color.Red)
+                .WithTimestamp(DateTimeOffset.Now)
+                .Build();
+                var m = await command.FollowupAsync("", embed: logc_embD, ephemeral: true);
+                borrar_msg(m);
+                return;
+            }
+
+            Properties.Settings.Default.LogChannel = selectedChannel.Id;
+            Properties.Settings.Default.Save();
+            Print($"Channel {selectedChannel} - {selectedChannel.Id} seted as Log Channel");
+            var t = _client.Guilds.First().GetTextChannel(selectedChannel.Id);
+
+            var talkc_embD = new EmbedBuilder()
+                .WithTitle("Settings")
+                .WithDescription($"Channel saved correctly. <:bossicon:1311094313714974812>")
+                .AddField("Channel", selectedChannel.ToString())
+                .WithColor(Color.Green)
+                .WithTimestamp(DateTimeOffset.Now)
+                .Build();
+            var m2 = await command.FollowupAsync("", embed: talkc_embD, ephemeral: true);
+            borrar_msg(m2);
+            await ZenosLog($"{command.User.Mention} sets {t.Mention} as log channel.");
+        }
+
+
+        //              /newsc
+        private async Task Command_newsc(SocketSlashCommand command, SocketChannel selectedChannel)
+        {
+            await command.DeferAsync(ephemeral: true);
+
+            if (selectedChannel == null)
+            {
+                var embD2 = new EmbedBuilder()
+                .WithTitle("Settings Error")
+                .WithDescription("Something is wrong... <:bossicon:1311094313714974812>")
+                .WithColor(Color.Red)
+                .WithTimestamp(DateTimeOffset.Now)
+                .Build();
+                var m = await command.FollowupAsync("", embed: embD2, ephemeral: true);
+                borrar_msg(m);
+                return;
+            }
+
+            Properties.Settings.Default.news_channel = selectedChannel.Id;
+            Properties.Settings.Default.Save();
+            Print($"Channel {selectedChannel} - {selectedChannel.Id} seted as ff news Channel");
+            var t = _client.Guilds.First().GetTextChannel(selectedChannel.Id);
+
+            var embD = new EmbedBuilder()
+                .WithTitle("Settings")
+                .WithDescription($"Channel saved correctly for ff news. <:bossicon:1311094313714974812>")
+                .AddField("Channel", selectedChannel.ToString())
+                .WithColor(Color.Green)
+                .WithTimestamp(DateTimeOffset.Now)
+                .Build();
+            var m2 = await command.FollowupAsync("", embed: embD, ephemeral: true);
+            await ZenosLog($"{command.User.Mention} sets {t.Mention} as ff news channel.");
+            borrar_msg(m2);
+        }
+
+
+        //              /uppdatec
+        private async Task Command_updatec(SocketSlashCommand command, SocketChannel selectedChannel)
+        {
+            await command.DeferAsync(ephemeral: true);
+
+            if (selectedChannel == null)
+            {
+                var embD2 = new EmbedBuilder()
+                .WithTitle("Settings Error")
+                .WithDescription("Something is wrong... <:bossicon:1311094313714974812>")
+                .WithColor(Color.Red)
+                .WithTimestamp(DateTimeOffset.Now)
+                .Build();
+                var m = await command.FollowupAsync("", embed: embD2, ephemeral: true);
+                borrar_msg(m);
+                return;
+            }
+
+            Properties.Settings.Default.update_channel = selectedChannel.Id;
+            Properties.Settings.Default.Save();
+            Print($"Channel {selectedChannel} - {selectedChannel.Id} seted as ff updates Channel");
+            var t = _client.Guilds.First().GetTextChannel(selectedChannel.Id);
+
+            var embD = new EmbedBuilder()
+                .WithTitle("Settings")
+                .WithDescription($"Channel saved correctly for ff updates. <:bossicon:1311094313714974812>")
+                .AddField("Channel", selectedChannel.ToString())
+                .WithColor(Color.Green)
+                .WithTimestamp(DateTimeOffset.Now)
+                .Build();
+            var m2 = await command.FollowupAsync("", embed: embD, ephemeral: true);
+            await ZenosLog($"{command.User.Mention} sets {t.Mention} as ff updates channel.");
+            borrar_msg(m2);
+
+
+        }
+
+
+        //              /statusc
+        private async Task Command_statusc(SocketSlashCommand command, SocketChannel selectedChannel)
+        {
+            await command.DeferAsync(ephemeral: true);
+
+            if (selectedChannel == null)
+            {
+                var embD2 = new EmbedBuilder()
+                .WithTitle("Settings Error")
+                .WithDescription("Something is wrong... <:bossicon:1311094313714974812>")
+                .WithColor(Color.Red)
+                .WithTimestamp(DateTimeOffset.Now)
+                .Build();
+                var m = await command.FollowupAsync("", embed: embD2, ephemeral: true);
+                borrar_msg(m);
+                return;
+            }
+
+            Properties.Settings.Default.status_channel = selectedChannel.Id;
+            Properties.Settings.Default.Save();
+            Print($"Channel {selectedChannel} - {selectedChannel.Id} seted as ff status Channel");
+            var t = _client.Guilds.First().GetTextChannel(selectedChannel.Id);
+
+            var embD = new EmbedBuilder()
+                .WithTitle("Settings")
+                .WithDescription($"Channel saved correctly for ff status. <:bossicon:1311094313714974812>")
+                .AddField("Channel", selectedChannel.ToString())
+                .WithColor(Color.Green)
+                .WithTimestamp(DateTimeOffset.Now)
+                .Build();
+            var m2 = await command.FollowupAsync("", embed: embD, ephemeral: true);
+            await ZenosLog($"{command.User.Mention} sets {t.Mention} as ff status channel.");
+            borrar_msg(m2);
+
+        }
+
+
+        //              /maintenancec
+        private async Task Command_maintenancec(SocketSlashCommand command, SocketChannel selectedChannel)
+        {
+            await command.DeferAsync(ephemeral: true);
+
+            if (selectedChannel == null)
+            {
+                var embD2 = new EmbedBuilder()
+                .WithTitle("Settings Error")
+                .WithDescription("Something is wrong... <:bossicon:1311094313714974812>")
+                .WithColor(Color.Red)
+                .WithTimestamp(DateTimeOffset.Now)
+                .Build();
+                var m2 = await command.FollowupAsync("", embed: embD2, ephemeral: true);
+                borrar_msg(m2);
+                return;
+            }
+
+            Properties.Settings.Default.maintenance_channel = selectedChannel.Id;
+            Properties.Settings.Default.Save();
+            Print($"Channel {selectedChannel} - {selectedChannel.Id} seted as ff maintenance Channel");
+            var t = _client.Guilds.First().GetTextChannel(selectedChannel.Id);
+
+            var embD = new EmbedBuilder()
+                .WithTitle("Settings")
+                .WithDescription($"Channel saved correctly for ff maintenance. <:bossicon:1311094313714974812>")
+                .AddField("Channel", selectedChannel.ToString())
+                .WithColor(Color.Green)
+                .WithTimestamp(DateTimeOffset.Now)
+                .Build();
+            var m = await command.FollowupAsync("", embed: embD, ephemeral: true);
+            await ZenosLog($"{command.User.Mention} sets {t.Mention} as ff maintenance channel.");
+            borrar_msg(m);
+        }
+
+
+
+        /********************
+          LodestoneHandler
+        *////////////////////
+        private async Task<List<Embed>> LodestoneHandler(int cantidad, SocketSlashCommand command, string kindOf)
+        {
+            //SOURCE https://documenter.getpostman.com/view/1779678/TzXzDHVk#5bd3a0a5-43b1-408d-bb7a-1788f22662a8
+            //  topics
+            string apiUrl = "";
+
+            switch (kindOf)
+            {
+                case "news":
+                    apiUrl = "https://na.lodestonenews.com/news/topics?locale=eu";
+                    break;
+
+                case "maintenance":
+                    apiUrl = "https://na.lodestonenews.com/news/maintenance/current?locale=eu";
+                    break;
+
+                case "updates":
+                    apiUrl = "https://na.lodestonenews.com/news/updates?locale=eu";
+                    break;
+
+                case "status":
+                    apiUrl = "https://na.lodestonenews.com/news/status?locale=eu";
+                    break;
+
+                default:
+                    apiUrl = "https://na.lodestonenews.com/news/topics?locale=eu";
+                    break;
+            }
+            HttpClient client = new HttpClient();
+            string jsonMaintenance = "", jsonCommon = "";
+            MaintenanceRoot data = null;
+            List<LodestoneNews> newsListD = new List<LodestoneNews>();
+
+            //LodestoneMaintenance
+            //List<LodestoneMaintenance> newsListM = new List<LodestoneMaintenance>();
+            bool empty = true;
+
+            if (kindOf == "maintenance")
+            {
+                //newsListM = JsonConvert.DeserializeObject<List<LodestoneMaintenance>>(jsonResponse);
+                jsonMaintenance = await client.GetStringAsync(apiUrl);
+                if (string.IsNullOrEmpty(jsonMaintenance)) { Print("NEWS ARE EMPTY OR NULL"); }
+                data = JsonConvert.DeserializeObject<MaintenanceRoot>(jsonMaintenance);
+                empty = (data == null || data.Game.Count == 0) ? true : false;
+                cantidad = 1; //plz xD
+
+            }
+            else
+            {
+                jsonCommon = await client.GetStringAsync(apiUrl);
+                if (string.IsNullOrEmpty(jsonCommon)) { Print("NEWS ARE EMPTY OR NULL"); }
+                newsListD = JsonConvert.DeserializeObject<List<LodestoneNews>>(jsonCommon);
+                empty = (newsListD == null || newsListD.Count == 0) ? true : false;
+            }
+
+            if (empty)
+            {
+                string tit = (kindOf == "maintenance") ? "I got nothing..." : "Error";
+                string str = (kindOf == "maintenance") ? "Is game on maintenance???" : "No data recieved.";
+
+                Print("NEW LIST IS NULL");
+                //await command.FollowupAsync("Something went wrong...");
+                var embed = new EmbedBuilder()
+                    .WithTitle(tit)
+                    .WithDescription(str)
+                    //.WithTimestamp(DateTimeOffset.Now)
+                    .WithColor(Color.Red)
+                    .Build();
+                return new List<Embed> { embed };
+            }
+
+            List<Embed> ret = new List<Embed>();
+
+            if (kindOf == "maintenance")
+            {
+                foreach (var news in data.Game)
+                {
+                    var embed = new EmbedBuilder()
+                        .WithTitle(news.Title)
+                        .WithUrl(news.Url)
+                        .WithTimestamp(DateTime.Parse(news.Time))
+                        .WithTimestamp(DateTime.Parse(news.Start))
+                        .WithTimestamp(DateTime.Parse(news.End))
+                        //.WithDescription(news.Description)
+                        .WithColor(Color.Blue)
+                        .WithFooter("From: Lodestone")
+                        .Build();
+                    //await command.FollowupAsync(embed: embed);
+
+                    ret.Add(embed);
+                }
+            }
+            else
+            {
+                foreach (var news in newsListD.Take(cantidad))
+                {
+                    var embed = new EmbedBuilder()
+                        .WithTitle(news.Title)
+                        .WithUrl(news.Url)
+                        .WithTimestamp(news.Time)
+                        .WithImageUrl(news.Image)
+                        .WithDescription(news.Description)
+                        .WithColor(Color.Blue)
+                        .WithFooter("From: Lodestone")
+                        .Build();
+                    //await command.FollowupAsync(embed: embed);
+
+                    ret.Add(embed);
+                }
+
+            }
+            //Print(ret.Count.ToString());
+            return ret;
+
+        }
 
 
 
@@ -559,11 +991,37 @@ namespace Begu
                         await Command_admin(command);
                         break;
 
-                    case "news":
+                    case "ffnews":
 
+                        //maintenance
+                        //news
+                        //status
+                        //updates
+                        if (!canTalk) { error = 3; goto default; }
+                        await Command_news(command, "news");
+
+                        break;
+
+
+                    case "ffstatus":
 
                         if (!canTalk) { error = 3; goto default; }
-                        await Command_news(command);
+                        await Command_news(command, "status");
+
+                        break;
+
+
+                    case "ffupdates":
+
+                        if (!canTalk) { error = 3; goto default; }
+                        await Command_news(command, "updates");
+
+                        break;
+
+                    case "ffmaintenance":
+
+                        if (!canTalk) { error = 3; goto default; }
+                        await Command_news(command, "maintenance");
 
                         break;
 
@@ -574,7 +1032,7 @@ namespace Begu
                         if (user_n?.Value is IUser user_name) { } else { goto default; }
                         if (!isAdmin) { error = 1; goto default; }
                         if (!canTalk) { error = 3; goto default; }
-                        if (user_name.IsBot) { goto default; } //don't check bots ¬¬
+                        if (user_name.IsBot) { error = 2; goto default; } //don't check bots ¬¬
                         await Command_userinfo(command, user_name);
 
                         break;
@@ -600,11 +1058,55 @@ namespace Begu
 
                     case "talkc":
 
-
                         if (!isAdmin) { error = 1; goto default; }
                         var channel = command.Data.Options.FirstOrDefault(opt => opt.Name == "channel");
                         if (channel?.Value is SocketChannel selectedChannel) { } else { error = 3; goto default; }//exit on fail
                         await Command_talkc(command, selectedChannel);
+
+                        break;
+
+                    case "logc":
+
+                        if (!isAdmin) { error = 1; goto default; }
+                        var channelL = command.Data.Options.FirstOrDefault(opt => opt.Name == "channell");
+                        if (channelL?.Value is SocketChannel selectedChannelL) { } else { error = 3; goto default; }//exit on fail
+                        await Command_logc(command, selectedChannelL);
+
+                        break;
+
+                    case "newsc":
+
+                        if (!isAdmin) { error = 1; goto default; }
+                        var channelNc = command.Data.Options.FirstOrDefault(opt => opt.Name == "newsc");
+                        if (channelNc?.Value is SocketChannel selectedChannelNc) { } else { error = 3; goto default; }//exit on fail
+                        await Command_newsc(command, selectedChannelNc);
+
+                        break;
+
+                    case "updatec":
+
+                        if (!isAdmin) { error = 1; goto default; }
+                        var channelUc = command.Data.Options.FirstOrDefault(opt => opt.Name == "updatec");
+                        if (channelUc?.Value is SocketChannel selectedChannelUc) { } else { error = 3; goto default; }//exit on fail
+                        await Command_updatec(command, selectedChannelUc);
+
+                        break;
+
+                    case "statusc":
+
+                        if (!isAdmin) { error = 1; goto default; }
+                        var channelSc = command.Data.Options.FirstOrDefault(opt => opt.Name == "statusc");
+                        if (channelSc?.Value is SocketChannel selectedChannelSc) { } else { error = 3; goto default; }//exit on fail
+                        await Command_statusc(command, selectedChannelSc);
+
+                        break;
+
+                    case "maintenancec":
+
+                        if (!isAdmin) { error = 1; goto default; }
+                        var channelMc = command.Data.Options.FirstOrDefault(opt => opt.Name == "maintenancec");
+                        if (channelMc?.Value is SocketChannel selectedChannelMc) { } else { error = 3; goto default; }//exit on fail
+                        await Command_maintenancec(command, selectedChannelMc);
 
                         break;
 
@@ -626,6 +1128,8 @@ namespace Begu
                             case 1:
                                 part1 = "What you trying?";
                                 part2 = "/YouNotAdmin";
+                                var t = _client.Guilds.First().GetTextChannel(command.Channel.Id);
+                                await ZenosLog($"{command.User.Mention} try to use  /{command.CommandName} command on {t.Mention}, but is not admin, i say nothing!!");
                                 break;
 
                             case 2:
@@ -649,7 +1153,8 @@ namespace Begu
                             .WithColor(Color.Red)
                             .AddField(part1, part2, false)
                             .Build();
-                        await command.RespondAsync("", embed: def_emb, ephemeral: true);
+                        var m = await command.FollowupAsync("", embed: def_emb, ephemeral: true);
+                        borrar_msg(m);
                         break;
                 }
 
@@ -735,7 +1240,7 @@ namespace Begu
         *////////////////////
         private bool Check_Allowed_Channel(SocketChannel channel_to_check)
         {
-        //Chech if can talk on channel
+            //Chech if can talk on channel
 
             StringCollection channels = Properties.Settings.Default.TalkChannel;
             if (channels == null) return false;
@@ -756,19 +1261,23 @@ namespace Begu
         *////////////////////
         private void Print(string line, bool showname = true)
         {
-        //Console bot print with timespamp
-            string time_stamp = "", h = "", m = "", s = "";
+            //Console bot print with timespamp
+            string time_stamp = "", h = "", m = "", s = "", ms = "";
             DateTime n = DateTime.Now;
             //0 on left
             if (n.Hour < 10) { h = "0"; }
             if (n.Minute < 10) { m = "0"; }
             if (n.Second < 10) { s = "0"; }
+            if (n.Millisecond < 100) { ms = "0"; }
+            if (n.Millisecond < 10) { ms = "00"; }
+
             //getting values
             h += n.Hour.ToString();
             m += n.Minute.ToString();
             s += n.Second.ToString();
+            ms += n.Millisecond.ToString();
             //making timestamp
-            time_stamp = h + ":" + m + ":" + s + " "; //format 00:00:00
+            time_stamp = h + ":" + m + ":" + s + "." + ms + " "; //format 00:00:00
 
             if (showname) { line = "Zeno♥ - " + line; }
             Console.WriteLine(time_stamp + " " + line);
@@ -780,7 +1289,7 @@ namespace Begu
         *////////////////////
         private void AddTalkChannel(String channel)
         {
-        //Add allowed talk channel
+            //Add allowed talk channel
             StringCollection channels = Properties.Settings.Default.TalkChannel;
             if (channels == null) channels = new StringCollection();
             channels.Add(channel);
@@ -793,7 +1302,7 @@ namespace Begu
         *////////////////////
         private void RemoveTalkChannel(String channel)
         {
-        //Remove allowed talk channel
+            //Remove allowed talk channel
             StringCollection channels = Properties.Settings.Default.TalkChannel;
             StringCollection new_channels = new StringCollection();
             foreach (var item in channels)
@@ -809,7 +1318,442 @@ namespace Begu
         }
 
 
+        /********************
+            ZenosLog
+        *////////////////////
+        private async Task ZenosLog(string message)
+        {
+            SocketTextChannel canal = _client.Guilds.First().GetTextChannel(Properties.Settings.Default.LogChannel);
+            await canal.SendMessageAsync(message);
+        }
 
+
+        /********************
+            borrar_msg
+        *////////////////////
+        private void borrar_msg(RestFollowupMessage botMessage, int tiempo = 8)
+        {
+            _ = Task.Run(async () =>
+            {
+                await Task.Delay(tiempo * 1000);
+                try { await botMessage.DeleteAsync(); } catch (Exception ex) { Print(ex.Message); }
+
+            });
+        }
+
+
+        private void Check_FF_updates()
+        {
+            _ = Task.Run(async () =>
+            {
+                int each = 5; //min
+                bool c_news = Properties.Settings.Default.news_channel == 0;
+                bool c_status = Properties.Settings.Default.status_channel == 0;
+                bool c_update = Properties.Settings.Default.update_channel == 0;
+                bool c_maintenance = Properties.Settings.Default.maintenance_channel == 0;
+
+                if (c_news || c_status || c_update || c_maintenance)
+                {
+                    SocketTextChannel _channel = (SocketTextChannel)_client.Guilds.First().GetChannel(Properties.Settings.Default.LogChannel);
+                    await _channel.SendMessageAsync($"Final Fantasy XIV News is stoped because i miss where i can put the news, trying again on {each} minutes." +
+                        $"{Environment.NewLine} Set it usung `/newsc` `/updatec` `/statusc` `/maintenancec`");
+                }
+
+                while (true)
+                {
+
+                    try
+                    {
+                        string cmsg = "";
+                        string mmsg = "";
+                        string apiUrl = "https://na.lodestonenews.com/news/topics?locale=eu";
+                        HttpClient client = new HttpClient();
+                        string jsonCommon = "";
+                        bool empty = true;
+
+                        //LodestoneNews
+                        List<LodestoneNews> newsListD = new List<LodestoneNews>();
+                        jsonCommon = await client.GetStringAsync(apiUrl);
+                        if (string.IsNullOrEmpty(jsonCommon)) { Print("NEWS ARE EMPTY OR NULL"); }
+                        newsListD = JsonConvert.DeserializeObject<List<LodestoneNews>>(jsonCommon);
+                        empty = (newsListD == null || newsListD.Count == 0) ? true : false;
+                        bool havenews = !(Properties.Settings.Default.news_last_id == newsListD.First().Id);
+                        //Print($"New updates? = {!empty && havenews}  ");
+                        cmsg += $"News:{!empty && havenews} | ";
+                        if (!empty && havenews)
+                        {
+
+                            SocketTextChannel news_channel = _client.Guilds.First().GetTextChannel(Properties.Settings.Default.news_channel);
+                            bool first = true;
+                            string bera = "";
+
+                            foreach (var item in newsListD)
+                            {
+                                if (bera == item.Id) { break; } // don't show again
+                                if (first)
+                                {
+                                    bera = Properties.Settings.Default.news_last_id; // i need that xD
+                                    first = false;
+                                    Properties.Settings.Default.news_last_id = item.Id;
+                                    Properties.Settings.Default.Save();
+                                }
+
+                                var embed = new EmbedBuilder()
+                                    .WithTitle(item.Title)
+                                    .WithUrl(item.Url)
+                                    .WithTimestamp(item.Time)
+                                    .WithImageUrl(item.Image)
+                                    .WithDescription(item.Description)
+                                    .WithColor(Color.Blue)
+                                    .WithFooter("From: Lodestone")
+                                    .Build();
+                                await news_channel.SendMessageAsync("", embed: embed);
+                            }
+
+                        }
+
+
+                        //status
+                        apiUrl = "https://na.lodestonenews.com/news/status?locale=eu";
+                        client = new HttpClient();
+                        jsonCommon = "";
+                        empty = true;
+                        newsListD = new List<LodestoneNews>();
+
+                        jsonCommon = await client.GetStringAsync(apiUrl);
+                        if (string.IsNullOrEmpty(jsonCommon)) { Print("NEWS ARE EMPTY OR NULL"); }
+                        newsListD = JsonConvert.DeserializeObject<List<LodestoneNews>>(jsonCommon);
+                        empty = (newsListD == null || newsListD.Count == 0) ? true : false;
+                        havenews = !(Properties.Settings.Default.status_last_id == newsListD.First().Id);
+                        //Print($"Status updates? = {!empty && havenews}  ");
+                        cmsg += $"Status:{!empty && havenews} | ";
+
+                        if (!empty && havenews)
+                        {
+
+                            SocketTextChannel news_channel = _client.Guilds.First().GetTextChannel(Properties.Settings.Default.status_channel);
+                            bool first = true;
+                            string bera = "";
+
+                            foreach (var item in newsListD)
+                            {
+                                if (bera == item.Id) { break; } // don't show again
+                                if (first)
+                                {
+                                    bera = Properties.Settings.Default.status_last_id;
+                                    first = false;
+                                    Properties.Settings.Default.status_last_id = item.Id;
+                                    Properties.Settings.Default.Save();
+                                }
+
+                                var embed = new EmbedBuilder()
+                                    .WithTitle(item.Title)
+                                    .WithUrl(item.Url)
+                                    .WithTimestamp(item.Time)
+                                    .WithImageUrl(item.Image)
+                                    .WithDescription(item.Description)
+                                    .WithColor(Color.Blue)
+                                    .WithFooter("From: Lodestone")
+                                    .Build();
+                                await news_channel.SendMessageAsync("", embed: embed);
+                            }
+
+                        }
+
+
+
+
+                        //update
+                        apiUrl = "https://na.lodestonenews.com/news/updates?locale=eu";
+                        client = new HttpClient();
+                        jsonCommon = "";
+                        empty = true;
+                        newsListD = new List<LodestoneNews>();
+
+
+                        jsonCommon = await client.GetStringAsync(apiUrl);
+                        if (string.IsNullOrEmpty(jsonCommon)) { Print("NEWS ARE EMPTY OR NULL"); }
+                        newsListD = JsonConvert.DeserializeObject<List<LodestoneNews>>(jsonCommon);
+                        empty = (newsListD == null || newsListD.Count == 0) ? true : false;
+                        havenews = !(Properties.Settings.Default.update_last_id == newsListD.First().Id);
+                        //Print($"Updates updates? = {!empty && havenews}  ");
+                        cmsg += $"Update:{!empty && havenews}";
+
+                        if (!empty && havenews)
+                        {
+
+                            SocketTextChannel news_channel = _client.Guilds.First().GetTextChannel(Properties.Settings.Default.update_channel);
+                            bool first = true;
+                            string hold_new = "";
+
+                            foreach (var item in newsListD)
+                            {
+                                if (hold_new == item.Id) { break; }
+
+                                if (first)
+                                {
+                                    first = false;
+                                    hold_new = Properties.Settings.Default.update_last_id;
+                                    Properties.Settings.Default.update_last_id = item.Id;
+                                    Properties.Settings.Default.Save();
+                                }
+
+                                var embed = new EmbedBuilder()
+                                    .WithTitle(item.Title)
+                                    .WithUrl(item.Url)
+                                    .WithTimestamp(item.Time)
+                                    .WithImageUrl(item.Image)
+                                    .WithDescription(item.Description)
+                                    .WithColor(Color.Blue)
+                                    .WithFooter("From: Lodestone")
+                                    .Build();
+                                await news_channel.SendMessageAsync("", embed: embed);
+                            }
+
+                        }
+
+
+                        //maintenance
+                        //Game
+                        apiUrl = "https://lodestonenews.com/news/maintenance/current?locale=eu";
+                        client = new HttpClient();
+                        jsonCommon = "";
+                        MaintenanceRoot data = null;
+                        empty = true;
+                        newsListD = new List<LodestoneNews>();
+
+                        jsonCommon = await client.GetStringAsync(apiUrl);
+                        if (string.IsNullOrEmpty(jsonCommon)) { Print("NEWS ARE EMPTY OR NULL"); }
+                        data = JsonConvert.DeserializeObject<MaintenanceRoot>(jsonCommon);
+                        empty = (data == null || data.Game.Count == 0) ? true : false;
+                        //Print($"Maintenance game updates? = {!empty && Properties.Settings.Default.maintenance_last_game_id != data.Game.First().Id}  ");
+                        mmsg += $"M/Game:{!empty && Properties.Settings.Default.maintenance_last_game_id != data.Game.First().Id} | ";
+
+                        if (empty)
+                        {
+                            Properties.Settings.Default.maintenance_last_game_id = "";
+                            Properties.Settings.Default.Save();
+                        }
+
+                        if ((!empty) && Properties.Settings.Default.maintenance_last_game_id != data.Game.First().Id)
+                        {
+
+                            SocketTextChannel news_channel = _client.Guilds.First().GetTextChannel(Properties.Settings.Default.maintenance_channel);
+                            bool first = true;
+                            string hold_new = "";
+
+                            foreach (var news in data.Game) //should be one
+                            {
+                                if (first)
+                                {
+                                    first = false;
+                                    hold_new = Properties.Settings.Default.maintenance_last_game_id;
+                                    Properties.Settings.Default.maintenance_last_game_id = news.Id;
+                                    Properties.Settings.Default.Save();
+                                }
+
+                                string st = utime(DateTime.Parse(news.Start));
+                                string et = utime(DateTime.Parse(news.End));
+                                string tt = utime(DateTime.Parse(news.Time));
+
+                                var embed = new EmbedBuilder()
+                                    .WithTitle(news.Title)
+                                    .WithUrl(news.Url)
+                                    .AddField($"Start time: {Environment.NewLine + utime(DateTime.Parse(news.Start), "d") + Environment.NewLine + utime(DateTime.Parse(news.Start), "t")}", st, true)
+                                    .AddField($"End time: {Environment.NewLine + utime(DateTime.Parse(news.End), "d") + Environment.NewLine + utime(DateTime.Parse(news.End), "t")}", et, true)
+                                    //.WithTimestamp(DateTime.Parse(news.Time))
+                                    //.WithDescription(news.Description)
+                                    .WithColor(Color.Blue)
+                                    .WithFooter($"From: Lodestone")
+                                    .Build();
+
+                                await news_channel.SendMessageAsync("Final Fantasy XIV - Game maintenance", embed: embed);
+                            }
+                        }
+
+                        //Mog station
+                        empty = (data == null || data.Mog.Count == 0) ? true : false;
+                        //Print($"Maintenance mog updates? = {!empty && Properties.Settings.Default.maintenance_last_mog_id != data.Mog.First().Id}  ");
+                        mmsg += $"M/Mog:{!empty && Properties.Settings.Default.maintenance_last_mog_id != data.Mog.First().Id} | ";
+
+                        if (empty)
+                        {
+                            Properties.Settings.Default.maintenance_last_mog_id = "";
+                            Properties.Settings.Default.Save();
+                        }
+                        //Properties.Settings.Default.maintenance_last_mog_id = "";
+
+                        if ((!empty) && Properties.Settings.Default.maintenance_last_mog_id != data.Mog.First().Id)
+                        {
+                            SocketTextChannel news_channel = _client.Guilds.First().GetTextChannel(Properties.Settings.Default.maintenance_channel);
+                            bool first = true;
+                            string hold_new = "";
+
+                            foreach (var news in data.Mog) //should be one
+                            {
+                                if (first)
+                                {
+                                    first = false;
+                                    hold_new = Properties.Settings.Default.maintenance_last_mog_id;
+                                    Properties.Settings.Default.maintenance_last_mog_id = news.Id;
+                                    Properties.Settings.Default.Save();
+                                }
+
+                                string st = utime(DateTime.Parse(news.Start));
+                                string et = utime(DateTime.Parse(news.End));
+                                string tt = utime(DateTime.Parse(news.Time));
+
+                                var embed = new EmbedBuilder()
+                                    .WithTitle(news.Title)
+                                    .WithUrl(news.Url)
+                                    .AddField($"Start time: {Environment.NewLine + utime(DateTime.Parse(news.Start), "d") + Environment.NewLine + utime(DateTime.Parse(news.Start), "t")}", st, true)
+                                    .AddField($"End time: {Environment.NewLine + utime(DateTime.Parse(news.End), "d") + Environment.NewLine + utime(DateTime.Parse(news.End), "t")}", et, true)
+                                    //.WithTimestamp(DateTime.Parse(news.Time))
+                                    //.WithDescription(news.Description)
+                                    .WithColor(Color.Blue)
+                                    .WithFooter($"From: Lodestone")
+                                    .Build();
+
+                                await news_channel.SendMessageAsync("Final Fantasy XIV - Mog Station maintenance", embed: embed);
+                            }
+                        }
+
+
+
+                        //Lodestone
+                        empty = (data == null || data.Lodestone.Count == 0) ? true : false;
+                        //Print($"Maintenance lodestone updates? = {!empty && Properties.Settings.Default.maintenance_last_lodestone_id != data.Lodestone.First().Id}  ");
+                        mmsg += $"M/Lodestone:{!empty && Properties.Settings.Default.maintenance_last_lodestone_id != data.Lodestone.First().Id} | ";
+
+                        if (empty)
+                        {
+                            Properties.Settings.Default.maintenance_last_lodestone_id = "";
+                            Properties.Settings.Default.Save();
+                        }
+                        //Properties.Settings.Default.maintenance_last_lodestone_id = "";
+
+                        if ((!empty) && Properties.Settings.Default.maintenance_last_lodestone_id != data.Lodestone.First().Id)
+                        {
+                            SocketTextChannel news_channel = _client.Guilds.First().GetTextChannel(Properties.Settings.Default.maintenance_channel);
+                            bool first = true;
+                            string hold_new = "";
+
+                            foreach (var news in data.Lodestone) //should be one
+                            {
+                                if (first)
+                                {
+                                    first = false;
+                                    hold_new = Properties.Settings.Default.maintenance_last_lodestone_id;
+                                    Properties.Settings.Default.maintenance_last_lodestone_id = news.Id;
+                                    Properties.Settings.Default.Save();
+                                }
+
+                                string st = utime(DateTime.Parse(news.Start));
+                                string et = utime(DateTime.Parse(news.End));
+                                string tt = utime(DateTime.Parse(news.Time));
+
+                                var embed = new EmbedBuilder()
+                                    .WithTitle(news.Title)
+                                    .WithUrl(news.Url)
+                                    .AddField($"Start time: {Environment.NewLine + utime(DateTime.Parse(news.Start), "d") + Environment.NewLine + utime(DateTime.Parse(news.Start), "t")}", st, true)
+                                    .AddField($"End time: {Environment.NewLine + utime(DateTime.Parse(news.End), "d") + Environment.NewLine + utime(DateTime.Parse(news.End), "t")}", et, true)
+                                    //.WithTimestamp(DateTime.Parse(news.Time))
+                                    //.WithDescription(news.Description)
+                                    .WithColor(Color.Blue)
+                                    .WithFooter($"From: Lodestone")
+                                    .Build();
+
+                                await news_channel.SendMessageAsync("Final Fantasy XIV - Lodestone maintenance", embed: embed);
+                            }
+
+                        }
+
+
+
+                        //Companion
+                        empty = (data == null || data.Companion.Count == 0) ? true : false;
+                        //Print($"Maintenance companion updates? = {!empty && Properties.Settings.Default.maintenance_last_companion_id != data.Companion.First().Id}  ");
+                        mmsg += $"M/Companion:{!empty && Properties.Settings.Default.maintenance_last_companion_id != data.Companion.First().Id}";
+
+                        if (empty)
+                        {
+                            Properties.Settings.Default.maintenance_last_companion_id = "";
+                            Properties.Settings.Default.Save();
+                        }
+                        //TEST
+                        //Properties.Settings.Default.maintenance_last_companion_id = "";
+
+                        if ((!empty) && Properties.Settings.Default.maintenance_last_companion_id != data.Companion.First().Id)
+                        {
+                            SocketTextChannel news_channel = _client.Guilds.First().GetTextChannel(Properties.Settings.Default.maintenance_channel);
+                            bool first = true;
+                            string hold_new = "";
+
+                            foreach (var news in data.Companion) //should be one
+                            {
+                                if (first)
+                                {
+                                    first = false;
+                                    hold_new = Properties.Settings.Default.maintenance_last_companion_id;
+                                    Properties.Settings.Default.maintenance_last_companion_id = news.Id;
+                                    Properties.Settings.Default.Save();
+                                }
+
+
+                                string st = utime(DateTime.Parse(news.Start));
+                                string et = utime(DateTime.Parse(news.End));
+                                string tt = utime(DateTime.Parse(news.Time));
+
+                                var embed = new EmbedBuilder()
+                                    .WithTitle(news.Title)
+                                    .WithUrl(news.Url)
+                                    .AddField($"Start time: {Environment.NewLine + utime(DateTime.Parse(news.Start), "d") + Environment.NewLine + utime(DateTime.Parse(news.Start), "t")}", st, true)
+                                    .AddField($"End time: {Environment.NewLine + utime(DateTime.Parse(news.End), "d") + Environment.NewLine + utime(DateTime.Parse(news.End), "t")}", et, true)
+                                    //.WithTimestamp(DateTime.Parse(news.Time))
+                                    //.WithDescription(news.Description)
+                                    .WithColor(Color.Blue)
+                                    .WithFooter($"From: Lodestone")
+                                    .Build();
+
+                                //TEST
+                                //news_channel = (SocketTextChannel)_client.Guilds.First().GetChannel(1310199196233760858); //test-bot channel
+                                //await news_channel.SendMessageAsync("Final Fantasy XIV - Companion maintenance", embed: embed);
+                                await news_channel.SendMessageAsync("Final Fantasy XIV - Companion maintenance", embed: embed);
+                            }
+
+                        }
+
+                        bool c1 = false, c2 = false;
+                        if (cmsg.Contains(":true")) { Print(cmsg); c1 = true; }
+                        if (mmsg.Contains(":true")) { Print(mmsg); c2 = true; }
+                        if (c1 || c2)
+                        {
+                            Print($"Cheching again in {each} minutes...");
+                        }
+                        else
+                        {
+                            Print($"No updates, cheching again in {each} minutes...\"");
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Print(ex.Message);
+                    }
+
+
+                    //               1 min * each
+                    await Task.Delay(60000 * each);
+                }
+            });
+        }
+
+        private string utime(DateTime date, string mode = "R")
+        {
+            long unixTimestamp = new DateTimeOffset(date).ToUnixTimeSeconds();
+            return $"<t:{unixTimestamp}:{mode}>";
+
+        }
 
     }
 
@@ -829,5 +1773,24 @@ namespace Begu
         public string Description { get; set; }
     }
 
-}
+    public class MaintenanceRoot
+    {
+        public List<MaintenanceEvent> Companion { get; set; }
+        public List<MaintenanceEvent> Game { get; set; }
+        public List<MaintenanceEvent> Lodestone { get; set; }
+        public List<MaintenanceEvent> Mog { get; set; }
+        public List<object> Psn { get; set; }
+    }
 
+    public class MaintenanceEvent
+    {
+        public string Id { get; set; }
+        public string Url { get; set; }
+        public string Title { get; set; }
+        public string Time { get; set; }
+        public string Start { get; set; }
+        public string End { get; set; }
+        public bool Current { get; set; }
+    }
+
+}
