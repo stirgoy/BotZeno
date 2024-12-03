@@ -25,18 +25,6 @@ namespace Begu.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TOKEN")]
-        public string token {
-            get {
-                return ((string)(this["token"]));
-            }
-            set {
-                this["token"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public global::System.Collections.Specialized.StringCollection TalkChannel {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["TalkChannel"]));
