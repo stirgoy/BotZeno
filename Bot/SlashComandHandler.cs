@@ -17,7 +17,7 @@ namespace Begu
         {
 
             //for conditional use            
-            bool isAdmin = (command.User as SocketGuildUser).GuildPermissions.Administrator;
+            bool isAdmin = (command.User as SocketGuildUser).GuildPermissions.Administrator; //actually useless, hadled by bot
             bool canTalk = Check_Allowed_Channel(command.Channel);
             int error = 0;
 

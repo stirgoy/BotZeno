@@ -8,9 +8,10 @@ namespace Begu
         {
 
             new SlashCommandBuilder()
-            .WithName("a_commands")
-            .WithDescription("Shows admin commands!")
-            .Build(),
+                .WithName("a_commands")
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .WithDescription("Shows admin commands!")
+                .Build(),
 
             new SlashCommandBuilder()
                 .WithName("timers")
@@ -19,11 +20,13 @@ namespace Begu
             new SlashCommandBuilder()
                 .WithName("a_answer")
                 .WithDescription("Shows my allowed answer channels for all users.")
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .Build(),
 
             new SlashCommandBuilder()
                 .WithName("a_userinfo")
                 .WithDescription("I bring server information from a specific user.")
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("name")
                     .WithDescription("User name.")
@@ -77,6 +80,7 @@ namespace Begu
             new SlashCommandBuilder()
                 .WithName("a_set_answer")
                 .WithDescription("Edits my answer channels, if channel is already added i going remove ^^")
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("channel")
                     .WithDescription("Choose a text channel")
@@ -88,6 +92,7 @@ namespace Begu
             new SlashCommandBuilder()
                 .WithName("a_set_log")
                 .WithDescription("Edits my log channel, only can be one channel")
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("channell")
                     .WithDescription("Choose a text channel")
@@ -99,6 +104,7 @@ namespace Begu
             new SlashCommandBuilder()
                 .WithName("a_set_news")
                 .WithDescription("Edits my ff news channel, only can be one channel")
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("newsc")
                     .WithDescription("Choose a text channel")
@@ -110,6 +116,7 @@ namespace Begu
             new SlashCommandBuilder()
                 .WithName("a_set_update")
                 .WithDescription("Edits my ff updates channel, only can be one channel")
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("updatec")
                     .WithDescription("Choose a text channel")
@@ -121,6 +128,7 @@ namespace Begu
             new SlashCommandBuilder()
                 .WithName("a_set_status")
                 .WithDescription("Edits my ff status channel, only can be one channel")
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("statusc")
                     .WithDescription("Choose a text channel")
@@ -132,6 +140,7 @@ namespace Begu
             new SlashCommandBuilder()
                 .WithName("a_set_maintenance")
                 .WithDescription("Edits my ff mainenance channel, only can be one channel")
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("maintenancec")
                     .WithDescription("Choose a text channel")

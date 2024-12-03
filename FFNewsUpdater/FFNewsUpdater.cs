@@ -27,6 +27,10 @@ namespace Begu
                 int each = _ffNewsUpdaterTimer;
                 bool run = _ffNewsUpdater;
 
+                if (!run)
+                {
+                    Print("Check_FF_updates Disabled.");
+                }
 
                 while (run)
                 {

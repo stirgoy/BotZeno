@@ -133,11 +133,22 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FFNewsUpdater.cs" />
-    <Compile Include="Fnc.cs" />
-    <Compile Include="LodestoneHandler.cs" />
-    <Compile Include="Init.cs" />
-    <Compile Include="MessageRecived.cs" />
+    <Compile Include="Bot\SlashCommands\Command_a_userinfo.cs" />
+    <Compile Include="Bot\SlashCommands\Command_a_set_answer.cs" />
+    <Compile Include="Bot\SlashCommands\Command_a_answer.cs" />
+    <Compile Include="Bot\SlashCommands\Command_a_set_log.cs" />
+    <Compile Include="Bot\SlashCommands\Command_a_set_news.cs" />
+    <Compile Include="Bot\SlashCommands\Command_a_set_update.cs" />
+    <Compile Include="Bot\SlashCommands\Command_a_set_status.cs" />
+    <Compile Include="Bot\SlashCommands\Command_a_set_maintenance.cs" />
+    <Compile Include="Bot\SlashCommands\Command_timestamp.cs" />
+    <Compile Include="Bot\SlashCommands\Command_timers.cs" />
+    <Compile Include="Bot\SlashCommands\Command_a_commands.cs" />
+    <Compile Include="FFNewsUpdater\FFNewsUpdater.cs" />
+    <Compile Include="Bot\Fnc.cs" />
+    <Compile Include="Bot\LodestoneHandler.cs" />
+    <Compile Include="Bot\Init.cs" />
+    <Compile Include="Bot\MessageRecived.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -145,10 +156,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="SlashComandHandler.cs" />
+    <Compile Include="Bot\SlashComandHandler.cs" />
     <Compile Include="Structs.cs" />
-    <Compile Include="ZenosSettings.cs" />
-    <Compile Include="ZenosSlashCommands.cs" />
+    <Compile Include="Bot\ZenosSettings.cs" />
+    <Compile Include="Bot\ZenosSlashCommands.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -11,8 +11,9 @@ namespace Begu
         //Bot Dev Settings
         readonly bool _updateSlashCommands = true; //slash commands server update
         readonly bool _consolePrint = true; //console log
-        readonly bool _ffNewsUpdater = true; //enabled?
-        readonly int _ffNewsUpdaterTimer = 5; //minutes
         readonly bool _ZenosLog = false; //zenos log enabled
+        //news updater
+        readonly bool _ffNewsUpdater = false; //enabled?
+        readonly int _ffNewsUpdaterTimer = 5; //minutes
     }
 }
