@@ -12,6 +12,9 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -22,13 +25,11 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,6 +49,21 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Begu.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>9F31C9D17A35E1EFC6B5376F97650C733AC1CD72</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Begu_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Discord.Net.Commands, Version=3.16.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -144,11 +160,19 @@
     <Compile Include="Bot\SlashCommands\Command_timestamp.cs" />
     <Compile Include="Bot\SlashCommands\Command_timers.cs" />
     <Compile Include="Bot\SlashCommands\Command_a_commands.cs" />
+    <Compile Include="Bot\SlashCommands\Command_showmount.cs" />
+    <Compile Include="Clases\Emote.cs" />
+    <Compile Include="Bot\SlashCommands\Command_a_show.cs" />
+    <Compile Include="Bot\SlashCommands\Command_a_sendmsg.cs" />
     <Compile Include="FFNewsUpdater\FFNewsUpdater.cs" />
     <Compile Include="Bot\Fnc.cs" />
     <Compile Include="Bot\LodestoneHandler.cs" />
     <Compile Include="Bot\Init.cs" />
     <Compile Include="Bot\MessageRecived.cs" />
+    <Compile Include="Clases\LodestoneNews.cs" />
+    <Compile Include="Clases\Maintenance.cs" />
+    <Compile Include="Clases\Minions.cs" />
+    <Compile Include="Bot\SlashCommands\Command_searchminion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -157,12 +181,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Bot\SlashComandHandler.cs" />
-    <Compile Include="Structs.cs" />
-    <Compile Include="Bot\ZenosSettings.cs" />
+    <Compile Include="Clases\Mount.cs" />
+    <Compile Include="StringT.cs" />
+    <Compile Include="ZenosSettings.cs" />
     <Compile Include="Bot\ZenosSlashCommands.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Begu_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -16,12 +16,24 @@ namespace Begu
         public async Task MainAsync()
         {
             //Environment.SetEnvironmentVariable("ZenosT", "TOKEN", EnvironmentVariableTarget.User);
+            //Environment.SetEnvironmentVariable("WUZenosT", "TOKEN", EnvironmentVariableTarget.User);
 #if DEBUG
-            Print("<<<<< -------\\\\\\\\\\\\ DEBUG MODE //////------->>>>>");
-#endif
             Print("<<<<< -------\\\\\\\\\\ Zeno♥ /////------->>>>>");
+#else
+            Print("<<<<< -------\\\\\\\\\\\\ Wind-Up Zeno♥ //////------->>>>>");
+#endif
+            Print("Cheching bot settings....");
+            //BotSettings();
             Print("Logging in...");
+
+
+
+            Print("Logging in...");
+#if DEBUG
             await _client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("ZenosT", EnvironmentVariableTarget.User));
+#else
+            await _client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("WUZenosT", EnvironmentVariableTarget.User));
+#endif
             await _client.StartAsync();
             await Task.Delay(Timeout.Infinite);
 
@@ -42,12 +54,19 @@ namespace Begu
             }
 
             string tc = "";
-            foreach (string item in Properties.Settings.Default.TalkChannel)
+
+            if (Properties.Settings.Default.TalkChannel != null)
             {
-                tc += $"{Kuru.GetChannel(ulong.Parse(item))}({Kuru.GetChannel(ulong.Parse(item)).Id}), ";
+                if (Properties.Settings.Default.TalkChannel.Count >= 1)
+                {
+                    foreach (string item in Properties.Settings.Default.TalkChannel)
+                    {
+                        tc += $"{Kuru.GetChannel(ulong.Parse(item))}({Kuru.GetChannel(ulong.Parse(item)).Id}), ";
+                    }
+                    tc = tc.Remove(tc.Length - 2);
+                    tc += ".";
+                }
             }
-            tc = tc.Remove(tc.Length - 2);
-            tc += ".";
 
             Print("Connected!");
 
@@ -82,11 +101,25 @@ namespace Begu
 
             //news test
             //Properties.Settings.Default.update_last_id = "5978bd3462caa8e2f949327d8d13b54427af5808";
+            /*
+            Properties.Settings.Default.update_last_id = "0";
+            Properties.Settings.Default.status_last_id = "0";
+            Properties.Settings.Default.news_last_id = "0";
+            Properties.Settings.Default.maintenance_last_companion_id = "0";
+            Properties.Settings.Default.maintenance_last_game_id = "0";
+            Properties.Settings.Default.maintenance_last_lodestone_id = "0";
+            Properties.Settings.Default.maintenance_last_mog_id = "0";
+            */
             //Properties.Settings.Default.Save();
             //Print(Properties.Settings.Default.news_last_id);
 
-            Print("Loading news updater...");
-            Check_FF_updates();
+
+            if (!onlyOne) // for reconnections
+            {
+                onlyOne = true;
+                Print("Loading function FFNewsUpdater...");
+                Check_FF_updates();
+            }
         }
 
         /********************

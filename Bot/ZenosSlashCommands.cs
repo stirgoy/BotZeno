@@ -1,4 +1,5 @@
 ﻿using Discord;
+using static System.Net.WebRequestMethods;
 
 namespace Begu
 {
@@ -10,22 +11,22 @@ namespace Begu
             new SlashCommandBuilder()
                 .WithName("a_commands")
                 .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .WithDescription("Shows admin commands!")
+                .WithDescription(StringT.Scd_a_commands)
                 .Build(),
 
             new SlashCommandBuilder()
                 .WithName("timers")
-                .WithDescription("Shows Eorzean timers.")
+                .WithDescription(StringT.Scd_timers)
                 .Build(),
             new SlashCommandBuilder()
                 .WithName("a_answer")
-                .WithDescription("Shows my allowed answer channels for all users.")
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .WithDescription(StringT.Scd_a_answer)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)            
                 .Build(),
 
             new SlashCommandBuilder()
                 .WithName("a_userinfo")
-                .WithDescription("I bring server information from a specific user.")
+                .WithDescription(StringT.Scd_a_userinfo)
                 .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("name")
@@ -36,10 +37,10 @@ namespace Begu
 
             new SlashCommandBuilder()
                 .WithName("ffnews")
-                .WithDescription("Shows Lodestone news.")
+                .WithDescription(StringT.Scd_ffnews)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("number")
-                    .WithDescription("How many news you want see?")
+                    .WithDescription(StringT.Scd_desc_hmn)
                     .WithType(ApplicationCommandOptionType.Integer)
                     .WithRequired(false)
                     )
@@ -47,10 +48,10 @@ namespace Begu
 
             new SlashCommandBuilder()
                 .WithName("ffstatus")
-                .WithDescription("Shows Lodestone news.")
+                .WithDescription(StringT.Scd_ffstatus)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("number")
-                    .WithDescription("How many news you want see?")
+                    .WithDescription(StringT.Scd_desc_hmn)
                     .WithType(ApplicationCommandOptionType.Integer)
                     .WithRequired(false)
                     )
@@ -58,20 +59,20 @@ namespace Begu
 
             new SlashCommandBuilder()
             .WithName("ffmaintenance")
-            .WithDescription("Shows Lodestone maintenance status.")
+            .WithDescription(StringT.Scd_ffmaintenence)
             .AddOption(new SlashCommandOptionBuilder()
                 .WithName("number")
-                .WithDescription("How many news you want see?")
+                .WithDescription(StringT.Scd_desc_hmn)
                 .WithType(ApplicationCommandOptionType.Integer)
                 .WithRequired(false)
                 )
             .Build(),
             new SlashCommandBuilder()
             .WithName("ffupdates")
-            .WithDescription("Shows Lodestone news.")
+            .WithDescription(StringT.Scd_ffupdates)
             .AddOption(new SlashCommandOptionBuilder()
                 .WithName("number")
-                .WithDescription("How many news you want see?")
+                .WithDescription(StringT.Scd_desc_hmn)
                 .WithType(ApplicationCommandOptionType.Integer)
                 .WithRequired(false)
                 )
@@ -79,7 +80,7 @@ namespace Begu
 
             new SlashCommandBuilder()
                 .WithName("a_set_answer")
-                .WithDescription("Edits my answer channels, if channel is already added i going remove ^^")
+                .WithDescription(StringT.Scd_a_set_answer)
                 .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("channel")
@@ -91,7 +92,7 @@ namespace Begu
 
             new SlashCommandBuilder()
                 .WithName("a_set_log")
-                .WithDescription("Edits my log channel, only can be one channel")
+                .WithDescription(StringT.Scd_a_set_log)
                 .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("channell")
@@ -103,7 +104,7 @@ namespace Begu
 
             new SlashCommandBuilder()
                 .WithName("a_set_news")
-                .WithDescription("Edits my ff news channel, only can be one channel")
+                .WithDescription(StringT.Scd_a_set_ffnews)
                 .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("newsc")
@@ -115,7 +116,7 @@ namespace Begu
 
             new SlashCommandBuilder()
                 .WithName("a_set_update")
-                .WithDescription("Edits my ff updates channel, only can be one channel")
+                .WithDescription(StringT.Scd_a_set_ffupdate)
                 .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("updatec")
@@ -127,7 +128,7 @@ namespace Begu
 
             new SlashCommandBuilder()
                 .WithName("a_set_status")
-                .WithDescription("Edits my ff status channel, only can be one channel")
+                .WithDescription(StringT.Scd_a_set_ffstatus)
                 .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("statusc")
@@ -139,7 +140,7 @@ namespace Begu
 
             new SlashCommandBuilder()
                 .WithName("a_set_maintenance")
-                .WithDescription("Edits my ff mainenance channel, only can be one channel")
+                .WithDescription(StringT.Scd_a_set_ffmainenance)
                 .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("maintenancec")
@@ -151,13 +152,68 @@ namespace Begu
 
             new SlashCommandBuilder()
                 .WithName("timestamp")
-                .WithDescription("I bring you a dynamic display of date time and the code ♥")
+                .WithDescription(StringT.Scd_timestamp)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("time")
-                    .WithDescription("Text a date time. example: YYYY-MM-DD HH:mm:ss, can be only the hour.")
+                    .WithDescription(StringT.Scd_timestamp_d )
                     .WithType(ApplicationCommandOptionType.String)
                     .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("searchmount")
+                .WithDescription(StringT.Scd_searchmount)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("mount")
+                    .WithDescription(StringT.Scd_searchmount_d)
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("searchminion")
+                .WithDescription(StringT.Scd_searchminion)
+                .AddOption(new SlashCommandOptionBuilder()
+                        .WithName("minion")
+                    .WithDescription(StringT.Scd_searchminion_d)
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("a_show_stored")
+                .WithDescription(StringT.Scd_a_show_stored)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("a_sendmsg")
+                .WithDescription(StringT.Scd_a_sendmsg)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .AddOption(new SlashCommandOptionBuilder()
+                        .WithName("title")
+                        .WithDescription(StringT.Scd_a_sendmsg_d1)
+                        .WithType(ApplicationCommandOptionType.String)
+                        .WithRequired(true))
+            .AddOption(new SlashCommandOptionBuilder()
+                        .WithName("msg")
+                        .WithDescription(StringT.Scd_a_sendmsg_d2)
+                        .WithType(ApplicationCommandOptionType.String)
+                        .WithRequired(true))
+            .AddOption(new SlashCommandOptionBuilder()
+                        .WithName("picture")
+                        .WithDescription(StringT.Scd_a_sendmsg_d3)
+                        .WithType(ApplicationCommandOptionType.String)
+                        .WithRequired(false))
+            .AddOption(new SlashCommandOptionBuilder()
+                        .WithName("channel")
+                        .WithDescription(StringT.Scd_a_sendmsg_d4)
+                        .WithType(ApplicationCommandOptionType.Channel)
+                        .AddChannelType(ChannelType.Text)
+                        .WithRequired(false))
                 .Build()
+
+            
         };
     }
 }

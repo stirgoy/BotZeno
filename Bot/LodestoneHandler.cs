@@ -22,23 +22,23 @@ namespace Begu
             switch (kindOf)
             {
                 case "news":
-                    apiUrl = "https://na.lodestonenews.com/news/topics?locale=eu";
+                    apiUrl = "https://lodestonenews.com/news/topics?locale=eu";
                     break;
 
                 case "maintenance":
-                    apiUrl = "https://na.lodestonenews.com/news/maintenance/current?locale=eu";
+                    apiUrl = "https://lodestonenews.com/news/maintenance/current?locale=eu";
                     break;
 
                 case "updates":
-                    apiUrl = "https://na.lodestonenews.com/news/updates?locale=eu";
+                    apiUrl = "https://lodestonenews.com/news/updates?locale=eu";
                     break;
 
                 case "status":
-                    apiUrl = "https://na.lodestonenews.com/news/status?locale=eu";
+                    apiUrl = "https://lodestonenews.com/news/status?locale=eu";
                     break;
 
                 default:
-                    apiUrl = "https://na.lodestonenews.com/news/topics?locale=eu";
+                    apiUrl = "https://lodestonenews.com/news/topics?locale=eu";
                     break;
             }
 

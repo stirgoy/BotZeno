@@ -41,7 +41,7 @@ namespace Begu
                 .Build();
             var m2 = await command.FollowupAsync("", embed: talkc_embD, ephemeral: true);
             BorrarMsg(m2);
-            await ZenosLog($"{command.User.Mention} sets {t.Mention} as log channel.");
+            await ZenoLog($"{command.User.Mention} sets {t.Mention} as log channel.");
         }
     }
 }

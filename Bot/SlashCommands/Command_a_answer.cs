@@ -45,11 +45,6 @@ namespace Begu
             }
 
 
-
-
-            (Properties.Settings.Default.status_channel) = 0;
-
-
             string logc1 = $"Current log channel/s: {((Properties.Settings.Default.LogChannel == 0) ? Emote.XD.RedCircle : Emote.XD.GeenCircle)}";
             string logc2 = (Properties.Settings.Default.LogChannel == 0) ? "No channel, use `/logc` for set." : (Kuru.GetTextChannel(Properties.Settings.Default.LogChannel)).Mention;
 

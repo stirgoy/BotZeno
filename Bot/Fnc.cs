@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Reactive;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Begu
@@ -36,7 +34,27 @@ namespace Begu
                 //updates
                 List<Embed> news = await LodestoneHandler(cantidad, mode);
 
-                await command.FollowupAsync("", embeds: news.ToArray(), ephemeral: false);
+                string lst;
+                switch (mode)
+                {
+                    case "news":                        
+                        lst = "News " + Emote.Bot.LTopics;
+                        break;
+                    case "status":
+                        lst = "Status "+ Emote.Bot.LStatus;
+                        break;
+                    case "update":
+                        lst = "Update " + Emote.Bot.LUpdate;
+                        break;
+                    case "maintenance":
+                        lst = "Maintenance " + Emote.Bot.LMaintenance;
+                        break;
+                    default: 
+                        lst = "News " + Emote.Bot.LTopics;
+                        break;
+                }
+
+                await command.FollowupAsync(" Final Fantasy XIV - " + lst, embeds: news.ToArray(), ephemeral: false);
 
             }
             catch (Exception ex)
@@ -162,9 +180,9 @@ namespace Begu
         /********************
             ZenosLog
         *////////////////////
-        private async Task ZenosLog(string message)
+        private async Task ZenoLog(string message)
         {
-            if (_ZenosLog)
+            if (_ZenoLog)
             {
                 SocketTextChannel canal = Kuru.GetTextChannel(Properties.Settings.Default.LogChannel);
                 await canal.SendMessageAsync(message);
@@ -184,5 +202,22 @@ namespace Begu
 
             });
         }
+        /*
+        private void GZeno()
+        {
+            _ = Task.Run(async () =>
+            {
+            
+                await _client.StopAsync();
+                await _client.LogoutAsync();
+                await Task.Delay(3000);
+                await _client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("ZenosT", EnvironmentVariableTarget.User));
+                await _client.StartAsync();
+            
+            });
+        }
+        */
+
+
     }
 }

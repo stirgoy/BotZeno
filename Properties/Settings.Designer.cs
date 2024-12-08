@@ -96,7 +96,7 @@ namespace Begu.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public string news_last_id {
             get {
                 return ((string)(this["news_last_id"]));
@@ -108,7 +108,7 @@ namespace Begu.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public string update_last_id {
             get {
                 return ((string)(this["update_last_id"]));
@@ -120,7 +120,7 @@ namespace Begu.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public string status_last_id {
             get {
                 return ((string)(this["status_last_id"]));
@@ -132,7 +132,7 @@ namespace Begu.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public string maintenance_last_game_id {
             get {
                 return ((string)(this["maintenance_last_game_id"]));
@@ -144,7 +144,7 @@ namespace Begu.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public string maintenance_last_mog_id {
             get {
                 return ((string)(this["maintenance_last_mog_id"]));
@@ -156,7 +156,7 @@ namespace Begu.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public string maintenance_last_lodestone_id {
             get {
                 return ((string)(this["maintenance_last_lodestone_id"]));
@@ -168,7 +168,7 @@ namespace Begu.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public string maintenance_last_companion_id {
             get {
                 return ((string)(this["maintenance_last_companion_id"]));

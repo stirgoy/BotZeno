@@ -1,4 +1,5 @@
-﻿using Discord.WebSocket;
+﻿using Discord;
+using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,22 +13,31 @@ namespace Begu
         /********************
          MessageReceivedAsync
         *////////////////////
-        private Task MessageReceivedAsync(SocketMessage message)
+        private async Task MessageReceivedAsync(SocketMessage message)
         {
-            /*
             var userMessage = message as SocketUserMessage;
             if (message.Author.IsBot || userMessage == null) return;
             if (!Check_Allowed_Channel(message.Channel)) { return; }
-
+            await Task.Delay(1);
+            return;
+            /*
+            if(userMessage.Author.Id != 247404719608168458) return;
+            await userMessage.Channel.SendMessageAsync(":3");
+            GZenos();
+            Print("done");
+            */
+                /*
             await userMessage.Channel.TriggerTypingAsync();
-
-            string answer = "hmm...";
+            await Task.Delay(4000);
+            
+                var emoj = new Emoji("🔥");
+            await userMessage.AddReactionAsync(emoj);
+            //string answer = "hmm...";
             bool sayhi = false;
             var mentionedUser = message.MentionedUsers.FirstOrDefault(u => u.Id == _client.CurrentUser.Id);
 
             if (userMessage.Content.ToString().ToLower().IndexOf("hi", StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                var emoj = new Emoji("❤️");
                 await message.AddReactionAsync(emoj);
                 answer = $"¡Hi, {message.Author.Mention}♥! 😊";
                 sayhi = true;
@@ -52,7 +62,7 @@ namespace Begu
             await message.Channel.SendMessageAsync(answer, false, null, null, null, reference);
             //await userMessage.Channel.SendMessageAsync(answer);
             */
-            return Task.CompletedTask;
+            
         }
     }
 }

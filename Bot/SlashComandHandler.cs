@@ -157,6 +157,44 @@ namespace Begu
 
                         break;
 
+                    case "searchmount":
+
+                        var mount = command.Data.Options.FirstOrDefault(opt => opt.Name == "mount");
+                        if (mount?.Value is string usr_mount) { } else { goto default; }//exit on fail
+                        if (!canTalk) { error = 3; goto default; }
+                        await Command_searchmount(usr_mount, command);
+
+                        break;
+
+                    case "searchminion":
+
+                        var minion = command.Data.Options.FirstOrDefault(opt => opt.Name == "minion");
+                        if (minion?.Value is string usr_minion) { } else { goto default; }//exit on fail
+                        if (!canTalk) { error = 3; goto default; }
+                        await Command_searchminion(usr_minion, command);
+
+                        break;
+
+                    case "a_show_stored":
+                        if (!isAdmin) { error = 1; goto default; }
+                        await Command_a_show_stored(command);
+                        break;
+
+                    case "a_sendmsg":
+                        if (!isAdmin) { error = 1; goto default; }
+                        var ttt = command.Data.Options.FirstOrDefault(opt => opt.Name == "title");
+                        var mmm = command.Data.Options.FirstOrDefault(opt => opt.Name == "msg");
+                        var ppp = command.Data.Options.FirstOrDefault(opt => opt.Name == "picture");
+                        var ccc = command.Data.Options.FirstOrDefault(opt => opt.Name == "channel");
+
+                        if (ttt?.Value is string tt) { } else { goto default; }//exit on fail
+                        if (mmm?.Value is string mm) { } else { goto default; }//exit on fail 
+                        if (ppp?.Value is string pp) { } else { pp = ""; }//exit on fail ????????? no lmao
+                        if (ccc?.Value is SocketTextChannel cc) { } else { cc = null; }//exit on fail ????????? no lmao
+
+                        await Command_a_sendmsg(command, tt, mm, pp, cc);
+                        break;
+
 
                     //////////////////////////    Errors
                     default:
@@ -166,30 +204,30 @@ namespace Begu
                         switch (error)
                         {
                             case 1:
-                                part1 = "What you trying?";
-                                part2 = "/YouNotAdmin";
-                                var t = Kuru.GetTextChannel(command.Channel.Id);
-                                await ZenosLog($"{command.User.Mention} try to use  /{command.CommandName} command on {t.Mention}, but is not admin, i say nothing!!");
+                                part1 = StringT.Err1_p1;
+                                part2 = StringT.Err1_p2;
+                                //var t = Kuru.GetTextChannel(command.Channel.Id);
+                                //await ZenoLog($"{command.User.Mention} try to use  /{command.CommandName} command on {t.Mention}, but is not admin, i say nothing!!");
                                 break;
 
                             case 2:
-                                part1 = "I don't understand...";
-                                part2 = "/WhatYouSendMe?";
+                                part1 = StringT.Err2_p1;
+                                part2 = StringT.Err2_p2;
                                 break;
 
                             case 3:
-                                part1 = "Im not allowed to talk here...";
-                                part2 = "/NotForZenos♥";
+                                part1 = StringT.Err3_p1;
+                                part2 = StringT.Err3_p2;
                                 break;
 
                             default:
-                                part1 = "Easter egg? out of limits";
-                                part2 = "This never should happen.... gj xD";
+                                part1 = StringT.Errd_p1;
+                                part2 = StringT.Errd_p2;
                                 break;
                         }
                         var def_emb = new EmbedBuilder()
                             .WithTitle($"Zeno♥.")
-                            .WithDescription(Emote.Bot.Sproud + " Because you looks lost. " + Emote.Bot.Sproud)
+                            .WithDescription(StringT.Desc_com1)
                             .WithColor(Color.Red)
                             .AddField(part1, part2, false)
                             .Build();

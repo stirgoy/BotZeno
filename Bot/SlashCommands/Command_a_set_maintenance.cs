@@ -40,7 +40,7 @@ namespace Begu
                 .WithTimestamp(DateTimeOffset.Now)
                 .Build();
             var m = await command.FollowupAsync("", embed: embD, ephemeral: true);
-            await ZenosLog($"{command.User.Mention} sets {t.Mention} as ff maintenance channel. " + Emote.Bot.Maintenance);
+            await ZenoLog($"{command.User.Mention} sets {t.Mention} as ff maintenance channel. " + Emote.Bot.Maintenance);
             BorrarMsg(m);
         }
     }

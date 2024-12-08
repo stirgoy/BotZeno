@@ -26,7 +26,7 @@ namespace Begu
                 .Build();
                 var m = await command.FollowupAsync("", embed: talkc_embD, ephemeral: true);
                 BorrarMsg(m);
-                await ZenosLog($"{command.User.Mention} removes {selectedChannel} as talk channel.");
+                await ZenoLog($"{command.User.Mention} removes {selectedChannel} as talk channel.");
                 return;
             }
 
@@ -41,7 +41,7 @@ namespace Begu
                 .WithTimestamp(DateTimeOffset.Now)
                 .Build();
             await command.FollowupAsync("", embed: talkc_emb, ephemeral: true);
-            await ZenosLog($"{command.User.Mention} sets {selectedChannel} as talk channel.");
+            await ZenoLog($"{command.User.Mention} sets {selectedChannel} as talk channel.");
 
         }
     }

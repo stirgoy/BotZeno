@@ -3,6 +3,7 @@ using Discord.WebSocket;
 using System;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Begu
@@ -17,29 +18,26 @@ namespace Begu
         //server
         SocketGuild Kuru = null; //Star Guardians!
 
+        // DiscordSocketClient
+        DiscordSocketConfig DCFG = new DiscordSocketConfig
+        {
+            GatewayIntents =
+                GatewayIntents.MessageContent |
+                GatewayIntents.AllUnprivileged &
+                ~GatewayIntents.GuildScheduledEvents &
+                ~GatewayIntents.GuildInvites
+        };
+
+        private Task Updater { get; set; }
+        bool onlyOne = false;
+
         //main
         static void Main() => new Program().MainAsync().GetAwaiter().GetResult();
         public Program()
         {
 
-
-
-            /***********************************
-                DiscordSocketClient
-            *///////////////////////////////////
-            var config = new DiscordSocketConfig
-            {
-                GatewayIntents =
-                GatewayIntents.MessageContent |
-                GatewayIntents.AllUnprivileged &
-                ~GatewayIntents.GuildScheduledEvents &
-                ~GatewayIntents.GuildInvites
-            };
-
-            _client = new DiscordSocketClient(config);
-            //_commands = new CommandService();
-
-
+            _client = new DiscordSocketClient(DCFG);
+            
             /********************
                 Event Handlers
             *////////////////////
