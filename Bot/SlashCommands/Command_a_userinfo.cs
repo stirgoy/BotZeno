@@ -41,6 +41,11 @@ namespace Begu
                 }
 
             }
+            else
+            {
+                Print("NULL USER");
+            }
+
             var roleList = string.Join(", ", sgu.Roles.Where(x => !x.IsEveryone).Select(x => x.Mention));
             roleList.Remove(roleList.Length - 2);
             roleList += ".";

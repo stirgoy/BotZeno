@@ -25,8 +25,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -164,7 +164,7 @@
     <Compile Include="Clases\Emote.cs" />
     <Compile Include="Bot\SlashCommands\Command_a_show.cs" />
     <Compile Include="Bot\SlashCommands\Command_a_sendmsg.cs" />
-    <Compile Include="FFNewsUpdater\FFNewsUpdater.cs" />
+    <Compile Include="Bot\SlashCommands\Command_a_set_notices.cs" />
     <Compile Include="Bot\Fnc.cs" />
     <Compile Include="Bot\LodestoneHandler.cs" />
     <Compile Include="Bot\Init.cs" />
@@ -173,6 +173,7 @@
     <Compile Include="Clases\Maintenance.cs" />
     <Compile Include="Clases\Minions.cs" />
     <Compile Include="Bot\SlashCommands\Command_searchminion.cs" />
+    <Compile Include="Command_a_react.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -183,6 +184,8 @@
     <Compile Include="Bot\SlashComandHandler.cs" />
     <Compile Include="Clases\Mount.cs" />
     <Compile Include="StringT.cs" />
+    <Compile Include="FFNewsUpdater\XIV_LN.cs" />
+    <Compile Include="FFNewsUpdater\XIV.cs" />
     <Compile Include="ZenosSettings.cs" />
     <Compile Include="Bot\ZenosSlashCommands.cs" />
   </ItemGroup>

@@ -1,5 +1,5 @@
-﻿using Discord.WebSocket;
-using Discord;
+﻿using Discord;
+using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace Begu
 {
     internal partial class Program
     {
-        private async Task Command_a_set_log(SocketSlashCommand command, SocketChannel selectedChannel)
+        async Task Command_a_set_notices(SocketSlashCommand command, SocketChannel selectedChannel)
         {
             await command.DeferAsync(ephemeral: true);
 
@@ -27,9 +27,9 @@ namespace Begu
                 return;
             }
 
-            Properties.Settings.Default.LogChannel = selectedChannel.Id;
+            Properties.Settings.Default.notices_channel = selectedChannel.Id;
             Properties.Settings.Default.Save();
-            Print($"Channel {selectedChannel} - {selectedChannel.Id} seted as Log Channel");
+            Print($"Channel {selectedChannel} - {selectedChannel.Id} seted as Notices Channel");
             var t = Kuru.GetTextChannel(selectedChannel.Id);
 
             var talkc_embD = new EmbedBuilder()
@@ -41,7 +41,8 @@ namespace Begu
                 .Build();
             var m2 = await command.FollowupAsync("", embed: talkc_embD, ephemeral: true);
             BorrarMsg(m2);
-            await ZenoLog($"{command.User.Mention} sets {t.Mention} as log channel.");
+            await ZenoLog($"{command.User.Mention} sets {t.Mention} as Notices channel.");
         }
+
     }
 }

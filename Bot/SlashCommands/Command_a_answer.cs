@@ -46,19 +46,22 @@ namespace Begu
 
 
             string logc1 = $"Current log channel/s: {((Properties.Settings.Default.LogChannel == 0) ? Emote.XD.RedCircle : Emote.XD.GeenCircle)}";
-            string logc2 = (Properties.Settings.Default.LogChannel == 0) ? "No channel, use `/logc` for set." : (Kuru.GetTextChannel(Properties.Settings.Default.LogChannel)).Mention;
+            string logc2 = (Properties.Settings.Default.LogChannel == 0) ? "No channel, use `/a_set_log` for set." : (Kuru.GetTextChannel(Properties.Settings.Default.LogChannel)).Mention;
 
             string newsc1 = $"Current ff news channel: {((Properties.Settings.Default.news_channel == 0) ? Emote.XD.RedCircle : Emote.XD.GeenCircle)}";
-            string newsc2 = (Properties.Settings.Default.news_channel == 0) ? "No channel, use `/newsc` for set." : (Kuru.GetTextChannel(Properties.Settings.Default.news_channel)).Mention;
+            string newsc2 = (Properties.Settings.Default.news_channel == 0) ? "No channel, use `/a_set_news` for set." : (Kuru.GetTextChannel(Properties.Settings.Default.news_channel)).Mention;
 
             string updatec1 = $"Current ff update channel: {((Properties.Settings.Default.update_channel == 0) ? Emote.XD.RedCircle : Emote.XD.GeenCircle)}";
-            string updatec2 = (Properties.Settings.Default.update_channel == 0) ? "No channel, use `/updatec` for set." : (Kuru.GetTextChannel(Properties.Settings.Default.update_channel)).Mention;
+            string updatec2 = (Properties.Settings.Default.update_channel == 0) ? "No channel, use `/a_set_update` for set." : (Kuru.GetTextChannel(Properties.Settings.Default.update_channel)).Mention;
 
             string status1 = $"Current ff status channel: {((Properties.Settings.Default.status_channel == 0) ? Emote.XD.RedCircle : Emote.XD.GeenCircle)}";
-            string status2 = (Properties.Settings.Default.status_channel == 0) ? "No channel, use `/statusc` for set." : (Kuru.GetTextChannel(Properties.Settings.Default.status_channel)).Mention;
+            string status2 = (Properties.Settings.Default.status_channel == 0) ? "No channel, use `/a_set_status` for set." : (Kuru.GetTextChannel(Properties.Settings.Default.status_channel)).Mention;
 
             string maint1 = $"Current ff maintenance channel: {((Properties.Settings.Default.maintenance_channel == 0) ? Emote.XD.RedCircle : Emote.XD.GeenCircle)}";
-            string maint2 = (Properties.Settings.Default.maintenance_channel == 0) ? "No channel, use `/maintenancec` for set." : (Kuru.GetTextChannel(Properties.Settings.Default.maintenance_channel)).Mention;
+            string maint2 = (Properties.Settings.Default.maintenance_channel == 0) ? "No channel, use `/a_set_maintenance` for set." : (Kuru.GetTextChannel(Properties.Settings.Default.maintenance_channel)).Mention;
+
+            string notic1 = $"Current ff notices channel: {((Properties.Settings.Default.notices_channel == 0) ? Emote.XD.RedCircle : Emote.XD.GeenCircle)}";
+            string notic2 = (Properties.Settings.Default.notices_channel == 0) ? "No channel, use `/a_set_notices` for set." : (Kuru.GetTextChannel(Properties.Settings.Default.notices_channel)).Mention;
 
             //embed
             var admin_embc = new EmbedBuilder()
@@ -68,8 +71,9 @@ namespace Begu
             .AddField($"Current answer channel/s: {((Properties.Settings.Default.TalkChannel.Count == 0) ? Emote.XD.RedCircle : Emote.XD.GeenCircle)}", cnls, false)
             .AddField(logc1, logc2, false)
             .AddField(newsc1, newsc2, false)
-            .AddField(updatec1, updatec2, false)
+            .AddField(notic1, notic2, false)
             .AddField(status1, status2, false)
+            .AddField(updatec1, updatec2, false)
             .AddField(maint1, maint2, false)
             .WithFooter("Take care.")
             .WithTimestamp(DateTimeOffset.Now)

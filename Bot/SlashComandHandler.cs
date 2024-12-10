@@ -86,11 +86,25 @@ namespace Begu
 
                         break;
 
+                    case "ffmaintenancenow":
+
+                        if (!canTalk) { error = 3; goto default; }
+                        await FFXIVModeHandler(command, "maintenance_c");
+
+                        break;
+
 
                     case "ffupdates":
 
                         if (!canTalk) { error = 3; goto default; }
                         await FFXIVModeHandler(command, "updates");
+
+                        break;
+
+                    case "ffnotices":
+
+                        if (!canTalk) { error = 3; goto default; }
+                        await FFXIVModeHandler(command, "notices");
 
                         break;
 
@@ -195,6 +209,25 @@ namespace Begu
                         await Command_a_sendmsg(command, tt, mm, pp, cc);
                         break;
 
+                    case "a_set_notices":
+
+                        if (!isAdmin) { error = 1; goto default; }
+                        var channelN = command.Data.Options.FirstOrDefault(opt => opt.Name == "notices");
+                        if (channelN?.Value is SocketChannel selectedChannelN) { } else { error = 3; goto default; }//exit on fail
+                        await Command_a_set_notices(command, selectedChannelN);
+
+                        break;
+
+                    case "a_react":
+
+                        if (!isAdmin) { error = 1; goto default; }
+                        var mesglink = command.Data.Options.FirstOrDefault(opt => opt.Name == "message_link");
+                        var emote = command.Data.Options.FirstOrDefault(opt => opt.Name == "emote");
+                        if (mesglink?.Value is string mesglink1) { } else { error = 3; goto default; }//exit on fail
+                        if (emote?.Value is string emote1) { } else { error = 3; goto default; }//exit on fail
+                        await Command_a_react(command, mesglink1, emote1);
+
+                        break;
 
                     //////////////////////////    Errors
                     default:

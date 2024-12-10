@@ -36,6 +36,7 @@ namespace Begu
             public static string LTopics { get { return "<:LTopics:1315292097644990494>"; } }
             public static string LMaintenance { get { return "<:LMaintenance:1315291567552069652>"; } }
             public static string LUpdate { get { return "<:LUpdate:1315291150759755896>"; } }
+            public static string Lnotices { get { return "<:Lnotices:1315743482245021767>"; } }
             //public static string XXXXX { get { return "XXXXXXXXXXXXX"; } }
 
         }
@@ -67,6 +68,8 @@ namespace Begu
             public static string LTopics { get { return "<:LTopics:1315341722045251656>"; } }
             public static string LMaintenance { get { return "<:LMaintenance:1315341732153393282>"; } }
             public static string LUpdate { get { return "<:LUpdate:1315341789439328256>"; } }
+            public static string Lnotices { get { return "<:Lnotices:1315743676508536882>"; } }
+
         }
 #endif
         public static class XD

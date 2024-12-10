@@ -13,13 +13,13 @@ namespace Begu
     {
 
         //commons
-        readonly DiscordSocketClient _client;
+        static DiscordSocketClient _client;
 
         //server
-        SocketGuild Kuru = null; //Star Guardians!
+        static SocketGuild Kuru = null; //Star Guardians!
 
         // DiscordSocketClient
-        DiscordSocketConfig DCFG = new DiscordSocketConfig
+        readonly DiscordSocketConfig DCFG = new DiscordSocketConfig
         {
             GatewayIntents =
                 GatewayIntents.MessageContent |
@@ -28,8 +28,7 @@ namespace Begu
                 ~GatewayIntents.GuildInvites
         };
 
-        private Task Updater { get; set; }
-        bool onlyOne = false;
+        
 
         //main
         static void Main() => new Program().MainAsync().GetAwaiter().GetResult();

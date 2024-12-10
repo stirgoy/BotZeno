@@ -67,6 +67,18 @@ namespace Begu
                 .WithRequired(false)
                 )
             .Build(),
+
+            new SlashCommandBuilder()
+            .WithName("ffmaintenancenow")
+            .WithDescription(StringT.Scd_ffmaintenence)
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("number")
+                .WithDescription(StringT.Scd_desc_hmn)
+                .WithType(ApplicationCommandOptionType.Integer)
+                .WithRequired(false)
+                )
+            .Build(),
+
             new SlashCommandBuilder()
             .WithName("ffupdates")
             .WithDescription(StringT.Scd_ffupdates)
@@ -211,9 +223,47 @@ namespace Begu
                         .WithType(ApplicationCommandOptionType.Channel)
                         .AddChannelType(ChannelType.Text)
                         .WithRequired(false))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("a_set_notices")
+                .WithDescription(StringT.Scd_a_set_ffmainenance)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("notices")
+                    .WithDescription("Choose a text channel")
+                    .WithType(ApplicationCommandOptionType.Channel)
+                    .AddChannelType(ChannelType.Text)
+                    .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("a_react")
+                .WithDescription(StringT.Scd_a_set_ffmainenance)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                 .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("message_link")
+                    .WithDescription("Link of message (you can get with left click)")
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("emote")
+                    .WithDescription("Emote for react")
+                    .WithType(ApplicationCommandOptionType.String)                
+                    .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("ffnotices")
+                .WithDescription(StringT.Scd_ffnews)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("number")
+                    .WithDescription(StringT.Scd_desc_hmn)
+                    .WithType(ApplicationCommandOptionType.Integer)
+                    .WithRequired(false))
                 .Build()
 
-            
+
         };
     }
 }

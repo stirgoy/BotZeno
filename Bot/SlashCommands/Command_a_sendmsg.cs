@@ -1,8 +1,10 @@
 ﻿using Discord;
+using Discord.Rest;
 using Discord.WebSocket;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Interop;
 
 namespace Begu
 {
@@ -36,7 +38,8 @@ namespace Begu
                     }
                 }
                 */
-                string ico = command.User.GetDisplayAvatarUrl(size: 64);
+                //string ico = command.User.GetDisplayAvatarUrl(size: 64);
+                string ico = _client.CurrentUser.GetDisplayAvatarUrl(size: 64);
                 Embed talkc_embD;
 
                 if (string.IsNullOrEmpty(picture))
@@ -46,7 +49,8 @@ namespace Begu
                         .WithDescription($"{desc}")
                         .WithColor(Color.Green)
                         .WithThumbnailUrl(ico)
-                        .WithFooter(usr.DisplayName)
+                        //.WithFooter(usr.DisplayName)
+                        .WithFooter("Wind-UpZeno♥")
                         .Build();
                 }
                 else
@@ -57,15 +61,18 @@ namespace Begu
                         .WithColor(Color.Green)
                         .WithImageUrl(picture)
                         .WithThumbnailUrl(ico)
-                        .WithFooter(usr.DisplayName)
+                        //.WithFooter(usr.DisplayName)
+                        .WithFooter("Wind-UpZeno♥")
                         .Build();
                 }
 
 
                 if (selectedChannel != null)
                 {
-                    await command.FollowupAsync($"Message sent to: {selectedChannel.Mention}", ephemeral: true);
-                    await selectedChannel.SendMessageAsync("", embed: talkc_embD);
+                    RestFollowupMessage m1 = await command.FollowupAsync($"Im typing on: {selectedChannel.Mention}", ephemeral: true);
+                    //TODO haz magia
+                    await selectedChannel.TriggerTypingAsync();
+                    EditIt(m1, selectedChannel, talkc_embD);
                 }
                 else
                 {
@@ -81,5 +88,17 @@ namespace Begu
 
 
         }
+
+
+        async void EditIt(RestFollowupMessage mesg, SocketTextChannel selectedChannel, Embed talkc_embD)
+        {
+                    await Task.Delay(4000);
+                    var mess = await selectedChannel.SendMessageAsync("", embed: talkc_embD);
+                    await mesg.ModifyAsync(msg=> msg.Content = $"There is your message: https://discord.com/channels/{Kuru.Id}/{selectedChannel.Id}/{mess.Id} :smiling_imp:");
+        }
+
+
+
+
     }
 }

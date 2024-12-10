@@ -35,7 +35,7 @@ namespace Begu
             var embD = new EmbedBuilder()
                 .WithTitle("Settings")
                 .WithDescription($"Channel saved correctly for ff maintenance. " + Emote.Bot.Boss)
-                .AddField("Channel", selectedChannel.ToString())
+                .AddField("Channel", t.Mention)
                 .WithColor(Color.Green)
                 .WithTimestamp(DateTimeOffset.Now)
                 .Build();

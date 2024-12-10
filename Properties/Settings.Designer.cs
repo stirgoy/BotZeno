@@ -177,5 +177,41 @@ namespace Begu.Properties {
                 this["maintenance_last_companion_id"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public ulong notices_channel {
+            get {
+                return ((ulong)(this["notices_channel"]));
+            }
+            set {
+                this["notices_channel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string notices_last_id {
+            get {
+                return ((string)(this["notices_last_id"]));
+            }
+            set {
+                this["notices_last_id"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string maintenance_last_id {
+            get {
+                return ((string)(this["maintenance_last_id"]));
+            }
+            set {
+                this["maintenance_last_id"] = value;
+            }
+        }
     }
 }

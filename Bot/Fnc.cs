@@ -33,7 +33,7 @@ namespace Begu
                 //status
                 //updates
                 List<Embed> news = await LodestoneHandler(cantidad, mode);
-
+                /*
                 string lst;
                 switch (mode)
                 {
@@ -43,18 +43,22 @@ namespace Begu
                     case "status":
                         lst = "Status "+ Emote.Bot.LStatus;
                         break;
-                    case "update":
-                        lst = "Update " + Emote.Bot.LUpdate;
+                    case "updates":
+                        lst = "Updates " + Emote.Bot.LUpdate;
                         break;
-                    case "maintenance":
+                    case "maintenance_c":
                         lst = "Maintenance " + Emote.Bot.LMaintenance;
                         break;
-                    default: 
-                        lst = "News " + Emote.Bot.LTopics;
+                    case "notices":
+                        lst = "Notices " + Emote.Bot.Lnotices;
+                        break;
+                    default:
+                        lst = "Maintenance " + Emote.Bot.LMaintenance;
                         break;
                 }
-
-                await command.FollowupAsync(" Final Fantasy XIV - " + lst, embeds: news.ToArray(), ephemeral: false);
+                */
+                //await command.FollowupAsync(" Final Fantasy XIV - " + lst, embeds: news.ToArray(), ephemeral: false);
+                await command.FollowupAsync("", embeds: news.ToArray(), ephemeral: false);
 
             }
             catch (Exception ex)
@@ -66,7 +70,7 @@ namespace Begu
         /********************
                 UnixTime
         *////////////////////
-        private string UnixTime(DateTime date, string mode = "R")
+        private static string UnixTime(DateTime date, string mode = "R")
         {
             long unixTimestamp = new DateTimeOffset(date).ToUnixTimeSeconds();
             return $"<t:{unixTimestamp}:{mode}>";
@@ -117,7 +121,7 @@ namespace Begu
         /********************
                 Print
         *////////////////////
-        private void Print(string line, bool showname = true)
+        private static void Print(string line, bool newLine = true, bool showname = true)
         {
             if (!_consolePrint) { return; }
             //Console bot print with timespamp
@@ -139,7 +143,28 @@ namespace Begu
             time_stamp = h + ":" + m + ":" + s + "." + ms + " "; //format 00:00:00
 
             if (showname) { line = "Zeno♥ - " + line; }
-            Console.WriteLine(time_stamp + " " + line);
+            if (newLine)
+            {
+                if (showname)
+                {
+                    Console.WriteLine(time_stamp + " " + line);
+                }
+                else
+                {
+                    Console.WriteLine(" " + line);
+                }
+            }
+            else
+            {
+                if (showname)
+                {
+                    Console.Write(time_stamp + " " + line);
+                }
+                else
+                {
+                    Console.Write(line);
+                }
+            }
         }
 
 
