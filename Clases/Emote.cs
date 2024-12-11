@@ -37,6 +37,13 @@ namespace Begu
             public static string LMaintenance { get { return "<:LMaintenance:1315291567552069652>"; } }
             public static string LUpdate { get { return "<:LUpdate:1315291150759755896>"; } }
             public static string Lnotices { get { return "<:Lnotices:1315743482245021767>"; } }
+            public static string Sadtuff { get { return "<:sadtuff:1316431647981441036>"; } }
+            public static string Happytuff { get { return "<:happytuff:1316431635859636355>"; } }
+            public static string Pepo_laugh { get { return "<a:pepo_laugh:1316431624249802853>"; } }
+            public static string Pepeshookt { get { return "<:pepeshookt:1316431614833721414>"; } }
+            public static string Peepoevil { get { return "<:peepoevil:1316431595317760090>"; } }
+            public static string Pepelove { get { return "<:pepelove:1316431583129108561>"; } }
+            public static string Pepecry { get { return "<:pepecry:1316431562476097667>"; } }
             //public static string XXXXX { get { return "XXXXXXXXXXXXX"; } }
 
         }
@@ -69,6 +76,13 @@ namespace Begu
             public static string LMaintenance { get { return "<:LMaintenance:1315341732153393282>"; } }
             public static string LUpdate { get { return "<:LUpdate:1315341789439328256>"; } }
             public static string Lnotices { get { return "<:Lnotices:1315743676508536882>"; } }
+            public static string Sadtuff { get { return "<:sadtuff:1316430922647601222>"; } }
+            public static string Happytuff { get { return "<:happytuff:1316430907577733232>"; } }
+            public static string Pepo_laugh { get { return "<a:pepo_laugh:1316430877487665152>"; } }
+            public static string Pepeshookt { get { return "<:pepeshookt:1316430243782725703>"; } }
+            public static string Peepoevil { get { return "<:peepoevil:1316430211574792334>"; } }
+            public static string Pepelove { get { return "<:pepelove:1316430197666611220>"; } }
+            public static string Pepecry { get { return "<:pepecry:1316430184446038037>"; } }
 
         }
 #endif
@@ -76,6 +90,7 @@ namespace Begu
         {
             public static string RedCircle { get { return "🔴"; } }
             public static string GeenCircle { get { return "🟢"; } }
+            public static string Fire { get { return "🔥"; } }
 
         }
     }

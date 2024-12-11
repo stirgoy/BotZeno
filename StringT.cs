@@ -1,4 +1,8 @@
-﻿namespace Begu
+﻿using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.LinkLabel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
+
+namespace Begu
 {
     public static class StringT
     {
@@ -18,17 +22,20 @@
         public static string Scd_a_commands => "Shows admin commands!"; 
         public static string Scd_timers => "Shows Eorzean timers."; 
         public static string Scd_a_answer => "Shows my allowed answer channels for all users."; 
-        public static string Scd_a_userinfo => "I bring server information from a specific user."; 
+        public static string Scd_a_userinfo => "I bring server information from a specific user.";
         public static string Scd_ffnews => "Shows Lodestone news."; 
         public static string Scd_ffstatus => "Shows Lodestone status news."; 
         public static string Scd_ffupdates => "Shows Lodestone updates news."; 
-        public static string Scd_ffmaintenence => "Shows FFXIV game maintenance staus."; 
+        public static string Scd_ffmaintenence => "Shows FFXIV maintenance news."; 
+        public static string Scd_ffnotices => "Shows FFXIV notices news.";
+        public static string Scd_ffmaintenencenow => "Shows current FFXIV game maintenance staus.";
         public static string Scd_desc_hmn => "Number of news i try get"; 
         public static string Scd_a_set_answer => "Edits my answer channels, if channel is already added i will remove ^^"; 
         public static string Scd_a_set_log => "Edits my log channel, only can be one channel"; 
         public static string Scd_a_set_ffnews => "Edits my ff news channel, only can be one channel";
         public static string Scd_a_set_ffupdate => "Edits my ff updates channel, only can be one channel"; 
         public static string Scd_a_set_ffstatus => "Edits my ff status channel, only can be one channel"; 
+        public static string Scd_a_set_ffnotices => "\"Edits my ff notices channel, only can be one channel";
         public static string Scd_a_set_ffmainenance => "Edits my ff mainenance channel, only can be one channel"; 
         public static string Scd_timestamp => "I bring you a dynamic display of date time and discord markdown code ♥"; 
         public static string Scd_timestamp_d => "Text a date time. format: YYYY-MM-DD HH:mm:ss, can be only the hour."; 
@@ -41,7 +48,21 @@
         public static string Scd_a_sendmsg_d1 => "Title of embed."; 
         public static string Scd_a_sendmsg_d2 => "The message you want show, use \\n for add new line."; 
         public static string Scd_a_sendmsg_d3 => "Url picture."; 
-        public static string Scd_a_sendmsg_d4 => "Where i post the embed."; 
+        public static string Scd_a_sendmsg_d4 => "Where i post the embed.";
+        public static string Scd_a_react => "Wind-up Zeno♥ react to a message";
+        public static string Scd_a_react_d1 => "Link of message(you can get with left click)"; 
+        public static string Scd_a_react_d2 => "Emote for react";
+        public static string Scd_ctt_d => "Choose a text channel";
+        public static string Scd_usermention => "User mention."; 
+        public static string Scd_a_nikname => "Changes the user nikname"; 
+        public static string Scd_a_nikname_d => "New nikname";
+
+
+        //public static string xxxxxx => "xxxxxxxxxxxx"; 
+        //public static string xxxxxx => "xxxxxxxxxxxx"; 
+        //public static string xxxxxx => "xxxxxxxxxxxx"; 
+        //public static string xxxxxx => "xxxxxxxxxxxx"; 
+        //public static string xxxxxx => "xxxxxxxxxxxx"; 
         //public static string xxxxxx => "xxxxxxxxxxxx"; 
     }
 }

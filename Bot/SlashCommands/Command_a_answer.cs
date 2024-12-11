@@ -13,6 +13,8 @@ namespace Begu
     {
         private async Task Command_a_answer(SocketSlashCommand command)
         {
+            try
+            {
             await command.DeferAsync(ephemeral: true);
 
             string cnls = "";
@@ -44,6 +46,7 @@ namespace Begu
                 cnls = "No channel, use `/talkc` for set.";
             }
 
+                
 
             string logc1 = $"Current log channel/s: {((Properties.Settings.Default.LogChannel == 0) ? Emote.XD.RedCircle : Emote.XD.GeenCircle)}";
             string logc2 = (Properties.Settings.Default.LogChannel == 0) ? "No channel, use `/a_set_log` for set." : (Kuru.GetTextChannel(Properties.Settings.Default.LogChannel)).Mention;
@@ -78,9 +81,16 @@ namespace Begu
             .WithFooter("Take care.")
             .WithTimestamp(DateTimeOffset.Now)
             .Build();
+
+
             var m = await command.FollowupAsync("", embed: admin_embc, ephemeral: true);
             BorrarMsg(m, 20);
 
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message + " " + ex.Source + ex.TargetSite);
+            }
         }
     }
 }

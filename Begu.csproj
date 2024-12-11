@@ -25,7 +25,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -166,13 +166,14 @@
     <Compile Include="Bot\SlashCommands\Command_a_sendmsg.cs" />
     <Compile Include="Bot\SlashCommands\Command_a_set_notices.cs" />
     <Compile Include="Bot\Fnc.cs" />
-    <Compile Include="Bot\LodestoneHandler.cs" />
+    <Compile Include="Bot\SlashCommands\Command_ffhandler.cs" />
     <Compile Include="Bot\Init.cs" />
     <Compile Include="Bot\MessageRecived.cs" />
     <Compile Include="Clases\LodestoneNews.cs" />
     <Compile Include="Clases\Maintenance.cs" />
     <Compile Include="Clases\Minions.cs" />
     <Compile Include="Bot\SlashCommands\Command_searchminion.cs" />
+    <Compile Include="Command_a_nikname.cs" />
     <Compile Include="Command_a_react.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

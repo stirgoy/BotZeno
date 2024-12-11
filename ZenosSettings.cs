@@ -13,7 +13,7 @@ namespace Begu
         static readonly bool _consolePrint = true; //console log
         readonly bool _ZenoLog = true; //zeno log is kuru log
 
-        
+        static bool XIV_LN_enabled = false;
 
     }
 }

@@ -14,7 +14,13 @@ namespace Begu
     {
         static Timer XIV_Timer;
 
-        static private void XIV_LN() { XIV_Timer = new Timer(XIV_LN_Loop, null, 10, XIV.Config.TimerInterval); } //timer
+        static private void XIV_LN() 
+        { 
+            if (XIV_LN_enabled)
+            {
+                XIV_Timer = new Timer(XIV_LN_Loop, null, 10, XIV.Config.TimerInterval); //timer
+            }
+        } 
 
         static async void XIV_LN_Loop(object state)
         {

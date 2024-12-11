@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Begu
 {
@@ -13,6 +14,22 @@ namespace Begu
         private async Task Command_a_commands(SocketSlashCommand command)
         {
             await command.DeferAsync(ephemeral: true);
+            string emotes = "";
+
+            var properties = typeof(Emote.Bot).GetProperties(BindingFlags.Public | BindingFlags.Static);
+            foreach (var property in properties)
+            {
+                var value = property.GetValue(null);
+                emotes += value.ToString();
+                if (property == properties.Last() )
+                {
+                    emotes += ".";
+                }
+                else
+                {
+                    emotes += ", ";
+                }
+            }
 
             var admin_emb = new EmbedBuilder()
             .WithTitle("Admin commands. " + Emote.Bot.Mentor)
@@ -30,6 +47,7 @@ namespace Begu
             .AddField("Edit my ff maintenance channel", "/a_set_maintenance", false)
             .AddField("Shows server info from user", "/a_userinfo", false)
             .AddField("Shows stored data on bot", "/a_show_stored", false)
+            .AddField("Bot emotes", emotes, false)
             .WithFooter("Take care.")
             .WithTimestamp(DateTimeOffset.Now)
             .Build();

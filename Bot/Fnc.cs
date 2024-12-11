@@ -1,10 +1,7 @@
-﻿using Discord;
-using Discord.Rest;
+﻿using Discord.Rest;
 using Discord.WebSocket;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Begu
@@ -12,60 +9,44 @@ namespace Begu
     internal partial class Program
     {
         /********************
-                FFXIVModeHandler
+        Kuru default settings
         *////////////////////
-        //Handler for singe seeing of news
-        private async Task FFXIVModeHandler(SocketSlashCommand command, string mode)
+        private async Task SetDefKuru()
         {
-            await command.DeferAsync(ephemeral: false);
+            //TODO retrieve last id
+            //lodestone ids
+            if (Properties.Settings.Default.news_last_id == "0") { Properties.Settings.Default.news_last_id = await GetLNId(XIV.APIs.Topics); }
+            if (Properties.Settings.Default.notices_last_id == "0") { Properties.Settings.Default.notices_last_id = await GetLNId(XIV.APIs.Notices); }
+            if (Properties.Settings.Default.status_last_id == "0") { Properties.Settings.Default.status_last_id = await GetLNId(XIV.APIs.Status); }
+            if (Properties.Settings.Default.update_last_id == "0") { Properties.Settings.Default.update_last_id = await GetLNId(XIV.APIs.Updates); }
+            if (Properties.Settings.Default.maintenance_last_id == "0") { Properties.Settings.Default.maintenance_last_id = await GetLNId(XIV.APIs.Maintenance); }
+            if (Properties.Settings.Default.maintenance_last_game_id == "0") { Properties.Settings.Default.maintenance_last_game_id = "0"; }
+            if (Properties.Settings.Default.maintenance_last_mog_id == "0") { Properties.Settings.Default.maintenance_last_mog_id = "0"; }
+            if (Properties.Settings.Default.maintenance_last_lodestone_id == "0") { Properties.Settings.Default.maintenance_last_lodestone_id = "0"; }
+            if (Properties.Settings.Default.maintenance_last_companion_id == "0") { Properties.Settings.Default.maintenance_last_companion_id = "0"; }
 
-            try
-            {
-                int def = 1; int min = 1; int max = 5;
-
-                var cantidadOption = command.Data.Options.FirstOrDefault(opt => opt.Name == "number");
-                int cantidad = cantidadOption?.Value is long value ? (int)value : def;
-                if (cantidad > max) { cantidad = max; }
-                if (cantidad <= 0) { cantidad = min; }
-
-                //maintenance >> need struct
-                //news
-                //status
-                //updates
-                List<Embed> news = await LodestoneHandler(cantidad, mode);
-                /*
-                string lst;
-                switch (mode)
-                {
-                    case "news":                        
-                        lst = "News " + Emote.Bot.LTopics;
-                        break;
-                    case "status":
-                        lst = "Status "+ Emote.Bot.LStatus;
-                        break;
-                    case "updates":
-                        lst = "Updates " + Emote.Bot.LUpdate;
-                        break;
-                    case "maintenance_c":
-                        lst = "Maintenance " + Emote.Bot.LMaintenance;
-                        break;
-                    case "notices":
-                        lst = "Notices " + Emote.Bot.Lnotices;
-                        break;
-                    default:
-                        lst = "Maintenance " + Emote.Bot.LMaintenance;
-                        break;
-                }
-                */
-                //await command.FollowupAsync(" Final Fantasy XIV - " + lst, embeds: news.ToArray(), ephemeral: false);
-                await command.FollowupAsync("", embeds: news.ToArray(), ephemeral: false);
-
-            }
-            catch (Exception ex)
-            {
-                Print($"Error: {ex.Message}");
-            }
+            //channels
+#if !DEBUG
+            /*
+            Properties.Settings.Default.news_channel = 1205502111979151420;
+            Properties.Settings.Default.notices_channel = 1205502111979151420;
+            Properties.Settings.Default.status_channel = 1205502111979151420;
+            Properties.Settings.Default.update_channel = 1205502111979151420;
+            Properties.Settings.Default.maintenance_channel = 1205502111979151420;
+            Properties.Settings.Default.LogChannel = 1181272233260368010;
+            */
+            if (Properties.Settings.Default.news_channel == 0) { Properties.Settings.Default.news_channel = 1205502111979151420; }
+            if(Properties.Settings.Default.notices_channel == 0) { Properties.Settings.Default.notices_channel = 1205502111979151420; }
+            if(Properties.Settings.Default.status_channel == 0) { Properties.Settings.Default.status_channel = 1205502111979151420; }
+            if(Properties.Settings.Default.update_channel == 0) { Properties.Settings.Default.update_channel = 1205502111979151420; }
+            if(Properties.Settings.Default.maintenance_channel == 0) { Properties.Settings.Default.maintenance_channel = 1205502111979151420; }
+            if(Properties.Settings.Default.LogChannel == 0) { Properties.Settings.Default.LogChannel = 1181272233260368010; }
+            if(Properties.Settings.Default.TalkChannel == null) { Properties.Settings.Default.TalkChannel = new StringCollection { "1181272233260368010", "1205502111979151420", "1315324417475219518" }; }
+            if(Properties.Settings.Default.TalkChannel.Count == 0) { Properties.Settings.Default.TalkChannel = new StringCollection{ "1181272233260368010", "1205502111979151420", "1315324417475219518" }; }
+#endif
+            Properties.Settings.Default.Save();
         }
+
 
         /********************
                 UnixTime

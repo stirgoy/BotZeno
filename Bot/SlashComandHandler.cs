@@ -50,6 +50,7 @@ namespace Begu
 
 
                     case "a_userinfo":
+                        if (!isAdmin) { error = 1; goto default; }
 
                         var user_n = command.Data.Options.FirstOrDefault(opt => opt.Name == "name");
                         if (user_n?.Value is IUser user_name) { } else { goto default; }
@@ -67,7 +68,7 @@ namespace Begu
                         //status
                         //updates
                         if (!canTalk) { error = 3; goto default; }
-                        await FFXIVModeHandler(command, "news");
+                        await Command_ffhandler(command, "news");
 
                         break;
 
@@ -75,21 +76,21 @@ namespace Begu
                     case "ffstatus":
 
                         if (!canTalk) { error = 3; goto default; }
-                        await FFXIVModeHandler(command, "status");
+                        await Command_ffhandler(command, "status");
 
                         break;
 
                     case "ffmaintenance":
 
                         if (!canTalk) { error = 3; goto default; }
-                        await FFXIVModeHandler(command, "maintenance");
+                        await Command_ffhandler(command, "maintenance");
 
                         break;
 
                     case "ffmaintenancenow":
 
                         if (!canTalk) { error = 3; goto default; }
-                        await FFXIVModeHandler(command, "maintenance_c");
+                        await Command_ffhandler(command, "maintenance_c");
 
                         break;
 
@@ -97,14 +98,14 @@ namespace Begu
                     case "ffupdates":
 
                         if (!canTalk) { error = 3; goto default; }
-                        await FFXIVModeHandler(command, "updates");
+                        await Command_ffhandler(command, "updates");
 
                         break;
 
                     case "ffnotices":
 
                         if (!canTalk) { error = 3; goto default; }
-                        await FFXIVModeHandler(command, "notices");
+                        await Command_ffhandler(command, "notices");
 
                         break;
 
@@ -196,6 +197,7 @@ namespace Begu
 
                     case "a_sendmsg":
                         if (!isAdmin) { error = 1; goto default; }
+
                         var ttt = command.Data.Options.FirstOrDefault(opt => opt.Name == "title");
                         var mmm = command.Data.Options.FirstOrDefault(opt => opt.Name == "msg");
                         var ppp = command.Data.Options.FirstOrDefault(opt => opt.Name == "picture");
@@ -212,8 +214,11 @@ namespace Begu
                     case "a_set_notices":
 
                         if (!isAdmin) { error = 1; goto default; }
+
                         var channelN = command.Data.Options.FirstOrDefault(opt => opt.Name == "notices");
+
                         if (channelN?.Value is SocketChannel selectedChannelN) { } else { error = 3; goto default; }//exit on fail
+
                         await Command_a_set_notices(command, selectedChannelN);
 
                         break;
@@ -221,11 +226,30 @@ namespace Begu
                     case "a_react":
 
                         if (!isAdmin) { error = 1; goto default; }
+
                         var mesglink = command.Data.Options.FirstOrDefault(opt => opt.Name == "message_link");
                         var emote = command.Data.Options.FirstOrDefault(opt => opt.Name == "emote");
+
                         if (mesglink?.Value is string mesglink1) { } else { error = 3; goto default; }//exit on fail
                         if (emote?.Value is string emote1) { } else { error = 3; goto default; }//exit on fail
+
                         await Command_a_react(command, mesglink1, emote1);
+
+                        break;
+
+                    case "a_nikname":
+                        
+
+                        var user_nn = command.Data.Options.FirstOrDefault(opt => opt.Name == "name");
+                        var user_nnn = command.Data.Options.FirstOrDefault(opt => opt.Name == "nik");
+
+                        if (user_nn?.Value is IUser user_) { } else { goto default; }
+                        if (user_nnn?.Value is string user_nnna) { } else { goto default; }
+
+                        if (!isAdmin) { error = 1; goto default; }
+                        if (user_.IsBot) { error = 2; goto default; } //don't change bots ¬¬
+
+                        await Command_a_nikname(command, user_, user_nnna);
 
                         break;
 

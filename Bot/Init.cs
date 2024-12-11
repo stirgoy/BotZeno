@@ -53,6 +53,24 @@ namespace Begu
                 return;
             }
 
+            //news test
+            //Properties.Settings.Default.update_last_id = "5978bd3462caa8e2f949327d8d13b54427af5808";
+            /*
+            Properties.Settings.Default.update_last_id = "0";
+            Properties.Settings.Default.status_last_id = "0";
+            Properties.Settings.Default.news_last_id = "0";
+            Properties.Settings.Default.maintenance_last_id = "0";
+            Properties.Settings.Default.notices_last_id = "0";
+            Properties.Settings.Default.maintenance_last_companion_id = "0";
+            Properties.Settings.Default.maintenance_last_game_id = "0";
+            Properties.Settings.Default.maintenance_last_lodestone_id = "0";
+            Properties.Settings.Default.maintenance_last_mog_id = "0";
+            */
+            //Properties.Settings.Default.Save();
+            //Print(Properties.Settings.Default.news_last_id);
+
+            await SetDefKuru();
+
             string tc = "";
 
             if (Properties.Settings.Default.TalkChannel != null)
@@ -101,23 +119,8 @@ namespace Begu
 
             XIV_LN(); //new updater
 
-            //news test
-            //Properties.Settings.Default.update_last_id = "5978bd3462caa8e2f949327d8d13b54427af5808";
-            /*
-            Properties.Settings.Default.update_last_id = "0";
-            Properties.Settings.Default.status_last_id = "0";
-            Properties.Settings.Default.news_last_id = "0";
-            Properties.Settings.Default.maintenance_last_id = "0";
-            Properties.Settings.Default.notices_last_id = "0";
-            Properties.Settings.Default.maintenance_last_companion_id = "0";
-            Properties.Settings.Default.maintenance_last_game_id = "0";
-            Properties.Settings.Default.maintenance_last_lodestone_id = "0";
-            Properties.Settings.Default.maintenance_last_mog_id = "0";
-            */
-            //Properties.Settings.Default.Save();
-            //Print(Properties.Settings.Default.news_last_id);
 
-            
+
 
         }
 
