@@ -14,13 +14,13 @@ namespace Begu
     {
         static Timer XIV_Timer;
 
-        static private void XIV_LN() 
-        { 
+        static private void XIV_LN()
+        {
             if (XIV_LN_enabled)
             {
                 XIV_Timer = new Timer(XIV_LN_Loop, null, 10, XIV.Config.TimerInterval); //timer
             }
-        } 
+        }
 
         static async void XIV_LN_Loop(object state)
         {
@@ -29,7 +29,7 @@ namespace Begu
                 XIV_Timer.Change(Timeout.Infinite, Timeout.Infinite); //stop timer
 
                 HttpClient H_Client = new HttpClient();
-                
+
                 //lets call api each 2 sec
                 Print("XIV_LN_Loop -> Start");
                 Print("API Call.", false, true);
@@ -229,7 +229,7 @@ namespace Begu
                         }
 
                         SocketTextChannel _channel = Kuru.GetTextChannel(Properties.Settings.Default.notices_channel);
-                        
+
 
                         for (int i = 0; i < howMany; i++)
                         {
@@ -252,7 +252,7 @@ namespace Begu
                         }
 
                         Properties.Settings.Default.notices_last_id = List_Notices[0].Id;
-                        Properties.Settings.Default.Save();                    
+                        Properties.Settings.Default.Save();
                     }
                 }
 

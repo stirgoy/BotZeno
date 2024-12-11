@@ -1,11 +1,9 @@
-﻿using Discord.WebSocket;
-using Discord;
+﻿using Discord;
+using Discord.WebSocket;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Begu
 {
@@ -21,7 +19,7 @@ namespace Begu
             {
                 var value = property.GetValue(null);
                 emotes += value.ToString();
-                if (property == properties.Last() )
+                if (property == properties.Last())
                 {
                     emotes += ".";
                 }

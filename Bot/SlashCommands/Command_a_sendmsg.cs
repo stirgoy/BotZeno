@@ -4,7 +4,6 @@ using Discord.WebSocket;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Interop;
 
 namespace Begu
 {
@@ -20,7 +19,7 @@ namespace Begu
             try
             {
 
-                await command.DeferAsync(ephemeral: false);
+                await command.DeferAsync(ephemeral: true);
 
                 //if (desc.Contains("\\n")) { desc = desc.Replace("\\n", Environment.NewLine); }
                 desc = desc.Replace("\\n", Environment.NewLine);
@@ -76,7 +75,8 @@ namespace Begu
                 }
                 else
                 {
-                    await command.FollowupAsync("", embed: talkc_embD, ephemeral: false);
+                    var del = await command.FollowupAsync("", embed: talkc_embD, ephemeral: true);
+                    BorrarMsg(del, 15);
                 }
 
             }
@@ -92,9 +92,10 @@ namespace Begu
 
         async void EditIt(RestFollowupMessage mesg, SocketTextChannel selectedChannel, Embed talkc_embD)
         {
-                    await Task.Delay(4000);
-                    var mess = await selectedChannel.SendMessageAsync("", embed: talkc_embD);
-                    await mesg.ModifyAsync(msg=> msg.Content = $"There is your message: https://discord.com/channels/{Kuru.Id}/{selectedChannel.Id}/{mess.Id} :smiling_imp:");
+            await Task.Delay(4000);
+            var mess = await selectedChannel.SendMessageAsync("", embed: talkc_embD);
+            await mesg.ModifyAsync(msg => msg.Content = $"There is your message: https://discord.com/channels/{Kuru.Id}/{selectedChannel.Id}/{mess.Id} :smiling_imp:");
+            BorrarMsg(mesg);
         }
 
 

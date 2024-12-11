@@ -1,10 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Begu
@@ -57,7 +53,7 @@ namespace Begu
 
             var m1 = await command.FollowupAsync("", embed: emb1, ephemeral: true);
             var m2 = await command.FollowupAsync("", embed: emb2, ephemeral: true);
-            
+
             BorrarMsg(m1, 60);
             BorrarMsg(m2, 60);
 

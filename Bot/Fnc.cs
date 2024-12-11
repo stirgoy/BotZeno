@@ -1,16 +1,17 @@
-﻿using Discord.Rest;
+﻿using Discord;
+using Discord.Rest;
 using Discord.WebSocket;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Begu
 {
     internal partial class Program
     {
-        /********************
-        Kuru default settings
-        *////////////////////
         private async Task SetDefKuru()
         {
             //TODO retrieve last id
@@ -27,6 +28,9 @@ namespace Begu
 
             //channels
 #if !DEBUG
+            /********************
+            Kuru default settings
+            *////////////////////
             /*
             Properties.Settings.Default.news_channel = 1205502111979151420;
             Properties.Settings.Default.notices_channel = 1205502111979151420;
@@ -47,6 +51,56 @@ namespace Begu
             Properties.Settings.Default.Save();
         }
 
+        /********************
+                MassDelete
+        *////////////////////
+        private async void MassDelete(SocketMessage message, int howmany)
+        {
+            var channel = message.Channel;
+            var mensajes = await channel.GetMessagesAsync(howmany).FlattenAsync();
+            foreach (var item in mensajes)
+            {
+                await item.DeleteAsync();
+                await Task.Delay(500);
+            }
+
+        }
+
+        /********************
+                GetLNId
+        *////////////////////
+        private async Task<string> GetLNId(string api, bool curr_maintenance = false)
+        {
+            HttpClient client = new HttpClient();
+            string jsonCommon = await client.GetStringAsync(api);
+            var newsListD = JsonConvert.DeserializeObject<List<LodestoneNews>>(jsonCommon);
+            if (newsListD.Count > 0)
+            {
+                return newsListD[0].Id;
+            }
+            else
+            {
+                return "0";
+            }
+
+        }
+
+        /********************
+                Reconnect
+        *////////////////////
+        private async void Reconnect()
+        {
+            try
+            {
+                await _client.StopAsync();
+                await Task.Delay(5000);
+                await _client.StartAsync();
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+            }
+        }
 
         /********************
                 UnixTime
@@ -94,6 +148,7 @@ namespace Begu
                     return true;
                 }
             }
+
 
             return false;
         }
@@ -208,22 +263,6 @@ namespace Begu
 
             });
         }
-        /*
-        private void GZeno()
-        {
-            _ = Task.Run(async () =>
-            {
-            
-                await _client.StopAsync();
-                await _client.LogoutAsync();
-                await Task.Delay(3000);
-                await _client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("ZenosT", EnvironmentVariableTarget.User));
-                await _client.StartAsync();
-            
-            });
-        }
-        */
-
 
     }
 }

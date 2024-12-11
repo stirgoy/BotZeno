@@ -1,9 +1,8 @@
-﻿using Discord.WebSocket;
-using Discord;
+﻿using Discord;
+using Discord.WebSocket;
 using System;
-using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Begu
@@ -18,7 +17,27 @@ namespace Begu
 
             //for conditional use            
             bool isAdmin = (command.User as SocketGuildUser).GuildPermissions.Administrator; //actually useless, hadled by bot
-            bool canTalk = Check_Allowed_Channel(command.Channel);
+            bool canTalk = false;
+            StringCollection channels = Properties.Settings.Default.TalkChannel;
+            if (channels == null) canTalk = false;
+            foreach (var item in channels)
+            {
+                if (command.Channel.Id == ulong.Parse(item))
+                {
+                    canTalk = true;
+                }
+            }
+
+            var suser = Kuru.GetUser(command.User.Id);
+            if (suser != null)
+            {
+                if (suser.GuildPermissions.Administrator)
+                {
+                    canTalk = true;
+                }
+            }
+
+            //bool canTalk = Check_Allowed_Channel(command.Channel);
             int error = 0;
 
             try
@@ -238,7 +257,7 @@ namespace Begu
                         break;
 
                     case "a_nikname":
-                        
+
 
                         var user_nn = command.Data.Options.FirstOrDefault(opt => opt.Name == "name");
                         var user_nnn = command.Data.Options.FirstOrDefault(opt => opt.Name == "nik");

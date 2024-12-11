@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Begu
+﻿namespace Begu
 {
     internal partial class Program
     {
@@ -13,7 +7,11 @@ namespace Begu
         static readonly bool _consolePrint = true; //console log
         readonly bool _ZenoLog = true; //zeno log is kuru log
 
+#if DEBUG
         static bool XIV_LN_enabled = false;
+#else
+        static bool XIV_LN_enabled = true;
+#endif
 
     }
 }

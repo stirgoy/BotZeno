@@ -1,5 +1,4 @@
 ﻿using Discord;
-using static System.Net.WebRequestMethods;
 
 namespace Begu
 {
@@ -21,7 +20,7 @@ namespace Begu
             new SlashCommandBuilder()
                 .WithName("a_answer")
                 .WithDescription(StringT.Scd_a_answer)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)            
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .Build(),
 
             new SlashCommandBuilder()
@@ -58,26 +57,26 @@ namespace Begu
                 .Build(),
 
             new SlashCommandBuilder()
-            .WithName("ffmaintenance")
-            .WithDescription(StringT.Scd_ffmaintenence)
-            .AddOption(new SlashCommandOptionBuilder()
-                .WithName("number")
-                .WithDescription(StringT.Scd_desc_hmn)
-                .WithType(ApplicationCommandOptionType.Integer)
-                .WithRequired(false)
-                )
-            .Build(),
+                .WithName("ffmaintenance")
+                .WithDescription(StringT.Scd_ffmaintenence)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("number")
+                    .WithDescription(StringT.Scd_desc_hmn)
+                    .WithType(ApplicationCommandOptionType.Integer)
+                    .WithRequired(false)
+                    )
+                .Build(),
 
             new SlashCommandBuilder()
             .WithName("ffmaintenancenow")
             .WithDescription(StringT.Scd_ffmaintenencenow)
             .AddOption(new SlashCommandOptionBuilder()
-                .WithName("number")
-                .WithDescription(StringT.Scd_desc_hmn)
-                .WithType(ApplicationCommandOptionType.Integer)
-                .WithRequired(false)
-                )
-            .Build(),
+                    .WithName("number")
+                    .WithDescription(StringT.Scd_desc_hmn)
+                    .WithType(ApplicationCommandOptionType.Integer)
+                    .WithRequired(false)
+                    )
+                .Build(),
 
             new SlashCommandBuilder()
             .WithName("ffupdates")
@@ -87,8 +86,8 @@ namespace Begu
                 .WithDescription(StringT.Scd_desc_hmn)
                 .WithType(ApplicationCommandOptionType.Integer)
                 .WithRequired(false)
-                )
-            .Build(),
+                    )
+                .Build(),
 
             new SlashCommandBuilder()
                 .WithName("a_set_answer")
@@ -207,17 +206,17 @@ namespace Begu
                         .WithDescription(StringT.Scd_a_sendmsg_d1)
                         .WithType(ApplicationCommandOptionType.String)
                         .WithRequired(true))
-            .AddOption(new SlashCommandOptionBuilder()
+                .AddOption(new SlashCommandOptionBuilder()
                         .WithName("msg")
                         .WithDescription(StringT.Scd_a_sendmsg_d2)
                         .WithType(ApplicationCommandOptionType.String)
                         .WithRequired(true))
-            .AddOption(new SlashCommandOptionBuilder()
+                .AddOption(new SlashCommandOptionBuilder()
                         .WithName("picture")
                         .WithDescription(StringT.Scd_a_sendmsg_d3)
                         .WithType(ApplicationCommandOptionType.String)
                         .WithRequired(false))
-            .AddOption(new SlashCommandOptionBuilder()
+                .AddOption(new SlashCommandOptionBuilder()
                         .WithName("channel")
                         .WithDescription(StringT.Scd_a_sendmsg_d4)
                         .WithType(ApplicationCommandOptionType.Channel)
@@ -249,7 +248,7 @@ namespace Begu
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("emote")
                     .WithDescription(StringT.Scd_a_react_d2)
-                    .WithType(ApplicationCommandOptionType.String)                
+                    .WithType(ApplicationCommandOptionType.String)
                     .WithRequired(true))
                 .Build(),
 
@@ -272,7 +271,7 @@ namespace Begu
                     .WithDescription(StringT.Scd_usermention)
                     .WithType(ApplicationCommandOptionType.User)
                     .WithRequired(true))
-            .AddOption(new SlashCommandOptionBuilder()
+                .AddOption(new SlashCommandOptionBuilder()
                     .WithName("nik")
                     .WithDescription(StringT.Scd_a_nikname_d)
                     .WithType(ApplicationCommandOptionType.String)

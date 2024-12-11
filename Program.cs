@@ -1,5 +1,7 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using System;
+using System.Threading.Tasks;
 
 namespace Begu
 {
@@ -40,10 +42,29 @@ namespace Begu
             _client.Ready += ReadyAsync;
             _client.MessageReceived += MessageReceivedAsync;
             _client.SlashCommandExecuted += SlashCommandHandlerAsync;
+            _client.Disconnected += ClientDisconected;
 
         }
 
+        private async Task ClientDisconected(Exception exception)
+        {
+            try
+            {
+                if (exception is GatewayReconnectException)
+                {
+                    Print("Server requested a reconnect");
+                    await _client.StopAsync();
+                    await Task.Delay(1000);
+                    await _client.StartAsync();
+                }
 
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+
+            }
+        }
     }
 
 }

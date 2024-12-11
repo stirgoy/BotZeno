@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Begu
 {
-    
+
     public class MountQuery
     {
         public string NameEnEnd { get; set; }

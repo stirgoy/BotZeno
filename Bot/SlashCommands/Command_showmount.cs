@@ -11,7 +11,7 @@ namespace Begu
 {
     internal partial class Program
     {
-        
+
         private async Task Command_searchmount(string mountname, SocketSlashCommand command)
         {
 
@@ -51,7 +51,7 @@ namespace Begu
 
 
                     user_emb = new EmbedBuilder()
-                        .WithTitle($"Results for: " + mountname )
+                        .WithTitle($"Results for: " + mountname)
                         .AddField("Name", $"{r.Name}", true)
                         .AddField("Seats", $"{r.Seats}", true)
                         .AddField("Movement", r.Movement, true)
@@ -76,7 +76,7 @@ namespace Begu
 
                     user_emb = new EmbedBuilder()
                         //.WithTitle(Emote.Bot.Mounts + $"**Results for: __{mountname}__** ")
-                        .WithFooter("Results for: "+mountname)
+                        .WithFooter("Results for: " + mountname)
                         .WithColor(Color.LightOrange)
                         .WithDescription(xD)
                             .Build();

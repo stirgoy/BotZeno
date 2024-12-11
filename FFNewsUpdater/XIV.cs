@@ -1,33 +1,8 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-
-namespace Begu
+﻿namespace Begu
 {
-
-    internal partial class Program
-    {
-        private async Task<string> GetLNId(string api, bool curr_maintenance = false)
-        {
-            HttpClient client = new HttpClient();
-            string jsonCommon = await client.GetStringAsync(api);
-            var newsListD = JsonConvert.DeserializeObject<List<LodestoneNews>>(jsonCommon);
-            if (newsListD.Count > 0 )
-            {
-                return newsListD[0].Id;
-            }
-            else
-            {
-                return "0";
-            }
-
-        }
-    }
 
     internal static class XIV
     {
-
         internal static class Config
         {
             internal static bool Enabled { get; set; } = true;

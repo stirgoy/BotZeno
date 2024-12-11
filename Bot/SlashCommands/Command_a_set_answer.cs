@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.WebSocket;
 using System;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
 
 namespace Begu
@@ -12,8 +13,19 @@ namespace Begu
         {
             await command.DeferAsync(ephemeral: true);
 
+            bool can = false;
+            StringCollection channels = Properties.Settings.Default.TalkChannel;
+            if (channels == null) can = false;
+            foreach (var item in channels)
+            {
+                if (selectedChannel.Id == ulong.Parse(item))
+                {
+                    can = true;
+                }
+            }
+
             //EXISTE
-            if (Check_Allowed_Channel(selectedChannel))
+            if (can)
             {
 
                 RemoveTalkChannel(selectedChannel.Id.ToString());

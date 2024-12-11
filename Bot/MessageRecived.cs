@@ -2,7 +2,6 @@
 using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -25,7 +24,22 @@ namespace Begu
             //app comands
             if (serveruser.GuildPermissions.Administrator) //only admins
             {
-                if (message.Content.StartsWith("!AppCmd-"))
+                if (message.Content.StartsWith("!del-"))
+                {
+                    await message.DeleteAsync();
+
+                    try
+                    {
+                        int cant = int.Parse(message.Content.Split('-')[1]);
+                        if (cant > 0)
+                        {
+                            MassDelete(message, cant);
+                        }
+
+                    }
+                    catch (Exception) { }
+                }
+                else if (message.Content.StartsWith("!AppCmd-"))
                 {
                     string command = message.Content.Split('-')[1];
 
@@ -39,8 +53,11 @@ namespace Begu
                             break;
                         case "xivln": //run news, i forgot swap XIV_LN_enabled....
                             await message.DeleteAsync();
-                            XIV_LN_enabled = true;
-                            XIV_LN();
+                            if (!XIV_LN_enabled)
+                            {
+                                XIV_LN_enabled = true;
+                                XIV_LN();
+                            }
                             break;
                         case "ping": //bot alive?
                             await userMessage.ReplyAsync("Pong " + Emote.Bot.Online);
@@ -57,7 +74,7 @@ namespace Begu
                             foreach (var property in properties)
                             {
                                 var value = property.GetValue(null);
-                                StringCollection anims = new StringCollection { "Pepo_laugh" };
+                                //StringCollection anims = new StringCollection { "Pepo_laugh" };
 
                                 emot += value.ToString();
                                 if (property != properties.Last()) { emot += " "; }
@@ -81,6 +98,14 @@ namespace Begu
                                 }
 
                             }
+                            break;
+                        case "reconnect":
+                            await message.DeleteAsync();
+                            Reconnect();
+                            break;
+                        case "play":
+                            await message.DeleteAsync();
+                            await _client.SetGameAsync("Pokemon Red", type: ActivityType.Playing);
                             break;
 
                     }

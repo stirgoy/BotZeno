@@ -1,9 +1,9 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -84,8 +84,8 @@ namespace Begu
                 {
                     jsonMaintenance = await client.GetStringAsync(apiUrl);
                     if (string.IsNullOrEmpty(jsonMaintenance))
-                    { 
-                        Print("NEWS ARE EMPTY OR NULL"); 
+                    {
+                        Print("NEWS ARE EMPTY OR NULL");
                     }
                     else
                     {
@@ -99,8 +99,8 @@ namespace Begu
                 {
                     jsonCommon = await client.GetStringAsync(apiUrl);
                     if (string.IsNullOrEmpty(jsonCommon))
-                    { 
-                        Print("NEWS ARE EMPTY OR NULL"); 
+                    {
+                        Print("NEWS ARE EMPTY OR NULL");
                     }
                     else
                     {
