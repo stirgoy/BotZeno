@@ -11,6 +11,12 @@ namespace Begu
 {
     internal partial class Program
     {
+        private async void logg(string tt)
+        {
+            Print(tt);
+            await ZenoLog(tt);
+
+        }
         /********************
          MessageReceivedAsync
         *////////////////////
@@ -18,14 +24,17 @@ namespace Begu
         {
             var userMessage = message as SocketUserMessage;
             var serveruser = Kuru.GetUser(userMessage.Author.Id);
+            var channel = Kuru.GetTextChannel(userMessage.Channel.Id);
             if (message.Author.IsBot || userMessage == null) return;
             //if (!Check_Allowed_Channel(message.Channel)) { return; }
 
             //app comands
             if (serveruser.GuildPermissions.Administrator) //only admins
             {
+
                 if (message.Content.StartsWith("!del-"))
                 {
+
                     await message.DeleteAsync();
 
                     try
@@ -38,10 +47,13 @@ namespace Begu
 
                     }
                     catch (Exception) { }
+
                 }
                 else if (message.Content.StartsWith("!AppCmd-"))
                 {
-                    string command = message.Content.Split('-')[1];
+                    string[] msg_splited = message.Content.Split('-');
+                    string command = msg_splited[1];
+
 
                     switch (command)
                     {
@@ -105,10 +117,22 @@ namespace Begu
                             break;
                         case "play":
                             await message.DeleteAsync();
-                            await _client.SetGameAsync("Pokemon Red", type: ActivityType.Playing);
+                            string game = "Final Fantasy XIV";
+                            if (msg_splited.Count() >= 3) 
+                            {
+                                game = "";
+                                foreach (string item in msg_splited)
+                                {
+                                    if (item != msg_splited[0] && item != msg_splited[1]) { game += item; }
+                                }
+                            }
+                            await _client.SetGameAsync(game, type: ActivityType.Playing);
                             break;
 
                     }
+
+                    string log = $"{message.Author.Mention} used !AppCmd-{command} on {Kuru.GetTextChannel(channel.Id).Mention}";
+                    logg(log);
 
                     return;
                 }

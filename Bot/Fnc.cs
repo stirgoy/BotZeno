@@ -60,16 +60,19 @@ namespace Begu
             var mensajes = await channel.GetMessagesAsync(howmany).FlattenAsync();
             foreach (var item in mensajes)
             {
-                await item.DeleteAsync();
+                await item.DeleteAsync();                
                 await Task.Delay(500);
             }
+
+            string log = $"{message.Author.Mention} used mass delete {howmany} times on {Kuru.GetTextChannel(channel.Id).Mention}";
+            logg(log);
 
         }
 
         /********************
                 GetLNId
         *////////////////////
-        private async Task<string> GetLNId(string api, bool curr_maintenance = false)
+        private async Task<string> GetLNId(string api)
         {
             HttpClient client = new HttpClient();
             string jsonCommon = await client.GetStringAsync(api);
@@ -114,6 +117,7 @@ namespace Begu
         /********************
          Check_Allowed_Channel
         *////////////////////
+        /*
         private bool Check_Allowed_Channel(ISocketMessageChannel channel_to_check)
         {
             //Chech if can talk on channel
@@ -134,7 +138,8 @@ namespace Begu
 
         /********************
          Check_Allowed_Channel
-        *////////////////////
+        ////////////////////
+        
         private bool Check_Allowed_Channel(SocketChannel channel_to_check)
         {
             //Chech if can talk on channel
@@ -153,7 +158,7 @@ namespace Begu
             return false;
         }
 
-
+        */
         /********************
                 Print
         *////////////////////
