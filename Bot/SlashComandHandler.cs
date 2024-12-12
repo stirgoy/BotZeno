@@ -80,7 +80,7 @@ namespace Begu
 
                         break;
 
-                    case "ffnews":
+                    case "fftopics":
 
                         //maintenance
                         //news
@@ -146,7 +146,7 @@ namespace Begu
 
                         break;
 
-                    case "a_set_news":
+                    case "a_set_topics":
 
                         if (!isAdmin) { error = 1; goto default; }
                         var channelNc = command.Data.Options.FirstOrDefault(opt => opt.Name == "newsc");

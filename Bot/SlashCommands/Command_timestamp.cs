@@ -34,7 +34,7 @@ namespace Begu
                 .AddField(discordTimestamp, $"`{discordTimestamp}`")
                 .WithFooter($" My friend.")
                 .WithColor(Color.Green)
-                .WithTimestamp(DateTimeOffset.Now)
+                //.WithTimestamp(DateTimeOffset.Now)
                 .Build();
             await command.FollowupAsync("", embed: talkc_embT, ephemeral: true);
 

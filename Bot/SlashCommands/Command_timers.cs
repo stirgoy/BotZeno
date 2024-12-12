@@ -50,18 +50,22 @@ namespace Begu
             long unixC = new DateTimeOffset(cacpot).ToUnixTimeSeconds();
             string cacpotDT = $"<t:{unixC}:R>";
 
+            long curt = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
+            string timenow = $"<t:{curt}:R>";
+
+
             // Embed response
             var embed = new EmbedBuilder()
                 .WithTitle($"Eorzean timers. " + Emote.Bot.FFXIV)
-                .WithDescription(Emote.Bot.Sproud + " Because you looks lost. " + Emote.Bot.Sproud)
+                .WithDescription(Emote.Bot.Sproud + " Because you looks lost. " + Emote.Bot.Sproud + Environment.NewLine + "-# " + timenow + Environment.NewLine)
                 .WithColor(Color.Green)
                 .AddField(Emote.Bot.MSQ + " Weekly", weeklyDT, true)
                 .AddField(Emote.Bot.Roulette + " Daily", dailyDT, true)
                 .AddField(Emote.Bot.Gc + " GC", gcDT, true)
                 .AddField(Emote.Bot.Fishing + " Ocean fishing", oceanDT, true)
                 .AddField(Emote.Bot.Cactuar + " Cacpot", cacpotDT, true)
-                .WithFooter("Take care.")
-                .WithTimestamp(DateTimeOffset.Now)
+                //.WithFooter("Take care. ")
+                //.WithTimestamp(DateTimeOffset.Now)
                 .Build();
 
             await command.FollowupAsync("", embed: embed);

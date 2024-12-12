@@ -35,7 +35,7 @@ namespace Begu
                 .Build(),
 
             new SlashCommandBuilder()
-                .WithName("ffnews")
+                .WithName("fftopics")
                 .WithDescription(StringT.Scd_ffnews)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("number")
@@ -114,7 +114,7 @@ namespace Begu
                 .Build(),
 
             new SlashCommandBuilder()
-                .WithName("a_set_news")
+                .WithName("a_set_topics")
                 .WithDescription(StringT.Scd_a_set_ffnews)
                 .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
