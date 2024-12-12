@@ -5,9 +5,9 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using static Begu.Emote;
+using static Zeno.Emote;
 
-namespace Begu
+namespace Zeno
 {
     internal partial class Program
     {

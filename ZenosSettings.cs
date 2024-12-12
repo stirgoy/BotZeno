@@ -1,4 +1,4 @@
-﻿namespace Begu
+﻿namespace Zeno
 {
     internal partial class Program
     {

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 
-namespace Begu
+namespace Zeno
 {
     internal partial class Program
     {

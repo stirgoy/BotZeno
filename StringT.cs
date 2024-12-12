@@ -1,4 +1,4 @@
-﻿namespace Begu
+﻿namespace Zeno
 {
     public static class StringT
     {

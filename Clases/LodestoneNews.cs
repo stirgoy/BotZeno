@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Begu
+namespace Zeno
 {
     public class LodestoneNews
     {

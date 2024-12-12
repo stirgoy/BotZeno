@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Begu.Properties {
+namespace Zeno.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

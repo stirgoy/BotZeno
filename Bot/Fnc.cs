@@ -8,7 +8,7 @@ using System.Collections.Specialized;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Begu
+namespace Zeno
 {
     internal partial class Program
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Begu
+namespace Zeno
 {
     internal partial class Program
     {
