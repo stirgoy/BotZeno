@@ -1,7 +1,7 @@
 ﻿namespace Zeno
 {
 
-    internal static class XIV
+    internal static class XIVLN
     {
         internal static class Config
         {

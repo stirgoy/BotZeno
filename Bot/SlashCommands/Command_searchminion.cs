@@ -5,19 +5,22 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using static Zeno.Emote;
 
 namespace Zeno
 {
     internal partial class Program
     {
-        private async Task Command_searchminion(string minionname, SocketSlashCommand scommand)
+        private async Task Command_searchminion(SocketSlashCommand command)
         {
-            await scommand.DeferAsync(ephemeral: false);
+
+            var minion = command.Data.Options.FirstOrDefault(opt => opt.Name == "minion");
+            if (minion?.Value is string minionname) { } else { return; }//exit on fail
+
+            await command.DeferAsync(ephemeral: false);
 
             try
             {
-                string apiUrl = "https://ffxivcollect.com/api/minions?name_en_start=" + minionname;
+                string apiUrl = $"{XIV_Collect.Apis.Minion}{minionname}";
                 HttpClient client = new HttpClient();
 
 
@@ -32,7 +35,7 @@ namespace Zeno
                 {
                     user_emb = new EmbedBuilder()
                         .WithTitle($"I found.")
-                        .AddField("Nothing...", $"{Bot.Disconnecting_party}", true)
+                        .AddField("Nothing...", $"{Emote.Bot.Disconnecting_party}", true)
                         .WithColor(Color.Red)
                         .Build();
                 }
@@ -44,7 +47,7 @@ namespace Zeno
                     {
                         if (item.Text == r.Sources.First().Text) { ways = ""; }
                         ways += "**" + item.Type + "** - " + item.Text;
-                        if (item.Text != r.Sources.Last().Text) { ways = Environment.NewLine; }
+                        if (item.Text != r.Sources.Last().Text) { ways = NL; }
                     }
 
 
@@ -69,7 +72,7 @@ namespace Zeno
 
                     foreach (MinionResult item in minionData.Results)
                     {
-                        xD += "- **" + item.Name + "**" + Environment.NewLine;
+                        xD += "- **" + item.Name + "**" + NL;
                     }
 
                     user_emb = new EmbedBuilder()
@@ -81,7 +84,7 @@ namespace Zeno
 
                 }
 
-                var del = await scommand.FollowupAsync("", embed: user_emb, ephemeral: false);
+                var del = await command.FollowupAsync("", embed: user_emb, ephemeral: false);
                 BorrarMsg(del, 120);
             }
             catch (Exception ex)
@@ -89,10 +92,10 @@ namespace Zeno
                 Print(ex.Message);
                 var user_emb = new EmbedBuilder()
                         .WithTitle(Emote.Bot.Mounts + "**Found nothing...** ")
-                        .WithDescription($"There is no minions that name starts with: `{minionname}` {Bot.Boss}")
+                        .WithDescription($"There is no minions that name starts with: `{minionname}` {Emote.Bot.Boss}")
                         .WithColor(Color.Red)
                             .Build();
-                await scommand.FollowupAsync("", embed: user_emb, ephemeral: false);
+                await command.FollowupAsync("", embed: user_emb, ephemeral: false);
             }
         }
     }

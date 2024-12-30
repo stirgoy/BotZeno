@@ -44,37 +44,37 @@ namespace Zeno
                 switch (kindOf)
                 {
                     case "news":
-                        apiUrl = XIV.APIs.Topics;
+                        apiUrl = XIVLN.APIs.Topics;
                         title = $"{Emote.Bot.LTopics} Tpoics";
                         break;
 
                     case "maintenance_c":
-                        apiUrl = XIV.APIs.MaintenanceCurrent;
+                        apiUrl = XIVLN.APIs.MaintenanceCurrent;
                         title = $"{Emote.Bot.LMaintenance} Current Maintenance";
                         break;
 
                     case "maintenance":
-                        apiUrl = XIV.APIs.Maintenance;
+                        apiUrl = XIVLN.APIs.Maintenance;
                         title = $"{Emote.Bot.LMaintenance} Maintenance";
                         break;
 
                     case "updates":
-                        apiUrl = XIV.APIs.Updates;
+                        apiUrl = XIVLN.APIs.Updates;
                         title = $"{Emote.Bot.LUpdate} Updates";
                         break;
 
                     case "status":
-                        apiUrl = XIV.APIs.Status;
+                        apiUrl = XIVLN.APIs.Status;
                         title = $"{Emote.Bot.LStatus} Status";
                         break;
 
                     case "notices":
-                        apiUrl = XIV.APIs.Notices;
+                        apiUrl = XIVLN.APIs.Notices;
                         title = $"{Emote.Bot.Lnotices} Notices";
                         break;
 
                     default:
-                        apiUrl = XIV.APIs.Topics;
+                        apiUrl = XIVLN.APIs.Topics;
                         title = $"{Emote.Bot.LTopics} Tpoics";
                         break;
                 }
@@ -141,10 +141,10 @@ namespace Zeno
                             var embed = new EmbedBuilder()
                                 .WithTitle(title)
                                 .WithUrl(item.Url)
-                                .AddField($"Start time: {Environment.NewLine + UnixTime(DateTime.Parse(item.Start), "d") + Environment.NewLine + UnixTime(DateTime.Parse(item.Start), "t")}", st, true)
-                                .AddField($"End time: {Environment.NewLine + UnixTime(DateTime.Parse(item.End), "d") + Environment.NewLine + UnixTime(DateTime.Parse(item.End), "t")}", et, true)
-                                .WithDescription("### " + item.Title + Environment.NewLine + Environment.NewLine + $"-# {tt}")
-                                .WithThumbnailUrl(XIV.Config.FFLogo)
+                                .AddField($"Start time: {NL + UnixTime(DateTime.Parse(item.Start), "d") + NL + UnixTime(DateTime.Parse(item.Start), "t")}", st, true)
+                                .AddField($"End time: {NL + UnixTime(DateTime.Parse(item.End), "d") + NL + UnixTime(DateTime.Parse(item.End), "t")}", et, true)
+                                .WithDescription("### " + item.Title + NL + NL + $"-# {tt}")
+                                .WithThumbnailUrl(XIVLN.Config.FFLogo)
                                 .WithColor(Color.Blue)
                                 .WithFooter("From: Lodestone News")
                                 .Build();
@@ -156,15 +156,15 @@ namespace Zeno
                     {
                         foreach (var item in newsListD.Take(cantidad))
                         {
-                            string start_desc = $"### [{item.Title}]({item.Url})" + Environment.NewLine + Environment.NewLine;
-                            string end_desc = Environment.NewLine + Environment.NewLine + "-# " + UnixTime(item.Time);
+                            string start_desc = $"### [{item.Title}]({item.Url})" + NL + NL;
+                            string end_desc = NL + NL + "-# " + UnixTime(item.Time);
                             var embed = new EmbedBuilder()
                                 .WithTitle(title)
                                 .WithUrl(item.Url)
                                 .WithImageUrl(item.Image)
                                 .WithDescription(start_desc + item.Description + end_desc)
                                 .WithColor(Color.Blue)
-                                .WithThumbnailUrl(XIV.Config.FFLogo)
+                                .WithThumbnailUrl(XIVLN.Config.FFLogo)
                                 .WithFooter("From: Lodestone News")
                                 .Build();
 

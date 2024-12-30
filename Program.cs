@@ -1,70 +1,37 @@
-﻿using Discord;
-using Discord.WebSocket;
+﻿using Discord.WebSocket;
 using System;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Zeno
 {
 
     internal partial class Program
     {
+        //init
+        public static void Main() => new Program().MainAsync().GetAwaiter().GetResult();
+        //static async Task Main() { await App.MainAsync(); }
+        private static readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
-        //bot
-        static DiscordSocketClient _client;
-
-        //server
-        static SocketGuild Kuru = null; //Star Guardians!
-
-        // DiscordSocketClient
-        readonly DiscordSocketConfig DCFG = new DiscordSocketConfig
-        {
-            GatewayIntents =
-                GatewayIntents.Guilds |
-                GatewayIntents.GuildMembers |
-                GatewayIntents.MessageContent |
-                GatewayIntents.AllUnprivileged &
-                ~GatewayIntents.GuildScheduledEvents &
-                ~GatewayIntents.GuildInvites
-        };
-
-
-
-        //main
-        static void Main() => new Program().MainAsync().GetAwaiter().GetResult();
         public Program()
         {
-            _client = new DiscordSocketClient(DCFG);
 
-            /********************
-                Event Handlers
-            *////////////////////
-            _client.Log += LogAsync;
-            _client.Ready += ReadyAsync;
-            _client.MessageReceived += MessageReceivedAsync;
-            _client.SlashCommandExecuted += SlashCommandHandlerAsync;
-            _client.Disconnected += ClientDisconected;
+            Bot_Zeno = new DiscordSocketClient(CordSocketConfig);
 
+            Bot_Zeno.Log += LogAsync;
+            Bot_Zeno.Ready += ReadyAsync;
+            Bot_Zeno.MessageReceived += MessageReceivedAsync;
+            Bot_Zeno.SlashCommandExecuted += SlashCommandHandlerAsync;
+            Bot_Zeno.Disconnected += ClientDisconected;
+
+            AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
         }
 
-        private async Task ClientDisconected(Exception exception)
+        private static void OnProcessExit(object sender, EventArgs e)
         {
-            try
-            {
-                if (exception is GatewayReconnectException)
-                {
-                    Print("Server requested a reconnect");
-                    await _client.StopAsync();
-                    await Task.Delay(1000);
-                    await _client.StartAsync();
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Print(ex.Message);
-
-            }
+            Print("Zeno is gone");
+            _cts.Cancel(); // Asegurar que las tareas en ejecución se detengan
         }
+
     }
 
 }

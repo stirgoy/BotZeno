@@ -1,14 +1,18 @@
 ﻿using Discord;
 using Discord.WebSocket;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Zeno
 {
     internal partial class Program
     {
-        private async Task Command_timestamp(SocketSlashCommand command, string user_msg)
+        private async Task Command_timestamp(SocketSlashCommand command)
         {
+            var msg = command.Data.Options.FirstOrDefault(opt => opt.Name == "time");
+            if (msg?.Value is string user_msg) { } else { return; }//exit on fail
+
             await command.DeferAsync(ephemeral: true);
 
             if (string.IsNullOrEmpty(user_msg))
@@ -34,7 +38,6 @@ namespace Zeno
                 .AddField(discordTimestamp, $"`{discordTimestamp}`")
                 .WithFooter($" My friend.")
                 .WithColor(Color.Green)
-                //.WithTimestamp(DateTimeOffset.Now)
                 .Build();
             await command.FollowupAsync("", embed: talkc_embT, ephemeral: true);
 

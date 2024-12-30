@@ -5,21 +5,23 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using static Zeno.Emote;
 
 namespace Zeno
 {
     internal partial class Program
     {
 
-        private async Task Command_searchmount(string mountname, SocketSlashCommand command)
+        private async Task Command_searchmount(SocketSlashCommand command)
         {
+
+            var mount = command.Data.Options.FirstOrDefault(opt => opt.Name == "mount");
+            if (mount?.Value is string mountname) { } else { return; }//exit on fail
 
             await command.DeferAsync(ephemeral: false);
 
             try
             {
-                string apiUrl = "https://ffxivcollect.com/api/mounts?name_en_start=" + mountname;
+                string apiUrl = $"{XIV_Collect.Apis.Mount}{mountname}";
                 HttpClient client = new HttpClient();
 
 
@@ -46,7 +48,7 @@ namespace Zeno
                     {
                         if (item.Text == r.Sources.First().Text) { ways = ""; }
                         ways += "**" + item.Type + "** - " + item.Text;
-                        if (item.Text != r.Sources.Last().Text) { ways = Environment.NewLine; }
+                        if (item.Text != r.Sources.Last().Text) { ways = NL; }
                     }
 
 
@@ -71,7 +73,7 @@ namespace Zeno
 
                     foreach (MountResult item in mountData.Results)
                     {
-                        xD += "- **" + item.Name + "**" + Environment.NewLine;
+                        xD += "- **" + item.Name + "**" + NL;
                     }
 
                     user_emb = new EmbedBuilder()
@@ -91,7 +93,7 @@ namespace Zeno
                 Print(ex.Message);
                 var user_emb = new EmbedBuilder()
                         .WithTitle(Emote.Bot.Mounts + "**Found nothing...** ")
-                        .WithDescription($"There is no mounts that name starts with: `{mountname}` {Bot.Boss}")
+                        .WithDescription($"There is no mounts that name starts with: `{mountname}` {Emote.Bot.Boss}")
                         .WithColor(Color.Red)
                             .Build();
                 await command.FollowupAsync("", embed: user_emb, ephemeral: false);

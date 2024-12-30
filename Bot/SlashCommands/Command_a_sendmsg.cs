@@ -9,73 +9,95 @@ namespace Zeno
 {
     internal partial class Program
     {
-        private async Task Command_a_sendmsg(SocketSlashCommand command, string title, string desc, string picture, SocketTextChannel selectedChannel)
+        private async Task Command_a_sendmsg(SocketSlashCommand command)
         {
+            var t_title = command.Data.Options.FirstOrDefault(opt => opt.Name == "title");
+            var t_desc = command.Data.Options.FirstOrDefault(opt => opt.Name == "msg");
+            var t_pic = command.Data.Options.FirstOrDefault(opt => opt.Name == "picture");
+            var t_channel = command.Data.Options.FirstOrDefault(opt => opt.Name == "channel");
+            var t_foot = command.Data.Options.FirstOrDefault(opt => opt.Name == "mention");
+
+            if (t_title?.Value is string title) { } else { return; }//exit on fail
+            if (t_desc?.Value is string desc) { } else { return; }//exit on fail 
+            if (t_pic?.Value is string picture) { } else { picture = ""; }
+            if (t_channel?.Value is SocketTextChannel selectedChannel) { } else { selectedChannel = null; }
+            if (t_foot?.Value is bool addFooter) { } else { addFooter = false; }
 
             if (string.IsNullOrEmpty(title)) { return; }
             if (string.IsNullOrEmpty(desc)) { return; }
+            string c = (selectedChannel != null) ? selectedChannel.Name : "NoChannel";
+            string p = (!string.IsNullOrEmpty(picture)) ? picture : "NoPicture";
+            string footer = "Wind-UpZeno♥";
+            string desFooter = "";
+            string ico = Bot_Zeno.CurrentUser.GetDisplayAvatarUrl(size: 64);
+            Print($"{command.User.Username} => a_sendmsg {title} - {desc} - {p} - {c} - Mention:{addFooter}");
 
+            if (addFooter)
+            {
+#if DEBUG
+                ulong[] roles = { 1285694137189797959, 1310733528660709398 };
+#else
+                ulong[] roles = { 1181272231695896672, 1215301157434687548, 1181272231695896668 };
+#endif
+
+
+                footer = "";
+                foreach (ulong item in roles)
+                {
+                    var role = Kuru.GetRole(item);
+                    desFooter += role.Mention;
+                    desFooter += (item != roles.Last()) ? ", " : ".";
+                }
+
+                desFooter = $"{NL} {NL}-# " + desFooter;
+                desc += desFooter;
+
+            }
+
+            ico = Kuru.IconUrl;
 
             try
             {
-
                 await command.DeferAsync(ephemeral: true);
 
-                //if (desc.Contains("\\n")) { desc = desc.Replace("\\n", Environment.NewLine); }
-                desc = desc.Replace("\\n", Environment.NewLine);
-                //string ico = _client.Guilds.First().IconUrl;
-
-                //SocketGuildUser usr = null;
-                SocketGuildUser usr = Kuru.Users.FirstOrDefault(item => item.Id == command.User.Id);
-                /*
-                foreach (var item in Kuru.Users)
-                {
-                    if (item.Id == command.User.Id)
-                    {
-                        usr = item;
-                        break;
-                    }
-                }
-                */
-                //string ico = command.User.GetDisplayAvatarUrl(size: 64);
-                string ico = _client.CurrentUser.GetDisplayAvatarUrl(size: 64);
-                Embed talkc_embD;
+                desc = desc.Replace("\\n", NL);
+                Embed embd;
+                SocketGuildUser usr = Kuru.GetUser(command.User.Id);
 
                 if (string.IsNullOrEmpty(picture))
                 {
-                    talkc_embD = new EmbedBuilder()
+                    embd = new EmbedBuilder()
                         .WithTitle(title)
                         .WithDescription($"{desc}")
                         .WithColor(Color.Green)
                         .WithThumbnailUrl(ico)
-                        //.WithFooter(usr.DisplayName)
-                        .WithFooter("Wind-UpZeno♥")
+                        .WithFooter(footer)
                         .Build();
                 }
                 else
                 {
-                    talkc_embD = new EmbedBuilder()
+                    embd = new EmbedBuilder()
                         .WithTitle(title)
                         .WithDescription($"{desc}")
                         .WithColor(Color.Green)
                         .WithImageUrl(picture)
                         .WithThumbnailUrl(ico)
-                        //.WithFooter(usr.DisplayName)
-                        .WithFooter("Wind-UpZeno♥")
+                        .WithFooter(footer)
                         .Build();
                 }
+
+
 
 
                 if (selectedChannel != null)
                 {
                     RestFollowupMessage m1 = await command.FollowupAsync($"Im typing on: {selectedChannel.Mention}", ephemeral: true);
-                    //TODO haz magia
                     await selectedChannel.TriggerTypingAsync();
-                    EditIt(m1, selectedChannel, talkc_embD);
+                    SendMsgDelayed(m1, selectedChannel, embd);
                 }
                 else
                 {
-                    var del = await command.FollowupAsync("", embed: talkc_embD, ephemeral: true);
+                    var del = await command.FollowupAsync("", embed: embd, ephemeral: true);
                     BorrarMsg(del, 15);
                 }
 
@@ -90,7 +112,7 @@ namespace Zeno
         }
 
 
-        async void EditIt(RestFollowupMessage mesg, SocketTextChannel selectedChannel, Embed talkc_embD)
+        async void SendMsgDelayed(RestFollowupMessage mesg, SocketTextChannel selectedChannel, Embed talkc_embD)
         {
             await Task.Delay(4000);
             var mess = await selectedChannel.SendMessageAsync("", embed: talkc_embD);

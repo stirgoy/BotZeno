@@ -2,6 +2,7 @@
 using Discord.WebSocket;
 using System;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Zeno
@@ -9,12 +10,16 @@ namespace Zeno
     internal partial class Program
     {
 
-        private async Task Command_a_set_answer(SocketSlashCommand command, SocketChannel selectedChannel)
+        private async Task Command_a_set_answer(SocketSlashCommand command)
         {
+
+            var channel = command.Data.Options.FirstOrDefault(opt => opt.Name == "channel");
+            if (channel?.Value is SocketChannel selectedChannel) { } else { return; }//exit on fail
+
             await command.DeferAsync(ephemeral: true);
 
             bool can = false;
-            StringCollection channels = Properties.Settings.Default.TalkChannel;
+            StringCollection channels = Config.Channels.TalkChannel;
             if (channels == null) can = false;
             foreach (var item in channels)
             {
@@ -34,7 +39,6 @@ namespace Zeno
                 .WithTitle("Settings")
                 .WithDescription("So now i will ignore " + selectedChannel.ToString() + Emote.Bot.Boss)
                 .WithColor(Color.Green)
-                .WithTimestamp(DateTimeOffset.Now)
                 .Build();
                 var m = await command.FollowupAsync("", embed: talkc_embD, ephemeral: true);
                 BorrarMsg(m);
@@ -50,7 +54,6 @@ namespace Zeno
                 .WithTitle("Settings")
                 .WithDescription($"Now i going answer on: " + selectedChannel.ToString())
                 .WithColor(Color.Green)
-                .WithTimestamp(DateTimeOffset.Now)
                 .Build();
             await command.FollowupAsync("", embed: talkc_emb, ephemeral: true);
             await ZenoLog($"{command.User.Mention} sets {selectedChannel} as talk channel.");

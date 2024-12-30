@@ -39,8 +39,16 @@ namespace Zeno
             string gcDT = $"<t:{unixG}:R>";
 
             // Ocean Fishing timer
-            DateTime ocean = new DateTime(ahora.Year, ahora.Month, ahora.Day, ahora.Hour, 0, 0)
-                .AddHours(2 - (ahora.Hour % 2));
+            DateTime ocean;
+            if (isDST)
+            { //pair
+                ocean = new DateTime(ahora.Year, ahora.Month, ahora.Day, ahora.Hour, 0, 0).AddHours(2 - (ahora.Hour % 2));
+            }
+            else
+            { //unpair
+                ocean = new DateTime(ahora.Year, ahora.Month, ahora.Day, ahora.Hour, 0, 0).AddHours(ahora.Hour % 2 == 0 ? 1 : 2);
+            }
+
             long unixO = new DateTimeOffset(ocean).ToUnixTimeSeconds();
             string oceanDT = $"<t:{unixO}:R>";
 
@@ -57,15 +65,13 @@ namespace Zeno
             // Embed response
             var embed = new EmbedBuilder()
                 .WithTitle($"Eorzean timers. " + Emote.Bot.FFXIV)
-                .WithDescription(Emote.Bot.Sproud + " Because you looks lost. " + Emote.Bot.Sproud + Environment.NewLine + "-# " + timenow + Environment.NewLine)
+                .WithDescription(Emote.Bot.Sproud + " Because you looks lost. " + Emote.Bot.Sproud + NL + "-# " + timenow + NL)
                 .WithColor(Color.Green)
                 .AddField(Emote.Bot.MSQ + " Weekly", weeklyDT, true)
                 .AddField(Emote.Bot.Roulette + " Daily", dailyDT, true)
                 .AddField(Emote.Bot.Gc + " GC", gcDT, true)
                 .AddField(Emote.Bot.Fishing + " Ocean fishing", oceanDT, true)
                 .AddField(Emote.Bot.Cactuar + " Cacpot", cacpotDT, true)
-                //.WithFooter("Take care. ")
-                //.WithTimestamp(DateTimeOffset.Now)
                 .Build();
 
             await command.FollowupAsync("", embed: embed);

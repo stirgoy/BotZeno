@@ -1,22 +1,14 @@
 ﻿using Discord;
+using System.Linq;
 
 namespace Zeno
 {
     public static class ZenosSlashCommands
     {
+    
+
         public static ApplicationCommandProperties[] Zenos_SC = new ApplicationCommandProperties[]
         {
-
-            new SlashCommandBuilder()
-                .WithName("a_commands")
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .WithDescription(StringT.Scd_a_commands)
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("timers")
-                .WithDescription(StringT.Scd_timers)
-                .Build(),
             new SlashCommandBuilder()
                 .WithName("a_answer")
                 .WithDescription(StringT.Scd_a_answer)
@@ -32,6 +24,118 @@ namespace Zeno
                     .WithDescription(StringT.Scd_usermention)
                     .WithType(ApplicationCommandOptionType.User)
                     .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("a_set_answer")
+                .WithDescription(StringT.Scd_a_set_answer)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("channel")
+                    .WithDescription(StringT.Scd_ctt_d)
+                    .WithType(ApplicationCommandOptionType.Channel)
+                    .AddChannelType(ChannelType.Text)
+                    .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("a_set_log")
+                .WithDescription(StringT.Scd_a_set_log)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("channell")
+                    .WithDescription(StringT.Scd_ctt_d)
+                    .WithType(ApplicationCommandOptionType.Channel)
+                    .AddChannelType(ChannelType.Text)
+                    .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("a_set_ffnews")
+                .WithDescription(StringT.Scd_a_set_ffnews)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("newsc")
+                    .WithDescription(StringT.Scd_ctt_d)
+                    .WithType(ApplicationCommandOptionType.Channel)
+                    .AddChannelType(ChannelType.Text)
+                    .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("a_show_stored")
+                .WithDescription(StringT.Scd_a_show_stored)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("a_sendmsg")
+                .WithDescription(StringT.Scd_a_sendmsg)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .AddOption(new SlashCommandOptionBuilder()
+                        .WithName("title")
+                        .WithDescription(StringT.Scd_a_sendmsg_d1)
+                        .WithType(ApplicationCommandOptionType.String)
+                        .WithRequired(true))
+                .AddOption(new SlashCommandOptionBuilder()
+                        .WithName("msg")
+                        .WithDescription(StringT.Scd_a_sendmsg_d2)
+                        .WithType(ApplicationCommandOptionType.String)
+                        .WithRequired(true))
+                .AddOption(new SlashCommandOptionBuilder()
+                        .WithName("picture")
+                        .WithDescription(StringT.Scd_a_sendmsg_d3)
+                        .WithType(ApplicationCommandOptionType.String)
+                        .WithRequired(false))
+                .AddOption(new SlashCommandOptionBuilder()
+                        .WithName("channel")
+                        .WithDescription(StringT.Scd_a_sendmsg_d4)
+                        .WithType(ApplicationCommandOptionType.Channel)
+                        .AddChannelType(ChannelType.Text)
+                        .WithRequired(false))
+                .AddOption(new SlashCommandOptionBuilder()
+                        .WithName("mention")
+                        .WithDescription("Adds FFXIV roles to footer and change Zenos picture for Server picture.")
+                        .WithType(ApplicationCommandOptionType.Boolean)
+                        .WithRequired(false))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("a_react")
+                .WithDescription(StringT.Scd_a_react)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                 .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("message_link")
+                    .WithDescription(StringT.Scd_a_react_d1)
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("emote")
+                    .WithDescription(StringT.Scd_a_react_d2)
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("a_nikname")
+                .WithDescription(StringT.Scd_a_nikname)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("name")
+                    .WithDescription(StringT.Scd_usermention)
+                    .WithType(ApplicationCommandOptionType.User)
+                    .WithRequired(true))
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("nik")
+                    .WithDescription(StringT.Scd_a_nikname_d)
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .Build(),
+
+
+            new SlashCommandBuilder()
+                .WithName("timers")
+                .WithDescription(StringT.Scd_timers)
                 .Build(),
 
             new SlashCommandBuilder()
@@ -90,78 +194,6 @@ namespace Zeno
                 .Build(),
 
             new SlashCommandBuilder()
-                .WithName("a_set_answer")
-                .WithDescription(StringT.Scd_a_set_answer)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("channel")
-                    .WithDescription(StringT.Scd_ctt_d)
-                    .WithType(ApplicationCommandOptionType.Channel)
-                    .AddChannelType(ChannelType.Text)
-                    .WithRequired(true))
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("a_set_log")
-                .WithDescription(StringT.Scd_a_set_log)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("channell")
-                    .WithDescription(StringT.Scd_ctt_d)
-                    .WithType(ApplicationCommandOptionType.Channel)
-                    .AddChannelType(ChannelType.Text)
-                    .WithRequired(true))
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("a_set_topics")
-                .WithDescription(StringT.Scd_a_set_ffnews)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("newsc")
-                    .WithDescription(StringT.Scd_ctt_d)
-                    .WithType(ApplicationCommandOptionType.Channel)
-                    .AddChannelType(ChannelType.Text)
-                    .WithRequired(true))
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("a_set_update")
-                .WithDescription(StringT.Scd_a_set_ffupdate)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("updatec")
-                    .WithDescription(StringT.Scd_ctt_d)
-                    .WithType(ApplicationCommandOptionType.Channel)
-                    .AddChannelType(ChannelType.Text)
-                    .WithRequired(true))
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("a_set_status")
-                .WithDescription(StringT.Scd_a_set_ffstatus)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("statusc")
-                    .WithDescription(StringT.Scd_ctt_d)
-                    .WithType(ApplicationCommandOptionType.Channel)
-                    .AddChannelType(ChannelType.Text)
-                    .WithRequired(true))
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("a_set_maintenance")
-                .WithDescription(StringT.Scd_a_set_ffmainenance)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("maintenancec")
-                    .WithDescription(StringT.Scd_ctt_d)
-                    .WithType(ApplicationCommandOptionType.Channel)
-                    .AddChannelType(ChannelType.Text)
-                    .WithRequired(true))
-                .Build(),
-
-            new SlashCommandBuilder()
                 .WithName("timestamp")
                 .WithDescription(StringT.Scd_timestamp)
                 .AddOption(new SlashCommandOptionBuilder()
@@ -185,69 +217,8 @@ namespace Zeno
                 .WithName("searchminion")
                 .WithDescription(StringT.Scd_searchminion)
                 .AddOption(new SlashCommandOptionBuilder()
-                        .WithName("minion")
+                    .WithName("minion")
                     .WithDescription(StringT.Scd_searchminion_d)
-                    .WithType(ApplicationCommandOptionType.String)
-                    .WithRequired(true))
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("a_show_stored")
-                .WithDescription(StringT.Scd_a_show_stored)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("a_sendmsg")
-                .WithDescription(StringT.Scd_a_sendmsg)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .AddOption(new SlashCommandOptionBuilder()
-                        .WithName("title")
-                        .WithDescription(StringT.Scd_a_sendmsg_d1)
-                        .WithType(ApplicationCommandOptionType.String)
-                        .WithRequired(true))
-                .AddOption(new SlashCommandOptionBuilder()
-                        .WithName("msg")
-                        .WithDescription(StringT.Scd_a_sendmsg_d2)
-                        .WithType(ApplicationCommandOptionType.String)
-                        .WithRequired(true))
-                .AddOption(new SlashCommandOptionBuilder()
-                        .WithName("picture")
-                        .WithDescription(StringT.Scd_a_sendmsg_d3)
-                        .WithType(ApplicationCommandOptionType.String)
-                        .WithRequired(false))
-                .AddOption(new SlashCommandOptionBuilder()
-                        .WithName("channel")
-                        .WithDescription(StringT.Scd_a_sendmsg_d4)
-                        .WithType(ApplicationCommandOptionType.Channel)
-                        .AddChannelType(ChannelType.Text)
-                        .WithRequired(false))
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("a_set_notices")
-                .WithDescription(StringT.Scd_a_set_ffnotices)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("notices")
-                    .WithDescription(StringT.Scd_ctt_d)
-                    .WithType(ApplicationCommandOptionType.Channel)
-                    .AddChannelType(ChannelType.Text)
-                    .WithRequired(true))
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("a_react")
-                .WithDescription(StringT.Scd_a_react)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                 .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("message_link")
-                    .WithDescription(StringT.Scd_a_react_d1)
-                    .WithType(ApplicationCommandOptionType.String)
-                    .WithRequired(true))
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("emote")
-                    .WithDescription(StringT.Scd_a_react_d2)
                     .WithType(ApplicationCommandOptionType.String)
                     .WithRequired(true))
                 .Build(),
@@ -260,25 +231,21 @@ namespace Zeno
                     .WithDescription(StringT.Scd_desc_hmn)
                     .WithType(ApplicationCommandOptionType.Integer)
                     .WithRequired(false))
-                .Build(),
-
+                .Build()
+             ,
             new SlashCommandBuilder()
-                .WithName("a_nikname")
-                .WithDescription(StringT.Scd_a_nikname)
+                .WithName("a_log")
+                .WithDescription("Zenos will show stored logs.")
                 .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("name")
-                    .WithDescription(StringT.Scd_usermention)
-                    .WithType(ApplicationCommandOptionType.User)
-                    .WithRequired(true))
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("nik")
-                    .WithDescription(StringT.Scd_a_nikname_d)
+                    .WithName("logname")
+                    .WithDescription("name of stored log")
                     .WithType(ApplicationCommandOptionType.String)
-                    .WithRequired(true))
+                    .WithRequired(false))
                 .Build()
-
-
+            
+            /*
+            */
         };
     }
 }

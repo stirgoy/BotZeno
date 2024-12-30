@@ -9,18 +9,17 @@ namespace Zeno
     internal partial class Program
     {
         //              /userinfo
-        private async Task Command_a_userinfo(SocketSlashCommand command, IUser user_name)
+        private async Task Command_a_userinfo(SocketSlashCommand command)
         {
+            var user_n = command.Data.Options.FirstOrDefault(opt => opt.Name == "name");
+            if (user_n?.Value is IUser user_name) { } else { return; }
+
             await command.DeferAsync(ephemeral: true);
 
-            SocketGuildUser sgu = null;
+            SocketGuildUser sgu = Kuru.GetUser(user_name.Id);
             //              lulu                str
             //print(user_name.GlobalName + " " + user_name.Username);
-            var serv_users = Kuru.Users;
-            foreach (var item in serv_users)
-            {
-                if (item.Id == user_name.Id) { sgu = item; break; }
-            }
+            Print($"{command.User.Username} => a_userinfo {user_n}");
 
             string roles = "Error getting roles. " + Emote.Bot.Boss;
 
@@ -67,7 +66,6 @@ namespace Zeno
                 .WithThumbnailUrl(avatarUrl)
                 .WithFooter($" My enemy.")
                 .WithColor(Color.Orange)
-                .WithTimestamp(DateTimeOffset.Now)
                 .Build();
 
             var m = await command.FollowupAsync("", embed: user_emb, ephemeral: true);

@@ -1,10 +1,7 @@
-﻿using Discord;
-using Discord.Rest;
-using Discord.WebSocket;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -12,159 +9,76 @@ namespace Zeno
 {
     internal partial class Program
     {
-        private async Task SetDefKuru()
-        {
-            //TODO retrieve last id
-            //lodestone ids
-            if (Properties.Settings.Default.news_last_id == "0") { Properties.Settings.Default.news_last_id = await GetLNId(XIV.APIs.Topics); }
-            if (Properties.Settings.Default.notices_last_id == "0") { Properties.Settings.Default.notices_last_id = await GetLNId(XIV.APIs.Notices); }
-            if (Properties.Settings.Default.status_last_id == "0") { Properties.Settings.Default.status_last_id = await GetLNId(XIV.APIs.Status); }
-            if (Properties.Settings.Default.update_last_id == "0") { Properties.Settings.Default.update_last_id = await GetLNId(XIV.APIs.Updates); }
-            if (Properties.Settings.Default.maintenance_last_id == "0") { Properties.Settings.Default.maintenance_last_id = await GetLNId(XIV.APIs.Maintenance); }
-            if (Properties.Settings.Default.maintenance_last_game_id == "0") { Properties.Settings.Default.maintenance_last_game_id = "0"; }
-            if (Properties.Settings.Default.maintenance_last_mog_id == "0") { Properties.Settings.Default.maintenance_last_mog_id = "0"; }
-            if (Properties.Settings.Default.maintenance_last_lodestone_id == "0") { Properties.Settings.Default.maintenance_last_lodestone_id = "0"; }
-            if (Properties.Settings.Default.maintenance_last_companion_id == "0") { Properties.Settings.Default.maintenance_last_companion_id = "0"; }
-
-            //channels
-#if !DEBUG
-            /********************
-            Kuru default settings
-            *////////////////////
-            /*
-            Properties.Settings.Default.news_channel = 1205502111979151420;
-            Properties.Settings.Default.notices_channel = 1205502111979151420;
-            Properties.Settings.Default.status_channel = 1205502111979151420;
-            Properties.Settings.Default.update_channel = 1205502111979151420;
-            Properties.Settings.Default.maintenance_channel = 1205502111979151420;
-            Properties.Settings.Default.LogChannel = 1181272233260368010;
-            */
-            if (Properties.Settings.Default.news_channel == 0) { Properties.Settings.Default.news_channel = 1205502111979151420; }
-            if(Properties.Settings.Default.notices_channel == 0) { Properties.Settings.Default.notices_channel = 1205502111979151420; }
-            if(Properties.Settings.Default.status_channel == 0) { Properties.Settings.Default.status_channel = 1205502111979151420; }
-            if(Properties.Settings.Default.update_channel == 0) { Properties.Settings.Default.update_channel = 1205502111979151420; }
-            if(Properties.Settings.Default.maintenance_channel == 0) { Properties.Settings.Default.maintenance_channel = 1205502111979151420; }
-            if(Properties.Settings.Default.LogChannel == 0) { Properties.Settings.Default.LogChannel = 1181272233260368010; }
-            if(Properties.Settings.Default.TalkChannel == null) { Properties.Settings.Default.TalkChannel = new StringCollection { "1181272233260368010", "1205502111979151420", "1315324417475219518" }; }
-            if(Properties.Settings.Default.TalkChannel.Count == 0) { Properties.Settings.Default.TalkChannel = new StringCollection{ "1181272233260368010", "1205502111979151420", "1315324417475219518" }; }
-#endif
-            Properties.Settings.Default.Save();
-        }
 
         /********************
-                MassDelete
-        *////////////////////
-        private async void MassDelete(SocketMessage message, int howmany)
+            GetLastNewsIds
+        *//////////////////// Used for make new default config file and don't bulk all news
+        private static async Task GetLastNewsIds()
         {
-            var channel = message.Channel;
-            var mensajes = await channel.GetMessagesAsync(howmany).FlattenAsync();
-            foreach (var item in mensajes)
-            {
-                await item.DeleteAsync();                
-                await Task.Delay(500);
-            }
-
-            string log = $"{message.Author.Mention} used mass delete {howmany} times on {Kuru.GetTextChannel(channel.Id).Mention}";
-            logg(log);
+            Config.Ids.Topics_last_id = await GetLNId(XIVLN.APIs.Topics);
+            Config.Ids.Notices_last_id = await GetLNId(XIVLN.APIs.Notices);
+            Config.Ids.Status_last_id = await GetLNId(XIVLN.APIs.Status);
+            Config.Ids.Update_last_id = await GetLNId(XIVLN.APIs.Updates);
+            Config.Ids.Maintenance_last_id = await GetLNId(XIVLN.APIs.Maintenance);
+            string current = await GetLNId(XIVLN.APIs.MaintenanceCurrent, true);
+            string[] arr_curr = current.Split(',');
+            Config.Ids.Maintenance_last_game_id = arr_curr[0];
+            Config.Ids.Maintenance_last_lodestone_id = arr_curr[1];
+            Config.Ids.Maintenance_last_mog_id = arr_curr[2];
+            Config.Ids.Maintenance_last_companion_id = arr_curr[3];
 
         }
 
         /********************
                 GetLNId
-        *////////////////////
-        private async Task<string> GetLNId(string api)
+        *//////////////////// retrieves last id from lodestonenews api
+        private static async Task<string> GetLNId(string api, bool maintenance = false)
         {
             HttpClient client = new HttpClient();
             string jsonCommon = await client.GetStringAsync(api);
-            var newsListD = JsonConvert.DeserializeObject<List<LodestoneNews>>(jsonCommon);
-            if (newsListD.Count > 0)
+
+            if (maintenance)
             {
-                return newsListD[0].Id;
+                MaintenanceRoot newsListD = JsonConvert.DeserializeObject<MaintenanceRoot>(jsonCommon);
+                string game = (newsListD.Game.Count == 0) ? "0" : newsListD.Game[0].Id;
+                string lode = (newsListD.Lodestone.Count == 0) ? "0" : newsListD.Lodestone[0].Id;
+                string mog = (newsListD.Mog.Count == 0) ? "0" : newsListD.Mog[0].Id;
+                string comp = (newsListD.Companion.Count == 0) ? "0" : newsListD.Companion[0].Id;
+                string ret = $"{game},{lode},{mog},{comp}";
+                return ret;
+
             }
             else
             {
-                return "0";
+                var newsListD = JsonConvert.DeserializeObject<List<LodestoneNews>>(jsonCommon);
+                if (newsListD.Count > 0)
+                {
+                    return newsListD[0].Id;
+                }
+                else
+                {
+                    return "0";
+                }
+
             }
 
-        }
-
-        /********************
-                Reconnect
-        *////////////////////
-        private async void Reconnect()
-        {
-            try
-            {
-                await _client.StopAsync();
-                await Task.Delay(5000);
-                await _client.StartAsync();
-            }
-            catch (Exception ex)
-            {
-                Print(ex.Message);
-            }
         }
 
         /********************
                 UnixTime
-        *////////////////////
+        *//////////////////// returns cord timestamp
         private static string UnixTime(DateTime date, string mode = "R")
         {
             long unixTimestamp = new DateTimeOffset(date).ToUnixTimeSeconds();
             return $"<t:{unixTimestamp}:{mode}>";
 
         }
-        /********************
-         Check_Allowed_Channel
-        *////////////////////
-        /*
-        private bool Check_Allowed_Channel(ISocketMessageChannel channel_to_check)
-        {
-            //Chech if can talk on channel
 
-            StringCollection channels = Properties.Settings.Default.TalkChannel;
-            if (channels == null) return false;
-            foreach (var item in channels)
-            {
-                if (channel_to_check.Id == ulong.Parse(item))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-
-        /********************
-         Check_Allowed_Channel
-        ////////////////////
-        
-        private bool Check_Allowed_Channel(SocketChannel channel_to_check)
-        {
-            //Chech if can talk on channel
-
-            StringCollection channels = Properties.Settings.Default.TalkChannel;
-            if (channels == null) return false;
-            foreach (var item in channels)
-            {
-                if (channel_to_check.Id == ulong.Parse(item))
-                {
-                    return true;
-                }
-            }
-
-
-            return false;
-        }
-
-        */
         /********************
                 Print
-        *////////////////////
+        *//////////////////// console log
         private static void Print(string line, bool newLine = true, bool showname = true)
         {
-            if (!_consolePrint) { return; }
             //Console bot print with timespamp
             string time_stamp, h = "", m = "", s = "", ms = "";
             DateTime n = DateTime.Now;
@@ -183,6 +97,15 @@ namespace Zeno
             //making timestamp
             time_stamp = h + ":" + m + ":" + s + "." + ms + " "; //format 00:00:00
 
+            if (!Skiplog)
+            {
+                if (!Directory.Exists($"{Path}\\Logs")) { Directory.CreateDirectory($"{Path}\\Logs"); }
+                string f = DateTime.Now.ToString("ddMM");
+                File.AppendAllText($"{Path}\\Logs\\{f}", $"{time_stamp}{line}{NL}");
+            }
+#if !DEBUG
+            if (!Config.ConsoleLog) { return; }
+#endif
             if (showname) { line = "Zeno♥ - " + line; }
             if (newLine)
             {
@@ -206,67 +129,6 @@ namespace Zeno
                     Console.Write(line);
                 }
             }
-        }
-
-
-        /********************
-            AddTalkChannel
-        *////////////////////
-        private void AddTalkChannel(String channel)
-        {
-            //Add allowed talk channel
-            StringCollection channels = Properties.Settings.Default.TalkChannel;
-            if (channels == null) channels = new StringCollection();
-            channels.Add(channel);
-            Properties.Settings.Default.TalkChannel = channels;
-            Properties.Settings.Default.Save();
-        }
-
-        /********************
-            RemoveTalkChannel
-        *////////////////////
-        private void RemoveTalkChannel(String channel)
-        {
-            //Remove allowed talk channel
-            StringCollection channels = Properties.Settings.Default.TalkChannel;
-            StringCollection new_channels = new StringCollection();
-            foreach (var item in channels)
-            {
-                if (item != channel)
-                {
-                    new_channels.Add(item);
-                }
-            }
-
-            Properties.Settings.Default.TalkChannel = new_channels;
-            Properties.Settings.Default.Save();
-        }
-
-
-        /********************
-            ZenosLog
-        *////////////////////
-        private async Task ZenoLog(string message)
-        {
-            if (_ZenoLog)
-            {
-                SocketTextChannel canal = Kuru.GetTextChannel(Properties.Settings.Default.LogChannel);
-                await canal.SendMessageAsync(message);
-            }
-        }
-
-
-        /********************
-            borrar_msg
-        *////////////////////
-        private void BorrarMsg(RestFollowupMessage botMessage, int tiempo = 8)
-        {
-            _ = Task.Run(async () =>
-            {
-                await Task.Delay(tiempo * 1000);
-                try { await botMessage.DeleteAsync(); } catch (Exception ex) { Print(ex.Message); }
-
-            });
         }
 
     }
