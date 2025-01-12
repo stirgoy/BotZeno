@@ -246,6 +246,11 @@ namespace Zeno
             new SlashCommandBuilder()
                 .WithName("cacpot")
                 .WithDescription(StringT.Scd_cacpot)
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("botinfo")
+                .WithDescription(StringT.Scd_botinfo)
                 .Build()
             
             /*

@@ -60,6 +60,7 @@ namespace Zeno
         public static string Scd_a_log_d => "name of stored log";
         public static string Scd_a_log => "Zenos will show stored logs.";
         public static string Scd_cacpot => "Adds or removes you from my reminder list for ff cacpot.";
+        public static string Scd_botinfo => "Shows information about Wind-up Zeno♥.";
 
 
         //Commands

@@ -187,6 +187,11 @@ namespace Zeno
                         await Command_cacpot(command);
 
                         break;
+
+                    case "botinfo":
+                        if (!canTalk) { error = 3; goto default; }
+                        await Command_botinfo(command);
+                        break;
                     /*
                     */
 
