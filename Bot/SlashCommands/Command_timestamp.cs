@@ -33,12 +33,12 @@ namespace Zeno
             string discordTimestamp = $"<t:{unixTimestamp}:R>";
 
             Embed talkc_embT = CreateEmbedField_1(
-                StringT.Embed_timestamp_t, 
-                StringT.Embed_timestamp_d, 
-                discordTimestamp, $"`{discordTimestamp}`", 
-                StringT.Embed_timestamp_f, 
+                StringT.Embed_timestamp_t,
+                StringT.Embed_timestamp_d,
+                discordTimestamp, $"`{discordTimestamp}`",
+                StringT.Embed_timestamp_f,
                 color: Color.Green);
-            
+
 
             await command.FollowupAsync("", embed: talkc_embT, ephemeral: true);
 

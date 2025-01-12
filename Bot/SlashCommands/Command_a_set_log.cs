@@ -16,8 +16,8 @@ namespace Zeno
 
             if (selectedChannel == null)
             {
-                Embed logc_embD = CreateEmbed("Settings Error", "Something is wrong... " + Emote.Bot.Boss,color: Color.Red);
-                
+                Embed logc_embD = CreateEmbed("Settings Error", "Something is wrong... " + Emote.Bot.Boss, color: Color.Red);
+
                 var m = await command.FollowupAsync("", embed: logc_embD, ephemeral: true);
                 BorrarMsg(m);
                 return;
@@ -28,8 +28,8 @@ namespace Zeno
             Print($"Channel {selectedChannel} - {selectedChannel.Id} seted as Log Channel");
             var t = Kuru.GetTextChannel(selectedChannel.Id);
 
-            Embed talkc_embD = CreateEmbedField_1("Settings", "Channel saved correctly. " + Emote.Bot.Boss, "Channel",t.Mention , color: Color.Red);
-                        
+            Embed talkc_embD = CreateEmbedField_1("Settings", "Channel saved correctly. " + Emote.Bot.Boss, "Channel", t.Mention, color: Color.Red);
+
             var m2 = await command.FollowupAsync("", embed: talkc_embD, ephemeral: true);
             BorrarMsg(m2);
             await ZenoLog($"{command.User.Mention} sets {t.Mention} as log channel.");

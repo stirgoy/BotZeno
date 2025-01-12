@@ -5,7 +5,6 @@ namespace Zeno
     public static class ZenosSlashCommands
     {
 
-
         public static ApplicationCommandProperties[] Zenos_SC = new ApplicationCommandProperties[]
         {
             new SlashCommandBuilder()

@@ -30,7 +30,7 @@ namespace Zeno
                 Print($"{command.User.GlobalName} added to cacpot list");
 
                 emb = CreateEmbed(StringT.Embed_add_cuctar_t, StringT.Embed_add_cuctar_d, miniImage: StringT.Embed_add_cuctar_url, color: Color.Red);
-                
+
             }
             else
             {
@@ -50,7 +50,7 @@ namespace Zeno
                 await Config_Save();
                 Print($"{command.User.GlobalName} removed from cacpot list");
 
-                emb = CreateEmbed(StringT.Embed_remove_cuctar_t, StringT.Embed_remove_cuctar_d, miniImage: StringT.Embed_remove_cuctar_url,color: Color.Green);
+                emb = CreateEmbed(StringT.Embed_remove_cuctar_t, StringT.Embed_remove_cuctar_d, miniImage: StringT.Embed_remove_cuctar_url, color: Color.Green);
 
             }
 

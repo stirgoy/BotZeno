@@ -1,13 +1,8 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Zeno
 {
@@ -15,7 +10,7 @@ namespace Zeno
     {
 
 
-        
+
         /********************
          MessageReceivedAsync
         *////////////////////
@@ -28,7 +23,7 @@ namespace Zeno
             var channel = Kuru.GetTextChannel(userMessage.Channel.Id);
             if (message.Author.IsBot || userMessage == null) return;
 
-            
+
 
             //app comands
             if (serveruser.GuildPermissions.Administrator) //only admins
@@ -117,14 +112,14 @@ namespace Zeno
 #if DEBUG ///////////////////////////////////////////
 
                         case "test":
-                            
+
                             break;
 
 #endif //////////////////////////////////////////////
-                        default: //delete any failute !AppCmd-
+                        default: //lets delete any failute !AppCmd-
                             BorrarMsg(userMessage, 0);
 
-                        break;
+                            break;
                     }
 
 
@@ -160,7 +155,7 @@ namespace Zeno
                 {
                     Random rng = new Random();
                     int indexr = rng.Next(ZenoTalk.Answer_help.Length);
-                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_help[indexr], serveruser.Mention, NL));
+                    SimulateTyping(userMessage, string.Format(ZenoTalk.Answer_help[indexr], serveruser.Mention, NL));
                     //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_help[indexr], serveruser.Mention, NL));
 
 
@@ -169,7 +164,7 @@ namespace Zeno
                 {
                     Random rng = new Random();
                     int indexr = rng.Next(ZenoTalk.Answer_macro.Length);
-                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_macro[indexr], serveruser.Mention, NL));
+                    SimulateTyping(userMessage, string.Format(ZenoTalk.Answer_macro[indexr], serveruser.Mention, NL));
                     //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_macro[indexr], serveruser.Mention, NL));
 
 
@@ -178,7 +173,7 @@ namespace Zeno
                 {
                     Random rng = new Random();
                     int indexr = rng.Next(ZenoTalk.Answer_retainer.Length);
-                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_retainer[indexr], serveruser.Mention, NL));
+                    SimulateTyping(userMessage, string.Format(ZenoTalk.Answer_retainer[indexr], serveruser.Mention, NL));
                     //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_retainer[indexr], serveruser.Mention, NL));
 
 
@@ -188,7 +183,7 @@ namespace Zeno
 
                     Random rng = new Random();
                     int indexr = rng.Next(ZenoTalk.Answer_menu.Length);
-                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_menu[indexr], serveruser.Mention, NL));
+                    SimulateTyping(userMessage, string.Format(ZenoTalk.Answer_menu[indexr], serveruser.Mention, NL));
                     //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_menu[indexr], serveruser.Mention, NL));
 
                     IDMChannel dm = await userMessage.Author.CreateDMChannelAsync();
@@ -202,7 +197,7 @@ namespace Zeno
 
                     Random rng = new Random();
                     int indexr = rng.Next(ZenoTalk.Answer_useful.Length);
-                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_useful[indexr], serveruser.Mention, NL));
+                    SimulateTyping(userMessage, string.Format(ZenoTalk.Answer_useful[indexr], serveruser.Mention, NL));
                     //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_menu[indexr], serveruser.Mention, NL));
 
                     IDMChannel dm = await userMessage.Author.CreateDMChannelAsync();
@@ -216,7 +211,7 @@ namespace Zeno
 
                     Random rng = new Random();
                     int indexr = rng.Next(ZenoTalk.Answer_hud.Length);
-                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_hud[indexr], serveruser.Mention, NL));
+                    SimulateTyping(userMessage, string.Format(ZenoTalk.Answer_hud[indexr], serveruser.Mention, NL));
                     //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_menu[indexr], serveruser.Mention, NL));
 
                     IDMChannel dm = await userMessage.Author.CreateDMChannelAsync();
@@ -230,7 +225,7 @@ namespace Zeno
 
                     Random rng = new Random();
                     int indexr = rng.Next(ZenoTalk.Answer_retainerBasics.Length);
-                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_retainerBasics[indexr], serveruser.Mention, NL));
+                    SimulateTyping(userMessage, string.Format(ZenoTalk.Answer_retainerBasics[indexr], serveruser.Mention, NL));
                     //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_menu[indexr], serveruser.Mention, NL));
 
                     IDMChannel dm = await userMessage.Author.CreateDMChannelAsync();
@@ -242,14 +237,14 @@ namespace Zeno
                 else if (RegExFind(ZenoTalk.GameFF, ZenoTalk.Maintenance, tcont)) //maintenance
                 {
                     Embed emb;
-                    emb = await FFMaintTalk();
+                    emb = await FFMaintenanceTalk();
                     if (emb != null)
                     {
                         await userMessage.ReplyAsync("", embed: emb);
                     }
                     else
                     {
-                        AnswerUser(userMessage, string.Format(StringT.MsgRecived_err_0, serveruser.Mention));
+                        SimulateTyping(userMessage, string.Format(StringT.MsgRecived_err_0, serveruser.Mention));
                         //await userMessage.ReplyAsync(string.Format("Sorry {0} Something whent wrong D:", serveruser.Mention));
                     }
 
@@ -259,7 +254,7 @@ namespace Zeno
                 {
                     Random rng = new Random();
                     int indexr = rng.Next(ZenoTalk.Answer_greetings.Length);
-                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_greetings[indexr], serveruser.Mention, NL));
+                    SimulateTyping(userMessage, string.Format(ZenoTalk.Answer_greetings[indexr], serveruser.Mention, NL));
                     //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_greetings[indexr], serveruser.Mention, NL));
                 }
                 else            // YW **LETF THE LAST LAST**                   **LETF THE LAST LAST**
@@ -275,7 +270,7 @@ namespace Zeno
 
                         Random rng = new Random();
                         int indexr = rng.Next(ZenoTalk.Answer_yw.Length);
-                        AnswerUser(userMessage, string.Format(ZenoTalk.Answer_yw[indexr], serveruser.Mention, NL));
+                        SimulateTyping(userMessage, string.Format(ZenoTalk.Answer_yw[indexr], serveruser.Mention, NL));
                         //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_greetings[indexr], serveruser.Mention, NL));
                     }
                 }
@@ -300,9 +295,9 @@ namespace Zeno
             return;
         }
 
-       
 
-        
+
+
 
     }
 }

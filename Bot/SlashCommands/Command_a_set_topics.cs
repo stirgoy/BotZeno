@@ -15,8 +15,8 @@ namespace Zeno
 
             if (selectedChannel == null)
             {
-                Embed embD2 = CreateEmbed("Settings Error", "Something is wrong... " + Emote.Bot.Boss,color:Color.Red);
-                
+                Embed embD2 = CreateEmbed("Settings Error", "Something is wrong... " + Emote.Bot.Boss, color: Color.Red);
+
                 var m = await command.FollowupAsync("", embed: embD2, ephemeral: true);
                 BorrarMsg(m);
                 return;
@@ -33,7 +33,7 @@ namespace Zeno
             var t = Kuru.GetTextChannel(selectedChannel.Id);
 
             Embed embD = CreateEmbedField_1("Settings", $"Channel saved correctly for ff news. " + Emote.Bot.Boss, "Channel", selectedChannel.ToString(), color: Color.Green);
-            
+
             var m2 = await command.FollowupAsync("", embed: embD, ephemeral: true);
             await ZenoLog($"{command.User.Mention} sets {t.Mention} as ff news channel.");
             BorrarMsg(m2);

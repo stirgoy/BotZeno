@@ -5,7 +5,7 @@ namespace Zeno
     internal partial class Program
     {
 
-        
+
         static Embed CreateEmbed(string title, string description = "")
         {
             return new EmbedBuilder()
@@ -26,7 +26,7 @@ namespace Zeno
                 .WithColor(embedColor)
                 .Build();
         }
- 
+
 
         static Embed CreateEmbedField_1(string title, string description, string field1a, string field1b, string footer = "", string miniImage = "", string image = "", Color? color = null)
         {

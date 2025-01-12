@@ -48,7 +48,7 @@ namespace Zeno
                                 $"I wish you luck with {ce + NL}But something tells me you only going get consolation prize {Emote.Bot.Pepeshookt}",
                                 miniImage: "https://i.postimg.cc/13dZCL3P/zenosxD.png",
                                 color: Color.Green);
-                                
+
 
                             await dm.SendMessageAsync($"", embed: emb);
                             await dm.SendMessageAsync($"{Emote.Bot.Pepo_laugh}");

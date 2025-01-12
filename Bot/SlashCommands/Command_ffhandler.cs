@@ -141,9 +141,9 @@ namespace Zeno
                             var embed = CreateEmbedField_2(
                                 title,
                                 "### " + item.Title + NL + NL + $"-# {tt}",
-                                $"Start time: {NL + UnixTime(DateTime.Parse(item.Start), "d") + NL + UnixTime(DateTime.Parse(item.Start), "t")}", 
+                                $"Start time: {NL + UnixTime(DateTime.Parse(item.Start), "d") + NL + UnixTime(DateTime.Parse(item.Start), "t")}",
                                 st,
-                                $"End time: {NL + UnixTime(DateTime.Parse(item.End), "d") + NL + UnixTime(DateTime.Parse(item.End), "t")}", 
+                                $"End time: {NL + UnixTime(DateTime.Parse(item.End), "d") + NL + UnixTime(DateTime.Parse(item.End), "t")}",
                                 et,
                                 "From: Lodestone News",
                                 XIVLN.Config.FFLogo,

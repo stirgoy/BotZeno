@@ -6,7 +6,7 @@ namespace Zeno
 {
     internal partial class Program
     {
-        private async Task UserJoinedHandler(SocketGuildUser user)
+        private async Task Kuru_UserJoined(SocketGuildUser user)
         {
 
             Print($"{user.GlobalName} join server");

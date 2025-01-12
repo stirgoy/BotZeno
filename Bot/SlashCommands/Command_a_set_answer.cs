@@ -34,7 +34,7 @@ namespace Zeno
 
                 RemoveTalkChannel(selectedChannel.Id.ToString());
                 //msg 
-                Embed talkc_embD = CreateEmbed("Settings", "So now i will ignore " + selectedChannel.ToString() + Emote.Bot.Boss, color:Color.Green);                
+                Embed talkc_embD = CreateEmbed("Settings", "So now i will ignore " + selectedChannel.ToString() + Emote.Bot.Boss, color: Color.Green);
 
                 var m = await command.FollowupAsync("", embed: talkc_embD, ephemeral: true);
                 BorrarMsg(m);
@@ -47,7 +47,7 @@ namespace Zeno
             Print("Channel set as talk channel: " + selectedChannel.ToString() + " - " + selectedChannel.Id.ToString());
 
             Embed talkc_emb = CreateEmbed("Settings", $"Now i going answer on: " + selectedChannel.ToString(), color: Color.Green);
-            
+
             await command.FollowupAsync("", embed: talkc_emb, ephemeral: true);
             await ZenoLog($"{command.User.Mention} sets {selectedChannel} as talk channel.");
 

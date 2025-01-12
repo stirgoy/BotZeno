@@ -9,7 +9,7 @@ namespace Zeno
         //Config Settings
         private static string Path { get => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Zeno"; }
         private static string Json_file { get => "kuru.json"; }
-        
+
         //globals
         private static DiscordSocketClient Bot_Zeno;
         private static SocketGuild Kuru = null;
