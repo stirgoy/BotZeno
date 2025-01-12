@@ -28,22 +28,7 @@ namespace Zeno
             var channel = Kuru.GetTextChannel(userMessage.Channel.Id);
             if (message.Author.IsBot || userMessage == null) return;
 
-            //if (!Check_Allowed_Channel(message.Channel)) { return; }
-
-            if (message.Content.StartsWith("!hi") && userMessage.Channel.Id == Channel_hi) //WELCOME
-            {
-                Autorole(serveruser,message);
-            }
-            else if (userMessage.Channel.Id == Channel_hi) //:3 lets lock rules channel xDD
-            {
-                if (!serveruser.GuildPermissions.Administrator)
-                {
-                    await message.DeleteAsync();
-                    string log = $"Message deleted on: {channel.Mention + NL} Reason: Not allowed.{NL}Autor: {message.Author.Mention + NL}Content:{NL + message.Content}";
-                    Print(log);
-                    await ZenoLog($"{Emote.Bot.Boss}Auto-mod{Emote.Bot.Boss}", log, message.Author.GetAvatarUrl());
-                }
-            }
+            
 
             //app comands
             if (serveruser.GuildPermissions.Administrator) //only admins
@@ -98,12 +83,12 @@ namespace Zeno
                             SendBotEmotes(userMessage.Channel);
 
                             break;
-                        case "reconnect":
+                        case "reconnect": //obv
                             await message.DeleteAsync();
                             Reconnect();
                             break;
 
-                        case "play":
+                        case "play": //sets custom status on bot info
                             await message.DeleteAsync();
                             string game = "Final Fantasy XIV";
                             if (msg_splited.Count() >= 3)
@@ -121,62 +106,54 @@ namespace Zeno
 
                             break;
 
-                        case "off":
+                        case "off": // shutdown bot
                             await message.DeleteAsync();
                             await message.Channel.SendMessageAsync($"Sayonara! {Emote.Bot.Disconnecting_party}");
                             await Bot_Zeno.StopAsync();
                             Environment.Exit(0);
+
                             break;
 
-                        /*
-                         */
-#if DEBUG
+#if DEBUG ///////////////////////////////////////////
 
                         case "test":
-                            /*
-                            string userm = "";
-                            ulong uid = 0;
-
-                            if (msg_splited.Count() >= 3)
-                            {
-                                userm = "";
-                                if (msg_splited[2] != null) { userm = msg_splited[2]; }
-                                if (userm != "")
-                                {
-
-                                    userm = userm.Substring(2);
-
-                                    userm = userm.Substring(0, userm.Length - 1);
-
-                                    uid = ulong.Parse(userm);
-                                }
-                            }
-                            if (uid > 0)
-                            {
-                                await XIVCollect_User(message, uid);
-                            }
-                            else
-                            {
-                                await XIVCollect_User(message);
-                            }
-
-                            Embed u = CreateEmbed("ok");
-                            await message.Channel.SendMessageAsync("", embed: u);
-                            await message.DeleteAsync();
-
-                            */
+                            
                             break;
-#endif
+
+#endif //////////////////////////////////////////////
+                        default: //delete any failute !AppCmd-
+                            BorrarMsg(userMessage, 0);
+
+                        break;
                     }
 
 
-                    return;
+                    return; // nothing more to do here
                 }
             }// if admin
 
 
+            //if (!Check_Allowed_Channel(message.Channel)) { return; }
+
+            if (message.Content.StartsWith("!hi") && userMessage.Channel.Id == Channel_hi) //WELCOME
+            {
+                Autorole(serveruser, message);
+                return; // work done here
+            }
+            else if (userMessage.Channel.Id == Channel_hi) //:3 lets lock rules channel xDD jic
+            {
+                if (!serveruser.GuildPermissions.Administrator)
+                {
+                    await message.DeleteAsync();
+                    string log = $"Message deleted on: {channel.Mention + NL} Reason: Not allowed.{NL}Autor: {message.Author.Mention + NL}Content:{NL + message.Content}";
+                    Print(log);
+                    await ZenoLog($"{Emote.Bot.Boss}Auto-mod{Emote.Bot.Boss}", log, message.Author.GetAvatarUrl());
+                    return; // go home bb
+                }
+            }
+
             if (channel.Id == Channel_zenos)
-            {// allowed channels only
+            {// allowed CHANNEL only
                 string tcont = message.Content;
 
                 if (RegExFind(ZenoTalk.Greetings, ZenoTalk.Help, tcont)) //help
