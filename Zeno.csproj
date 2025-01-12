@@ -170,7 +170,7 @@
     <Compile Include="Bot\Clases\ClassRoom.cs" />
     <Compile Include="Bot\SlashCommands\Command_a_log.cs" />
     <Compile Include="Bot\SlashCommands\Command_cacpot.cs" />
-    <Compile Include="Command_botinfo.cs" />
+    <Compile Include="Bot\SlashCommands\Command_botinfo.cs" />
     <Compile Include="EventNoticer.cs" />
     <Compile Include="Bot\Create_Embed.cs" />
     <Compile Include="Bot\Events\Scheduled_Events.cs" />
