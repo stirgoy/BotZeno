@@ -2,24 +2,24 @@
 
 namespace Zeno
 {
-    public class Query
+    public class MinionsQuery
     {
         public string NameEnStart { get; set; }
     }
 
-    public class Behavior
+    public class MinionsBehavior
     {
         public int Id { get; set; }
         public string Name { get; set; }
     }
 
-    public class Race
+    public class MinionsRace
     {
         public int Id { get; set; }
         public string Name { get; set; }
     }
 
-    public class Source
+    public class MinionsSource
     {
         public string Type { get; set; }
         public string Text { get; set; }
@@ -27,13 +27,13 @@ namespace Zeno
         public int? RelatedId { get; set; }
     }
 
-    public class SkillType
+    public class MinionsSkillType
     {
         public int Id { get; set; }
         public string Name { get; set; }
     }
 
-    public class Verminion
+    public class MinionsVerminion
     {
         public int Cost { get; set; }
         public int Attack { get; set; }
@@ -48,7 +48,7 @@ namespace Zeno
         public bool Eye { get; set; }
         public bool Gate { get; set; }
         public bool Shield { get; set; }
-        public SkillType SkillType { get; set; }
+        public MinionsSkillType SkillType { get; set; }
     }
 
     public class MinionResult
@@ -60,18 +60,18 @@ namespace Zeno
         public string Tooltip { get; set; }
         public string Patch { get; set; }
         public int? ItemId { get; set; }
-        public Behavior Behavior { get; set; }
-        public Race Race { get; set; }
+        public MinionsBehavior Behavior { get; set; }
+        public MinionsRace Race { get; set; }
         public string Image { get; set; }
         public string Icon { get; set; }
         public string Owned { get; set; }
-        public List<Source> Sources { get; set; }
-        public Verminion Verminion { get; set; }
+        public List<MinionsSource> Sources { get; set; }
+        public MinionsVerminion Verminion { get; set; }
     }
 
     public class MinionRoot
     {
-        public Query Query { get; set; }
+        public MinionsQuery Query { get; set; }
         public int Count { get; set; }
         public List<MinionResult> Results { get; set; }
     }

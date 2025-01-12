@@ -17,13 +17,13 @@ namespace Zeno
 
             if (string.IsNullOrEmpty(user_msg))
             {
-                await command.RespondAsync("Please provide a valid date time my friend in the format YYYY-MM-DD HH:mm:ss.", ephemeral: true);
+                await command.RespondAsync(StringT.Msg_err1_timestamp, ephemeral: true);
                 return;
             }
 
             if (!DateTime.TryParse(user_msg, out DateTime parsedDate))
             {
-                await command.RespondAsync("Invalid date format my friend. Use YYYY-MM-DD HH:mm:ss.", ephemeral: true);
+                await command.RespondAsync(StringT.Msg_err1_timestamp, ephemeral: true);
                 return;
             }
 
@@ -32,13 +32,14 @@ namespace Zeno
             long unixTimestamp = new DateTimeOffset(parsedDate).ToUnixTimeSeconds();
             string discordTimestamp = $"<t:{unixTimestamp}:R>";
 
-            var talkc_embT = new EmbedBuilder()
-                .WithTitle("Timestamp")
-                .WithDescription($"Here's your Discord timestamp my enemy:")
-                .AddField(discordTimestamp, $"`{discordTimestamp}`")
-                .WithFooter($" My friend.")
-                .WithColor(Color.Green)
-                .Build();
+            Embed talkc_embT = CreateEmbedField_1(
+                StringT.Embed_timestamp_t, 
+                StringT.Embed_timestamp_d, 
+                discordTimestamp, $"`{discordTimestamp}`", 
+                StringT.Embed_timestamp_f, 
+                color: Color.Green);
+            
+
             await command.FollowupAsync("", embed: talkc_embT, ephemeral: true);
 
         }

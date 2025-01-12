@@ -1,6 +1,5 @@
 ﻿using Discord;
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,7 +19,7 @@ namespace Zeno
             //Environment.SetEnvironmentVariable("ZenosT", "TOKEN", EnvironmentVariableTarget.User);
             //Environment.SetEnvironmentVariable("WUZenosT", "TOKEN", EnvironmentVariableTarget.User);
 #if DEBUG
-            Print("<<<<< -------\\\\\\\\\\ Zeno♥ /////------->>>>>"); 
+            Print("<<<<< -------\\\\\\\\\\ Zeno♥ /////------->>>>>");
             Print("                                                (DEBUG)");
             await Bot_Zeno.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("ZenosT", EnvironmentVariableTarget.User));
             Config.RunBot = true;
@@ -36,7 +35,7 @@ namespace Zeno
             {
                 Print("Logging in...");
                 await Bot_Zeno.StartAsync();
-                
+
             }
 
             try

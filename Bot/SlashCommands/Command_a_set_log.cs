@@ -1,6 +1,5 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,11 +16,8 @@ namespace Zeno
 
             if (selectedChannel == null)
             {
-                var logc_embD = new EmbedBuilder()
-                .WithTitle("Settings Error")
-                .WithDescription("Something is wrong... " + Emote.Bot.Boss)
-                .WithColor(Color.Red)
-                .Build();
+                Embed logc_embD = CreateEmbed("Settings Error", "Something is wrong... " + Emote.Bot.Boss,color: Color.Red);
+                
                 var m = await command.FollowupAsync("", embed: logc_embD, ephemeral: true);
                 BorrarMsg(m);
                 return;
@@ -32,12 +28,8 @@ namespace Zeno
             Print($"Channel {selectedChannel} - {selectedChannel.Id} seted as Log Channel");
             var t = Kuru.GetTextChannel(selectedChannel.Id);
 
-            var talkc_embD = new EmbedBuilder()
-                .WithTitle("Settings")
-                .WithDescription($"Channel saved correctly. " + Emote.Bot.Boss)
-                .AddField("Channel", t.Mention)
-                .WithColor(Color.Green)
-                .Build();
+            Embed talkc_embD = CreateEmbedField_1("Settings", "Channel saved correctly. " + Emote.Bot.Boss, "Channel",t.Mention , color: Color.Red);
+                        
             var m2 = await command.FollowupAsync("", embed: talkc_embD, ephemeral: true);
             BorrarMsg(m2);
             await ZenoLog($"{command.User.Mention} sets {t.Mention} as log channel.");

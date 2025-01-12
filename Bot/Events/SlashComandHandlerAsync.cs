@@ -37,7 +37,7 @@ namespace Zeno
             {
                 switch (command.CommandName)
                 {
-                    
+
 
                     case "timers":
 
@@ -175,14 +175,20 @@ namespace Zeno
                         await Command_a_nikname(command);
 
                         break;
+
                     case "a_log":
                         if (!isAdmin) { error = 1; goto default; }
-
                         await Command_a_log(command);
 
                         break;
-/*
-*/
+
+                    case "cacpot":
+                        if (!canTalk) { error = 3; goto default; }
+                        await Command_cacpot(command);
+
+                        break;
+                    /*
+                    */
 
                     //////////////////////////    Errors
                     default:
@@ -229,23 +235,6 @@ namespace Zeno
             }
         }
 
-        async void test(SocketSlashCommand cmd)
-        {
-            await cmd.DeferAsync();
-            var dm = await cmd.User.CreateDMChannelAsync();
-            await cmd.FollowupAsync($"Keep a look on your direct messages {Emote.Bot.Happytuff}");
-            
-            //await dm.SendMessageAsync("Macro Menu Guide:");
-            var o = await dm.SendMessageAsync(ClassRoom.Macros.MacroMenu.Part_1);
-            await dm.SendMessageAsync(ClassRoom.Macros.MacroMenu.Part_2);
-            await dm.SendMessageAsync(ClassRoom.Macros.MacroMenu.Part_3);
-            await dm.SendMessageAsync(ClassRoom.Macros.MacroMenu.Part_4);
-            await dm.SendMessageAsync(ClassRoom.Macros.MacroMenu.Part_5);
-            await dm.SendMessageAsync(ClassRoom.Macros.MacroMenu.Part_6);
-            await dm.SendMessageAsync(ClassRoom.Macros.MacroMenu.Part_7);
-            await dm.SendMessageAsync(ClassRoom.Macros.MacroMenu.Part_8);
-            
-            
-        }
+
     }
 }

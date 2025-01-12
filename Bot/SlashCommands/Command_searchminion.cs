@@ -43,7 +43,7 @@ namespace Zeno
                 {
                     string ways = "No data.";
 
-                    foreach (Source item in r.Sources)
+                    foreach (MinionsSource item in r.Sources)
                     {
                         if (item.Text == r.Sources.First().Text) { ways = ""; }
                         ways += "**" + item.Type + "** - " + item.Text;
@@ -75,12 +75,12 @@ namespace Zeno
                         xD += "- **" + item.Name + "**" + NL;
                     }
 
-                    user_emb = new EmbedBuilder()
+                    user_emb = CreateEmbed(
                         //.WithTitle(Emote.Bot.Mounts + $"**Results for: __{mountname}__** ")
-                        .WithFooter("Results for: " + minionname)
-                        .WithColor(Color.LightOrange)
-                        .WithDescription(xD)
-                            .Build();
+                        "",
+                        xD,
+                        footer: "Results for: " + minionname,
+                        color: Color.LightOrange);
 
                 }
 
@@ -90,11 +90,10 @@ namespace Zeno
             catch (Exception ex)
             {
                 Print(ex.Message);
-                var user_emb = new EmbedBuilder()
-                        .WithTitle(Emote.Bot.Mounts + "**Found nothing...** ")
-                        .WithDescription($"There is no minions that name starts with: `{minionname}` {Emote.Bot.Boss}")
-                        .WithColor(Color.Red)
-                            .Build();
+                var user_emb = CreateEmbed(
+                        Emote.Bot.Mounts + "**Found nothing...** ",
+                        $"There is no minions that name starts with: `{minionname}` {Emote.Bot.Boss}",
+                        color: Color.Red);
                 await command.FollowupAsync("", embed: user_emb, ephemeral: false);
             }
         }

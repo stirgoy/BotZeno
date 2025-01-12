@@ -66,24 +66,11 @@ namespace Zeno
 
                 if (string.IsNullOrEmpty(picture))
                 {
-                    embd = new EmbedBuilder()
-                        .WithTitle(title)
-                        .WithDescription($"{desc}")
-                        .WithColor(Color.Green)
-                        .WithThumbnailUrl(ico)
-                        .WithFooter(footer)
-                        .Build();
+                    embd = CreateEmbed(title, desc, footer, ico, color: Color.Green);
                 }
                 else
                 {
-                    embd = new EmbedBuilder()
-                        .WithTitle(title)
-                        .WithDescription($"{desc}")
-                        .WithColor(Color.Green)
-                        .WithImageUrl(picture)
-                        .WithThumbnailUrl(ico)
-                        .WithFooter(footer)
-                        .Build();
+                    embd = CreateEmbed(title, desc, footer, ico, picture, Color.Green);
                 }
 
 

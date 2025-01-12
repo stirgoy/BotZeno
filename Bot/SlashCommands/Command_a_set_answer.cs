@@ -1,6 +1,5 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using System;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,11 +34,8 @@ namespace Zeno
 
                 RemoveTalkChannel(selectedChannel.Id.ToString());
                 //msg 
-                var talkc_embD = new EmbedBuilder()
-                .WithTitle("Settings")
-                .WithDescription("So now i will ignore " + selectedChannel.ToString() + Emote.Bot.Boss)
-                .WithColor(Color.Green)
-                .Build();
+                Embed talkc_embD = CreateEmbed("Settings", "So now i will ignore " + selectedChannel.ToString() + Emote.Bot.Boss, color:Color.Green);                
+
                 var m = await command.FollowupAsync("", embed: talkc_embD, ephemeral: true);
                 BorrarMsg(m);
                 await ZenoLog($"{command.User.Mention} removes {selectedChannel} as talk channel.");
@@ -50,11 +46,8 @@ namespace Zeno
 
             Print("Channel set as talk channel: " + selectedChannel.ToString() + " - " + selectedChannel.Id.ToString());
 
-            var talkc_emb = new EmbedBuilder()
-                .WithTitle("Settings")
-                .WithDescription($"Now i going answer on: " + selectedChannel.ToString())
-                .WithColor(Color.Green)
-                .Build();
+            Embed talkc_emb = CreateEmbed("Settings", $"Now i going answer on: " + selectedChannel.ToString(), color: Color.Green);
+            
             await command.FollowupAsync("", embed: talkc_emb, ephemeral: true);
             await ZenoLog($"{command.User.Mention} sets {selectedChannel} as talk channel.");
 

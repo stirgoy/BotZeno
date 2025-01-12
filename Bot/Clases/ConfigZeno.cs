@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace Zeno
 {
@@ -17,9 +18,15 @@ namespace Zeno
 
             public NewsIds Ids { get; set; }
             public KuruCFG Channels { get; set; }
-
+            public StringCollection CacpotIds { get; set; } = new StringCollection() { };
+            public string LastCacpot { get; set; } = "";
+            public List<string[]> Events_Noticed { get; set; } = new List<string[]>(); //will save event = 0 users rest
 
         }
+
+        
+
+
         public class NewsIds
         {
             public string Update_last_id { get; set; } = "0";

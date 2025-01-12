@@ -25,8 +25,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>11</ApplicationRevision>
-    <ApplicationVersion>2.0.0.11</ApplicationVersion>
+    <ApplicationRevision>15</ApplicationRevision>
+    <ApplicationVersion>2.0.0.15</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -166,9 +166,15 @@
     <Compile Include="Bot\SlashCommands\Command_timestamp.cs" />
     <Compile Include="Bot\SlashCommands\Command_timers.cs" />
     <Compile Include="Bot\SlashCommands\Command_searchmount.cs" />
-    <Compile Include="ClassRoom\ClassRoom.cs" />
+    <Compile Include="Bot\Cacpot.cs" />
+    <Compile Include="Bot\Clases\ClassRoom.cs" />
     <Compile Include="Bot\SlashCommands\Command_a_log.cs" />
-    <Compile Include="StirgoyLN.cs" />
+    <Compile Include="Bot\SlashCommands\Command_cacpot.cs" />
+    <Compile Include="EventNoticer.cs" />
+    <Compile Include="Bot\Create_Embed.cs" />
+    <Compile Include="Bot\Events\Scheduled_Events.cs" />
+    <Compile Include="Bot\Events\UserJoinedHandler.cs" />
+    <Compile Include="Bot\Events\UserLeftHandler.cs" />
     <Compile Include="XIV_Collect\Clases\Character.cs" />
     <Compile Include="Bot\Clases\Emote.cs" />
     <Compile Include="Bot\SlashCommands\Command_a_show.cs" />
@@ -199,15 +205,13 @@
     <Compile Include="Bot\Clases\StringT.cs" />
     <Compile Include="XIV_LodestoneNews\XIV_LodestoneNews.cs" />
     <Compile Include="XIV_LodestoneNews\Clases\XIVLN.cs" />
-    <Compile Include="Bot\ZenosSettings.cs" />
+    <Compile Include="ZenosSettings.cs" />
     <Compile Include="Bot\ZenosSlashCommands.cs" />
-    <Compile Include="Bot\Fnc_SlashCommands.cs" />
     <Compile Include="Bot\Fnc_Zenos.cs" />
-    <Compile Include="XIV_Collect\Clases\User.cs" />
+    <Compile Include="XIV_Collect\Clases\XIVCollect_User.cs" />
     <Compile Include="XIV_Collect\Clases\XIV_Collect.cs" />
-    <Compile Include="XIV_Collect\XIV_Collect_User.cs" />
     <Compile Include="Bot\ConfigHandler.cs" />
-    <Compile Include="ZenoTalk.cs" />
+    <Compile Include="Bot\Clases\ZenoTalk.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

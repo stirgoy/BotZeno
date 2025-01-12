@@ -11,7 +11,7 @@ namespace Zeno
         {
 
             if (!Directory.Exists(Path)) { Directory.CreateDirectory(Path); }
-            if (!File.Exists($"{Path}\\{Xmlf}"))
+            if (!File.Exists($"{Path}\\{Json_file}"))
             {
 #if DEBUG
                 Config.Channels.All_news = 1310199196233760858;
@@ -27,7 +27,7 @@ namespace Zeno
                 Print("New default configuration file was created.");
             }
 
-            string js = File.ReadAllText($"{Path}\\{Xmlf}");
+            string js = File.ReadAllText($"{Path}\\{Json_file}");
             ConfigZeno loaded = JsonConvert.DeserializeObject<ConfigZeno>(js);
             if (loaded != null)
             {
@@ -38,7 +38,7 @@ namespace Zeno
         private static Task Config_Save()
         {
             string js = JsonConvert.SerializeObject(Config, Formatting.Indented);
-            File.WriteAllText($"{Path}\\{Xmlf}", js);
+            File.WriteAllText($"{Path}\\{Json_file}", js);
             return Task.CompletedTask;
         }
 

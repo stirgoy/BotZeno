@@ -1,5 +1,4 @@
 ﻿using Discord.WebSocket;
-using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -11,7 +10,7 @@ namespace Zeno
         {
             await command.DeferAsync(ephemeral: true);
 
-            string jsoncfg = File.ReadAllText($"{Path}\\{Xmlf}");
+            string jsoncfg = File.ReadAllText($"{Path}\\{Json_file}");
             jsoncfg = $"There is my persistent data => kuru.json:{NL}```{jsoncfg}```";
 
             var m1 = await command.FollowupAsync(jsoncfg, ephemeral: true);

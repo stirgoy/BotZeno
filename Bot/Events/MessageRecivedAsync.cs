@@ -7,11 +7,15 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Zeno
 {
     internal partial class Program
     {
+
+
+        
         /********************
          MessageReceivedAsync
         *////////////////////
@@ -26,10 +30,24 @@ namespace Zeno
 
             //if (!Check_Allowed_Channel(message.Channel)) { return; }
 
+            if (message.Content.StartsWith("!hi") && userMessage.Channel.Id == Channel_hi) //WELCOME
+            {
+                Autorole(serveruser,message);
+            }
+            else if (userMessage.Channel.Id == Channel_hi) //:3 lets lock rules channel xDD
+            {
+                if (!serveruser.GuildPermissions.Administrator)
+                {
+                    await message.DeleteAsync();
+                    string log = $"Message deleted on: {channel.Mention + NL} Reason: Not allowed.{NL}Autor: {message.Author.Mention + NL}Content:{NL + message.Content}";
+                    Print(log);
+                    await ZenoLog($"{Emote.Bot.Boss}Auto-mod{Emote.Bot.Boss}", log, message.Author.GetAvatarUrl());
+                }
+            }
+
             //app comands
             if (serveruser.GuildPermissions.Administrator) //only admins
             {
-
                 if (message.Content.StartsWith("!del-"))
                 {
 
@@ -52,7 +70,7 @@ namespace Zeno
                     string[] msg_splited = message.Content.Split('-');
                     string command = msg_splited[1];
 
-                    string log = $"{message.Author.Username} used !AppCmd-{message.Content} on {Kuru.GetTextChannel(channel.Id).Name}";
+                    string log = $"{message.Author.Username} used: {message.Content} on {Kuru.GetTextChannel(channel.Id).Name}";
                     Print(log);
 
                     switch (command)
@@ -115,6 +133,7 @@ namespace Zeno
 #if DEBUG
 
                         case "test":
+                            /*
                             string userm = "";
                             ulong uid = 0;
 
@@ -141,6 +160,11 @@ namespace Zeno
                                 await XIVCollect_User(message);
                             }
 
+                            Embed u = CreateEmbed("ok");
+                            await message.Channel.SendMessageAsync("", embed: u);
+                            await message.DeleteAsync();
+
+                            */
                             break;
 #endif
                     }
@@ -151,15 +175,15 @@ namespace Zeno
             }// if admin
 
 
-            if (Config.Channels.TalkChannel.Contains(channel.Id.ToString()))
+            if (channel.Id == Channel_zenos)
             {// allowed channels only
                 string tcont = message.Content;
 
                 if (RegExFind(ZenoTalk.Greetings, ZenoTalk.Help, tcont)) //help
                 {
                     Random rng = new Random();
-                    int indexr = rng.Next(ZenoTalk.answer_help.Length);
-                    AnswerUser(userMessage, string.Format(ZenoTalk.answer_help[indexr], serveruser.Mention, NL));
+                    int indexr = rng.Next(ZenoTalk.Answer_help.Length);
+                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_help[indexr], serveruser.Mention, NL));
                     //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_help[indexr], serveruser.Mention, NL));
 
 
@@ -167,9 +191,18 @@ namespace Zeno
                 else if (RegExFind(ZenoTalk.Macros, ZenoTalk.Help, tcont)) //macros
                 {
                     Random rng = new Random();
-                    int indexr = rng.Next(ZenoTalk.answer_macro.Length);
-                    AnswerUser(userMessage, string.Format(ZenoTalk.answer_macro[indexr], serveruser.Mention, NL));
+                    int indexr = rng.Next(ZenoTalk.Answer_macro.Length);
+                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_macro[indexr], serveruser.Mention, NL));
                     //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_macro[indexr], serveruser.Mention, NL));
+
+
+                }
+                else if (RegExFind(ZenoTalk.Retainers, ZenoTalk.Help, tcont))//retainers
+                {
+                    Random rng = new Random();
+                    int indexr = rng.Next(ZenoTalk.Answer_retainer.Length);
+                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_retainer[indexr], serveruser.Mention, NL));
+                    //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_retainer[indexr], serveruser.Mention, NL));
 
 
                 }
@@ -177,8 +210,8 @@ namespace Zeno
                 {
 
                     Random rng = new Random();
-                    int indexr = rng.Next(ZenoTalk.answer_menu.Length);
-                    AnswerUser(userMessage, string.Format(ZenoTalk.answer_menu[indexr], serveruser.Mention, NL));
+                    int indexr = rng.Next(ZenoTalk.Answer_menu.Length);
+                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_menu[indexr], serveruser.Mention, NL));
                     //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_menu[indexr], serveruser.Mention, NL));
 
                     IDMChannel dm = await userMessage.Author.CreateDMChannelAsync();
@@ -187,16 +220,49 @@ namespace Zeno
 
 
                 }
-                else if (RegExFind(ZenoTalk.Retainers, ZenoTalk.Help, tcont))//retainers
+                else if (RegExFind(ZenoTalk.Macros, ZenoTalk.Useful, tcont)) //macros > useful
                 {
+
                     Random rng = new Random();
-                    int indexr = rng.Next(ZenoTalk.answer_retainer.Length);
-                    AnswerUser(userMessage, string.Format(ZenoTalk.answer_retainer[indexr], serveruser.Mention, NL));
-                    //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_retainer[indexr], serveruser.Mention, NL));
+                    int indexr = rng.Next(ZenoTalk.Answer_useful.Length);
+                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_useful[indexr], serveruser.Mention, NL));
+                    //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_menu[indexr], serveruser.Mention, NL));
+
+                    IDMChannel dm = await userMessage.Author.CreateDMChannelAsync();
+                    SendGuide(dm, 1);
+
 
 
                 }
-                else if (RegExFind(ZenoTalk.Maintenance, ZenoTalk.GameFF, tcont)) //maintenance
+                else if (RegExFind(ZenoTalk.Macros, ZenoTalk.Hud, tcont)) //macros > hud
+                {
+
+                    Random rng = new Random();
+                    int indexr = rng.Next(ZenoTalk.Answer_hud.Length);
+                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_hud[indexr], serveruser.Mention, NL));
+                    //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_menu[indexr], serveruser.Mention, NL));
+
+                    IDMChannel dm = await userMessage.Author.CreateDMChannelAsync();
+                    SendGuide(dm, 2);
+
+
+
+                }
+                else if (RegExFind(ZenoTalk.Retainers, ZenoTalk.Basic, tcont)) //macros > retainers basics
+                {
+
+                    Random rng = new Random();
+                    int indexr = rng.Next(ZenoTalk.Answer_retainerBasics.Length);
+                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_retainerBasics[indexr], serveruser.Mention, NL));
+                    //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_menu[indexr], serveruser.Mention, NL));
+
+                    IDMChannel dm = await userMessage.Author.CreateDMChannelAsync();
+                    SendGuide(dm, 3);
+
+
+
+                }
+                else if (RegExFind(ZenoTalk.GameFF, ZenoTalk.Maintenance, tcont)) //maintenance
                 {
                     Embed emb;
                     emb = await FFMaintTalk();
@@ -206,18 +272,35 @@ namespace Zeno
                     }
                     else
                     {
-                        AnswerUser(userMessage, string.Format("Sorry {0} Something whent wrong D:", serveruser.Mention));
+                        AnswerUser(userMessage, string.Format(StringT.MsgRecived_err_0, serveruser.Mention));
                         //await userMessage.ReplyAsync(string.Format("Sorry {0} Something whent wrong D:", serveruser.Mention));
                     }
-                    
 
-                }
-                else if (RegExFind(ZenoTalk.Greetings, ZenoTalk.Greetings, tcont))// greetings **LETF THE LAST ONE**
+
+                }               //**LETF THE PENULTIMATE**
+                else if (RegExFind(ZenoTalk.Greetings, ZenoTalk.Greetings, tcont))// greetings **LETF THE PENULTIMATE**
                 {
                     Random rng = new Random();
-                    int indexr = rng.Next(ZenoTalk.answer_greetings.Length);
-                    AnswerUser(userMessage, string.Format(ZenoTalk.answer_greetings[indexr], serveruser.Mention, NL));
+                    int indexr = rng.Next(ZenoTalk.Answer_greetings.Length);
+                    AnswerUser(userMessage, string.Format(ZenoTalk.Answer_greetings[indexr], serveruser.Mention, NL));
                     //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_greetings[indexr], serveruser.Mention, NL));
+                }
+                else            // YW **LETF THE LAST LAST**                   **LETF THE LAST LAST**
+                {
+                    bool pass = false;
+                    foreach (var item in ZenoTalk.Yw)
+                    {
+                        if (tcont.Contains(item)) { pass = true; break; }
+                    }
+
+                    if (pass)
+                    {
+
+                        Random rng = new Random();
+                        int indexr = rng.Next(ZenoTalk.Answer_yw.Length);
+                        AnswerUser(userMessage, string.Format(ZenoTalk.Answer_yw[indexr], serveruser.Mention, NL));
+                        //await userMessage.ReplyAsync(string.Format(ZenoTalk.answer_greetings[indexr], serveruser.Mention, NL));
+                    }
                 }
 
 
@@ -240,97 +323,9 @@ namespace Zeno
             return;
         }
 
-        async void AnswerUser(SocketUserMessage msg, string content)
-        {
-            await msg.Channel.TriggerTypingAsync();
-            await Task.Delay(3000);
-            await msg.ReplyAsync(content);
-        }
+       
 
-
-        async void SendGuide(IDMChannel dm, int guide)
-        {
-            List<string> selguide = null;
-
-            switch (guide)
-            {
-                case 0:
-                    selguide = ClassRoom.Macros.Menu;
-                    break;
-                default:
-                    break;
-            }
-
-
-
-            foreach (var item in selguide)
-            {
-                await dm.SendMessageAsync(item);
-                await Task.Delay(1000);
-            }
-        }
-
-
-        async Task<Embed> FFMaintTalk()
-        {
-            HttpClient client = new HttpClient();
-            Embed embed = null;
-            MaintenanceRoot data = null;
-            string title = $"{Emote.Bot.LMaintenance} Current Maintenance";
-
-            string jsonMaintenance = await client.GetStringAsync(XIVLN.APIs.MaintenanceCurrent);
-            bool empty = true;
-
-            if (!string.IsNullOrEmpty(jsonMaintenance))
-            {
-                data = JsonConvert.DeserializeObject<MaintenanceRoot>(jsonMaintenance);
-                empty = (data == null || data.Game.Count == 0);
-            }
-
-            if (!empty)
-            {
-                foreach (var item in data.Game)
-                {
-                    string st = UnixTime(DateTime.Parse(item.Start));
-                    string et = UnixTime(DateTime.Parse(item.End));
-                    string tt = UnixTime(DateTime.Parse(item.Time));
-
-                    embed = new EmbedBuilder()
-                        .WithTitle(title)
-                        .WithUrl(item.Url)
-                        .AddField($"Start time: {NL + UnixTime(DateTime.Parse(item.Start), "d") + NL + UnixTime(DateTime.Parse(item.Start), "t")}", st, true)
-                        .AddField($"End time: {NL + UnixTime(DateTime.Parse(item.End), "d") + NL + UnixTime(DateTime.Parse(item.End), "t")}", et, true)
-                        .WithDescription("### " + item.Title + NL + NL + $"-# {tt}")
-                        .WithThumbnailUrl(XIVLN.Config.FFLogo)
-                        .WithColor(Color.Blue)
-                        .WithFooter("From: Lodestone News")
-                        .Build();
-                }
-            }
-            else
-            {
-                embed = new EmbedBuilder()
-                    .WithTitle("I got nothing... " + Emote.Bot.Disconnecting_party)
-                    .WithDescription("Is game on maintenance??? " + Emote.Bot.Disconnecting_party)
-                    .WithColor(Color.Red)
-                    .Build();
-            }
-
-            return embed;
-
-        }
-
-
-        bool RegExFind(string[] constant, string[] variable, string text)
-        {
-            string constantchain = string.Join("|", constant); // Une las palabras fijas con "|"
-            string variablechain = string.Join("|", variable); // Une las palabras opcionales con "|"
-            string patron = $@"\b({constantchain})\b.*\b({variablechain})\b|\b({variablechain})\b.*\b({constantchain})\b";
-            Regex regex = new Regex(patron, RegexOptions.IgnoreCase);
-            return regex.IsMatch(text);
-        }
-
-
+        
 
     }
 }

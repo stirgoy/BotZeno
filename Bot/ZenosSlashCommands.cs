@@ -1,11 +1,10 @@
 ﻿using Discord;
-using System.Linq;
 
 namespace Zeno
 {
     public static class ZenosSlashCommands
     {
-    
+
 
         public static ApplicationCommandProperties[] Zenos_SC = new ApplicationCommandProperties[]
         {
@@ -95,7 +94,7 @@ namespace Zeno
                         .WithRequired(false))
                 .AddOption(new SlashCommandOptionBuilder()
                         .WithName("mention")
-                        .WithDescription("Adds FFXIV roles to footer and change Zenos picture for Server picture.")
+                        .WithDescription(StringT.Scd_a_sendmsg_d5)
                         .WithType(ApplicationCommandOptionType.Boolean)
                         .WithRequired(false))
                 .Build(),
@@ -235,13 +234,18 @@ namespace Zeno
              ,
             new SlashCommandBuilder()
                 .WithName("a_log")
-                .WithDescription("Zenos will show stored logs.")
+                .WithDescription(StringT.Scd_a_log)
                 .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName("logname")
-                    .WithDescription("name of stored log")
+                    .WithDescription(StringT.Scd_a_log_d)
                     .WithType(ApplicationCommandOptionType.String)
                     .WithRequired(false))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("cacpot")
+                .WithDescription(StringT.Scd_cacpot)
                 .Build()
             
             /*

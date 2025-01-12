@@ -118,11 +118,11 @@ namespace Zeno
 
                     Print("NEW LIST IS NULL");
 
-                    var embed = new EmbedBuilder()
-                        .WithTitle(tit)
-                        .WithDescription(str)
-                        .WithColor(Color.Red)
-                        .Build();
+                    var embed = CreateEmbed(
+                        tit,
+                        str,
+                        color: Color.Red);
+
                     await command.FollowupAsync(embed: embed);
                 }
                 else
@@ -138,16 +138,17 @@ namespace Zeno
                             string et = UnixTime(DateTime.Parse(item.End));
                             string tt = UnixTime(DateTime.Parse(item.Time));
 
-                            var embed = new EmbedBuilder()
-                                .WithTitle(title)
-                                .WithUrl(item.Url)
-                                .AddField($"Start time: {NL + UnixTime(DateTime.Parse(item.Start), "d") + NL + UnixTime(DateTime.Parse(item.Start), "t")}", st, true)
-                                .AddField($"End time: {NL + UnixTime(DateTime.Parse(item.End), "d") + NL + UnixTime(DateTime.Parse(item.End), "t")}", et, true)
-                                .WithDescription("### " + item.Title + NL + NL + $"-# {tt}")
-                                .WithThumbnailUrl(XIVLN.Config.FFLogo)
-                                .WithColor(Color.Blue)
-                                .WithFooter("From: Lodestone News")
-                                .Build();
+                            var embed = CreateEmbedField_2(
+                                title,
+                                "### " + item.Title + NL + NL + $"-# {tt}",
+                                $"Start time: {NL + UnixTime(DateTime.Parse(item.Start), "d") + NL + UnixTime(DateTime.Parse(item.Start), "t")}", 
+                                st,
+                                $"End time: {NL + UnixTime(DateTime.Parse(item.End), "d") + NL + UnixTime(DateTime.Parse(item.End), "t")}", 
+                                et,
+                                "From: Lodestone News",
+                                XIVLN.Config.FFLogo,
+                                item.Url,
+                                Color.Blue);
 
                             ret.Add(embed);
                         }

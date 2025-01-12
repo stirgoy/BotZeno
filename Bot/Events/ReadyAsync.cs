@@ -12,7 +12,7 @@ namespace Zeno
 
         private async Task ReadyAsync()
         {
-            
+
             Kuru = Bot_Zeno.Guilds.First();
 
             if (Kuru == null)
@@ -72,6 +72,8 @@ namespace Zeno
             }
 
             XIV_LN(); //news updater
+            Cacpot(); //cacpot dm noticer
+            //EventNoticer();
 
 
 

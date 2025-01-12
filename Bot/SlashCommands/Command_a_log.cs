@@ -12,7 +12,7 @@ namespace Zeno
         async Task Command_a_log(SocketSlashCommand command)
         {
             await command.DeferAsync(ephemeral: true);
-            Embed answer=null;
+            Embed answer = null;
 
             var log_t = command.Data.Options.FirstOrDefault(opt => opt.Name == "logname");
             if (log_t?.Value is string logname) { } else { logname = ""; }
@@ -32,11 +32,8 @@ namespace Zeno
 
                 if (Directory.GetFiles(logpath).Count() == 0)
                 {
-                    //no logs
-                    answer = new EmbedBuilder()
-                        .WithTitle("I found no logs " + Emote.Bot.Sadtuff)
-                        .WithColor(Color.Orange)
-                        .Build();
+                    //no logs                    
+                    answer = CreateEmbed("I found no logs " + Emote.Bot.Sadtuff, color: Color.Red);
                 }
                 else
                 {
@@ -52,11 +49,7 @@ namespace Zeno
                         }
                     }
 
-                    answer = new EmbedBuilder()
-                        .WithTitle("I have this logs:" + Emote.Bot.Happytuff)
-                        .WithDescription(desc)
-                        .WithColor(Color.Orange)
-                        .Build();
+                    answer = CreateEmbed("I have this logs:" + Emote.Bot.Happytuff, desc, color: Color.Orange);
                 }
 
             }
@@ -89,10 +82,7 @@ namespace Zeno
                 }
                 else
                 {
-                    answer = new EmbedBuilder()
-                        .WithTitle("I found nothing with " + logname + " " + Emote.Bot.Sadtuff)
-                        .WithColor(Color.Orange)
-                        .Build();
+                    answer = CreateEmbed("I found nothing with " + logname + " " + Emote.Bot.Sadtuff, color: Color.Orange);
                 }
             }
 
@@ -105,7 +95,7 @@ namespace Zeno
             }
             else
             {
-                await command.FollowupAsync("", embed:answer, ephemeral: true);
+                await command.FollowupAsync("", embed: answer, ephemeral: true);
             }
 
         }

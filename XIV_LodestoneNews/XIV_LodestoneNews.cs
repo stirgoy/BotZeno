@@ -535,7 +535,7 @@ namespace Zeno
 
                 }
 
-                
+
                 XIV_Timer.Change(XIVLN.Config.TimerInterval, Timeout.Infinite); //stop timer
 
             }
