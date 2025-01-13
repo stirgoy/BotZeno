@@ -38,6 +38,9 @@
             public static string Peepoevil { get { return "<:peepoevil:1316431595317760090>"; } }
             public static string Pepelove { get { return "<:pepelove:1316431583129108561>"; } }
             public static string Pepecry { get { return "<:pepecry:1316431562476097667>"; } }
+            public static string CSharp { get { return "<:CSharp:1328327760770236436>"; } }
+            //public static string XXXXX { get { return "XXXXXXXXXXXXX"; } }
+            //public static string XXXXX { get { return "XXXXXXXXXXXXX"; } }
             //public static string XXXXX { get { return "XXXXXXXXXXXXX"; } }
 
         }
@@ -77,6 +80,10 @@
             public static string Peepoevil { get { return "<:peepoevil:1316430211574792334>"; } }
             public static string Pepelove { get { return "<:pepelove:1316430197666611220>"; } }
             public static string Pepecry { get { return "<:pepecry:1316430184446038037>"; } }
+            public static string CSharp { get { return "<:CSharp:1328327963707572224>"; } }
+            //public static string XXXXX { get { return "XXXXXXXXXXXXX"; } }
+            //public static string XXXXX { get { return "XXXXXXXXXXXXX"; } }
+            //public static string XXXXX { get { return "XXXXXXXXXXXXX"; } }
 
         }
 #endif
