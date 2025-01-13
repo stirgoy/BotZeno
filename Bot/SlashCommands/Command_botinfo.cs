@@ -19,10 +19,10 @@ namespace Zeno
             desc += $"{NL}";
             desc += $"You can see my source code on [**BotZeno-Code**](<https://github.com/stirgoy/BotZeno>).{NL}";
             desc += $"Also i have a little guide of my commands and slash commands on [**BotZeno-Wiki**](<https://github.com/stirgoy/BotZeno/wiki>).{NL}";
-            desc += $"My work on {Kuru.Name} is bring help to members and take care of new ones, also:{NL}"; 
+            desc += $"My work on {Kuru.Name} is bring help to members and take care of new ones, also:{NL}";
             desc += $"* Can bring some information of mounts/minions of FFXIV{NL}";
             desc += $"* Send my guides via DM.{NL}";
-            desc += $"* Post FFXIV Lodestone news.{NL}"; 
+            desc += $"* Post FFXIV Lodestone news.{NL}";
             desc += $"* Send a DM remembering to all interested on weekly cacpot {Emote.Bot.Cactuar}.{NL}";
             desc += $"* Send a DM at start of any server event to all interested members. {NL}";
             desc += $"-# Tell us something if you wants help with bot or share any idea.{NL}";

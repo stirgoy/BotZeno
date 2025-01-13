@@ -5,7 +5,7 @@ namespace Zeno
     //function
     internal partial class Program
     {
-        internal static string EorzeaTime(string format = "HH,mm") => DateTime.Now.ToEorzeaTime().ToString(format);        
+        internal static string EorzeaTime(string format = "HH,mm") => DateTime.Now.ToEorzeaTime().ToString(format);
     }
 
     //DateTime extension

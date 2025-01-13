@@ -24,7 +24,7 @@ namespace Zeno
             string welcome = "https://discord.com/channels/1284428695309910016/";
 #else
             string rules = "https://discord.com/channels/1181272231477780571/1181272232442478664";
-            string welcome = "https://discord.com/channels/1181272231477780571/"; 
+            string welcome = "https://discord.com/channels/1181272231477780571/";
 #endif
 
             welcome += Channel_hi;

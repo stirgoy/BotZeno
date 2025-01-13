@@ -41,7 +41,7 @@ namespace Zeno
                             Kuru.GetUsersAsync(); //hmmm...
                             SocketGuildUser bdy = Kuru.GetUser(uid);
                             IDMChannel dm = await bdy.CreateDMChannelAsync();
-                            
+
                             Embed emb = CreateEmbed(
                                 StringT.Cac_dm_title,
                                 StringT.Ca_dm_desc,

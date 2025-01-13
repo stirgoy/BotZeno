@@ -83,11 +83,11 @@ namespace Zeno
 
         //others
         public static string MsgRecived_err_0 => "Sorry {0} Something whent wrong D:";
-        public static string LN_from => "From: Lodestone News"; 
-        
-        
-        
-        
+        public static string LN_from => "From: Lodestone News";
+
+
+
+
         //public static string xxxxxx => "xxxxxxxxxxxx"; 
         //public static string xxxxxx => "xxxxxxxxxxxx"; 
         //public static string xxxxxx => "xxxxxxxxxxxx"; 
