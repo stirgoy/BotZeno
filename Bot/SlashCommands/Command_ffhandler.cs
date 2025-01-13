@@ -145,7 +145,7 @@ namespace Zeno
                                 st,
                                 $"End time: {NL + UnixTime(DateTime.Parse(item.End), "d") + NL + UnixTime(DateTime.Parse(item.End), "t")}",
                                 et,
-                                "From: Lodestone News",
+                                StringT.LN_from,
                                 XIVLN.Config.FFLogo,
                                 item.Url,
                                 Color.Blue);
@@ -166,7 +166,7 @@ namespace Zeno
                                 .WithDescription(start_desc + item.Description + end_desc)
                                 .WithColor(Color.Blue)
                                 .WithThumbnailUrl(XIVLN.Config.FFLogo)
-                                .WithFooter("From: Lodestone News")
+                                .WithFooter(StringT.LN_from)
                                 .Build();
 
                             ret.Add(embed);
@@ -181,7 +181,7 @@ namespace Zeno
             }
             catch (Exception ex)
             {
-                Print("Begu.LodestoneHandler() Error");
+                Print("Command_ffhandler error");
                 Print(ex.Message);
                 Print(ex.Source);
                 if (ex.InnerException != null)

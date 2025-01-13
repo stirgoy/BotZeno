@@ -19,9 +19,10 @@ namespace Zeno
                 await Task.Delay(750);
             }
 
-            string log = $"{message.Author.Mention} used mass delete {howmany} times on {Kuru.GetTextChannel(channel.Id).Mention}";
+            string log = $"{message.Author.GlobalName} used mass delete {howmany} times on {Kuru.GetTextChannel(channel.Id).Name}";
+            string logz = $"{message.Author.Mention} used mass delete {howmany} times on {Kuru.GetTextChannel(channel.Id).Mention}";
             Print(log);
-            await ZenoLog(log);
+            await ZenoLog(logz);
 
         }
     }

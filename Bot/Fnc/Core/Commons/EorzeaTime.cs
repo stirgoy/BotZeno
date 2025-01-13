@@ -2,9 +2,16 @@
 
 namespace Zeno
 {
+    //function
+    internal partial class Program
+    {
+        internal static string EorzeaTime(string format = "HH,mm") => DateTime.Now.ToEorzeaTime().ToString(format);        
+    }
+
+    //DateTime extension
     public static class EorzeaDateTimeExtention
     {
-        public static DateTime EorzeaTime(this DateTime date)
+        public static DateTime ToEorzeaTime(this DateTime date)
         {
             const double EORZEA_MULTIPLIER = 3600D / 175D;
 

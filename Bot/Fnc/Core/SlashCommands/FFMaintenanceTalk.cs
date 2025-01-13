@@ -42,7 +42,7 @@ namespace Zeno
                         st,
                         $"End time: {NL + UnixTime(DateTime.Parse(item.End), "d") + NL + UnixTime(DateTime.Parse(item.End), "t")}",
                         et,
-                        "From: Lodestone News",
+                        StringT.LN_from,
                         XIVLN.Config.FFLogo,
                         item.Url,
                         Color.Blue);

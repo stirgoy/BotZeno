@@ -218,6 +218,7 @@
     <Compile Include="Bot\Events\ClientDisconected.cs" />
     <Compile Include="Bot\Events\LogAsync.cs" />
     <Compile Include="Bot\Clases\ConfigZeno.cs" />
+    <Compile Include="Bot\Fnc\Core\Commons\EorzeaTime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -230,7 +231,7 @@
     <Compile Include="Bot\Clases\StringT.cs" />
     <Compile Include="Bot\Background\XIV_LodestoneNews.cs" />
     <Compile Include="Bot\Clases\XIV_LodestoneNews\XIVLN.cs" />
-    <Compile Include="Bot\ZenosSettings.cs" />
+    <Compile Include="Bot\ZenoSettings.cs" />
     <Compile Include="Bot\SlashCommands\ZenosSlashCommands.cs" />
     <Compile Include="Bot\Fnc\Core\SlashCommands\RemoveTalkChannel.cs" />
     <Compile Include="Bot\Clases\XIV_Collect\XIVCollect_User.cs" />

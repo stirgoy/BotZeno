@@ -76,9 +76,22 @@ namespace Zeno
         public static string Embed_timestamp_d => $"Here's your Discord timestamp my enemy:";
         public static string Embed_timestamp_f => $" My friend.";
 
+
+        //Cacpot
+        public static string Cac_dm_title => $"{Emote.Bot.Cactuar + Emote.Bot.Cactuar} CACPOT TIME!!!!! {Emote.Bot.Cactuar + Emote.Bot.Cactuar}";
+        public static string Ca_dm_desc => $"I wish you luck with {Emote.Bot.Cactuar + NL}But something tells me you only going get consolation prize {Emote.Bot.Pepeshookt}";
+
         //others
         public static string MsgRecived_err_0 => "Sorry {0} Something whent wrong D:";
-
+        public static string LN_from => "From: Lodestone News"; 
+        
+        
+        
+        
+        //public static string xxxxxx => "xxxxxxxxxxxx"; 
+        //public static string xxxxxx => "xxxxxxxxxxxx"; 
+        //public static string xxxxxx => "xxxxxxxxxxxx"; 
+        //public static string xxxxxx => "xxxxxxxxxxxx"; 
         //public static string xxxxxx => "xxxxxxxxxxxx"; 
         //public static string xxxxxx => "xxxxxxxxxxxx"; 
         //public static string xxxxxx => "xxxxxxxxxxxx"; 

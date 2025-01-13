@@ -23,8 +23,7 @@ namespace Zeno
             Print("                                                (DEBUG)");
             await Bot_Zeno.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("ZenosT", EnvironmentVariableTarget.User));
             Config.RunBot = true;
-            Config.XIV_LN_enabled = true;
-            //StirgoyLN();
+            Config.XIV_LN_enabled = true;            
 #else
             Print("<<<<< -------\\\\\\\\\\\\ Wind-Up Zeno♥ //////------->>>>>");
             await Bot_Zeno.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("WUZenosT", EnvironmentVariableTarget.User));

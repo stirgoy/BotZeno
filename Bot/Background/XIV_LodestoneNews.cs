@@ -86,7 +86,7 @@ namespace Zeno
                                             .WithDescription(start_desc + List_Topics[i].Description + end_desc)
                                             .WithThumbnailUrl(XIVLN.Config.FFLogo)
                                             .WithColor(Color.Blue)
-                                            .WithFooter("From: Lodestone News")
+                                            .WithFooter(StringT.LN_from)
                                             .Build();
                             if (_channel != null)
                             {
@@ -139,7 +139,7 @@ namespace Zeno
                                             .WithDescription(start_desc + List_Status[i].Description + end_desc)
                                             .WithThumbnailUrl(XIVLN.Config.FFLogo)
                                             .WithColor(Color.Blue)
-                                            .WithFooter("From: Lodestone News")
+                                            .WithFooter(StringT.LN_from)
                             .Build();
 
                             if (_channel != null)
@@ -192,7 +192,7 @@ namespace Zeno
                                             .WithDescription(start_desc + List_Updates[i].Description + end_desc)
                                             .WithThumbnailUrl(XIVLN.Config.FFLogo)
                                             .WithColor(Color.Blue)
-                                            .WithFooter("From: Lodestone News")
+                                            .WithFooter(StringT.LN_from)
                             .Build();
 
                             if (_channel != null)
@@ -247,7 +247,7 @@ namespace Zeno
                                             .WithDescription(start_desc + List_Notices[i].Description + end_desc)
                                             .WithThumbnailUrl(XIVLN.Config.FFLogo)
                                             .WithColor(Color.Blue)
-                                            .WithFooter("From: Lodestone News")
+                                            .WithFooter(StringT.LN_from)
                             .Build();
 
                             if (_channel != null)
@@ -300,7 +300,7 @@ namespace Zeno
                                             .WithDescription(start_desc + List_Maintenance[i].Description + end_desc)
                                             .WithThumbnailUrl(XIVLN.Config.FFLogo)
                                             .WithColor(Color.Blue)
-                                            .WithFooter("From: Lodestone News")
+                                            .WithFooter(StringT.LN_from)
                             .Build();
 
                             if (_channel != null)
@@ -354,7 +354,7 @@ namespace Zeno
                                     .AddField($"Start time: {NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Game[i].Start), "d") + NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Game[i].Start), "t")}", st, true)
                                     .AddField($"End time: {NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Game[i].End), "d") + NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Game[i].End), "t")}", et, true)
                                     .WithColor(Color.Blue)
-                                    .WithFooter($"From: Lodestone News")
+                                    .WithFooter(StringT.LN_from)
                                     .Build();
 
                                 if (_channel != null)
@@ -404,7 +404,7 @@ namespace Zeno
                                     .AddField($"Start time: {NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Lodestone[i].Start), "d") + NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Lodestone[i].Start), "t")}", st, true)
                                     .AddField($"End time: {NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Lodestone[i].End), "d") + NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Lodestone[i].End), "t")}", et, true)
                                     .WithColor(Color.Blue)
-                                    .WithFooter($"From: Lodestone News")
+                                    .WithFooter(StringT.LN_from)
                                     .Build();
 
                                 if (_channel != null)
@@ -455,7 +455,7 @@ namespace Zeno
                                     .AddField($"Start time: {NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Mog[i].Start), "d") + NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Mog[i].Start), "t")}", st, true)
                                     .AddField($"End time: {NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Mog[i].End), "d") + NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Mog[i].End), "t")}", et, true)
                                     .WithColor(Color.Blue)
-                                    .WithFooter($"From: Lodestone News")
+                                    .WithFooter(StringT.LN_from)
                                     .Build();
 
                                 if (_channel != null)
@@ -507,7 +507,7 @@ namespace Zeno
                                     .AddField($"Start time: {NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Companion[i].Start), "d") + NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Companion[i].Start), "t")}", st, true)
                                     .AddField($"End time: {NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Companion[i].End), "d") + NL + UnixTime(DateTime.Parse(List_Maintenance_Current.Companion[i].End), "t")}", et, true)
                                     .WithColor(Color.Blue)
-                                    .WithFooter($"From: Lodestone News")
+                                    .WithFooter(StringT.LN_from)
                                     .Build();
 
                                 if (_channel != null)

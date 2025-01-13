@@ -112,7 +112,7 @@ namespace Zeno
 #if DEBUG ///////////////////////////////////////////
 
                         case "test":
-
+                            Console.WriteLine(EorzeaTime());
                             break;
 
 #endif //////////////////////////////////////////////
@@ -130,7 +130,7 @@ namespace Zeno
 
             //if (!Check_Allowed_Channel(message.Channel)) { return; }
 
-            if (message.Content.StartsWith("!hi") && userMessage.Channel.Id == Channel_hi) //WELCOME
+            if (message.Content.StartsWith("!hi") && userMessage.Channel.Id == Channel_hi) //AUTOROLE
             {
                 Autorole(serveruser, message);
                 return; // work done here

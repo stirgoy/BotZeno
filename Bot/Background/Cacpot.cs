@@ -41,11 +41,10 @@ namespace Zeno
                             Kuru.GetUsersAsync(); //hmmm...
                             SocketGuildUser bdy = Kuru.GetUser(uid);
                             IDMChannel dm = await bdy.CreateDMChannelAsync();
-                            string ce = Emote.Bot.Cactuar;
-
+                            
                             Embed emb = CreateEmbed(
-                                $"{ce + ce} CACPOT TIME!!!!! {ce + ce}",
-                                $"I wish you luck with {ce + NL}But something tells me you only going get consolation prize {Emote.Bot.Pepeshookt}",
+                                StringT.Cac_dm_title,
+                                StringT.Ca_dm_desc,
                                 miniImage: "https://i.postimg.cc/13dZCL3P/zenosxD.png",
                                 color: Color.Green);
 
