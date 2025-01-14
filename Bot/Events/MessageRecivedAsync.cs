@@ -112,7 +112,8 @@ namespace Zeno
 #if DEBUG ///////////////////////////////////////////
 
                         case "test":
-                            Console.WriteLine(EorzeaTime());
+                            //Console.WriteLine(EorzeaTime());
+
                             break;
 
 #endif //////////////////////////////////////////////

@@ -150,6 +150,13 @@ namespace Zeno
 
                         break;
 
+                    case "searchoutfit":
+
+                        if (!canTalk) { error = 3; goto default; }
+                        await Command_searchoutfit(command);
+
+                        break;
+
                     case "a_show_stored":
                         if (!isAdmin) { error = 1; goto default; }
                         await Command_a_show_stored(command);

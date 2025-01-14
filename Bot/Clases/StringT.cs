@@ -43,6 +43,8 @@ namespace Zeno
         public static string Scd_searchmount_d => "Mount name.";
         public static string Scd_searchminion => "I try search information about ffxiv minion";
         public static string Scd_searchminion_d => "Minion name.";
+        public static string Scd_searchoutfit => "I try search information about ffxiv outfit";
+        public static string Scd_searchoutfit_d => "Outfit name.";
         public static string Scd_a_show_stored => "I show all stored data.";
         public static string Scd_a_sendmsg => "I send an embeded message.";
         public static string Scd_a_sendmsg_d1 => "Title of embed.";

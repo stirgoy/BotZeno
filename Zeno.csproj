@@ -230,6 +230,8 @@
     <Compile Include="Bot\Events\LogAsync.cs" />
     <Compile Include="Bot\Clases\ConfigZeno.cs" />
     <Compile Include="Bot\Fnc\Core\Commons\EorzeaTime.cs" />
+    <Compile Include="Bot\Clases\XIV_Collect\Outfits.cs" />
+    <Compile Include="Command_searchoutfit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -249,6 +251,7 @@
     <Compile Include="Bot\Clases\XIV_Collect\XIV_Collect.cs" />
     <Compile Include="Bot\Fnc\Core\Config_Load.cs" />
     <Compile Include="Bot\Clases\ZenoTalk.cs" />
+    <Compile Include="Bot\Fnc\Core\SlashCommands\SearchOutfit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

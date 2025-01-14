@@ -8,7 +8,7 @@ namespace Zeno
         private async Task Kuru_EventCanceled(SocketGuildEvent server_event)
         {
             Print("Event canceled");
-            await Delete_Event(server_event);
+            await DeleteEvent(server_event);
 
         }
     }

@@ -9,7 +9,7 @@ namespace Zeno
         {
 
             Print("Event completed");
-            await Delete_Event(server_event);
+            await DeleteEvent(server_event);
         }
     }
 }

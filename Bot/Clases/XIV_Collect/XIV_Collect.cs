@@ -8,6 +8,7 @@
             internal static string Character { get => "https://ffxivcollect.com/api/characters/"; }
             internal static string Minion { get => "https://ffxivcollect.com/api/minions?name_en_start="; }
             internal static string Mount { get => "https://ffxivcollect.com/api/mounts?name_en_start="; }
+            internal static string Outfit { get => "https://ffxivcollect.com/api/outfits?name_en_start="; }
 
         }
     }

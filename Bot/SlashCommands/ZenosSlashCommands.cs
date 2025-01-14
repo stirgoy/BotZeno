@@ -222,6 +222,16 @@ namespace Zeno
                 .Build(),
 
             new SlashCommandBuilder()
+                .WithName("searchoutfit")
+                .WithDescription(StringT.Scd_searchoutfit)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("outfit")
+                    .WithDescription(StringT.Scd_searchoutfit_d)
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
                 .WithName("ffnotices")
                 .WithDescription(StringT.Scd_ffnotices)
                 .AddOption(new SlashCommandOptionBuilder()

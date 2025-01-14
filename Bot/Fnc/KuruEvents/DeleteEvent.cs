@@ -8,7 +8,7 @@ namespace Zeno
         /********************
                 Delete_Event
         *////////////////////
-        private async Task Delete_Event(SocketGuildEvent server_event)
+        private async Task DeleteEvent(SocketGuildEvent server_event)
         {
             Print("Event deletd from config");
 
