@@ -75,6 +75,14 @@ namespace Zeno
             Cacpot(); //cacpot dm noticer
             //EventNoticer();
 
+            try
+            {
+                CreateShortcut();
+            }
+            catch (Exception ex)
+            {
+                Print("ERROR creating shortcurt: " + ex.Message);
+            }
 
 
         }
