@@ -176,23 +176,23 @@
     <Compile Include="Bot\Events\Kuru_EventCreated.cs" />
     <Compile Include="Bot\Events\OnProcessExit.cs" />
     <Compile Include="Bot\Fnc\Commands\MassDelete.cs" />
-    <Compile Include="Bot\Fnc\Core\SlashCommands\AddTalkChannel.cs" />
-    <Compile Include="Bot\Fnc\Core\Commons\SimulateTyping.cs" />
+    <Compile Include="Bot\Fnc\SlashCommands\AddTalkChannel.cs" />
+    <Compile Include="Bot\Fnc\Commons\SimulateTyping.cs" />
     <Compile Include="Bot\Fnc\Core\Autorole.cs" />
-    <Compile Include="Bot\Fnc\Core\Commons\BorrarMsg.cs" />
+    <Compile Include="Bot\Fnc\Commons\BorrarMsg.cs" />
     <Compile Include="Bot\Fnc\Core\Config_Save.cs" />
     <Compile Include="Bot\Init.cs" />
     <Compile Include="Bot\Fnc\KuruEvents\DeleteEvent.cs" />
-    <Compile Include="Bot\Fnc\Core\SlashCommands\FFMaintenanceTalk.cs" />
+    <Compile Include="Bot\Fnc\SlashCommands\FFMaintenanceTalk.cs" />
     <Compile Include="Bot\Fnc\KuruEvents\GetEvent.cs" />
-    <Compile Include="Bot\Fnc\Core\Commons\Print.cs" />
+    <Compile Include="Bot\Fnc\Commons\Print.cs" />
     <Compile Include="Bot\Fnc\Commands\Reconnect.cs" />
     <Compile Include="Bot\Fnc\Commands\ResetApp.cs" />
-    <Compile Include="Bot\Fnc\Core\Commons\RegExFind.cs" />
+    <Compile Include="Bot\Fnc\Commons\RegExFind.cs" />
     <Compile Include="Bot\Fnc\KuruEvents\SendEventNoticer.cs" />
     <Compile Include="Bot\Fnc\Core\SendGuide.cs" />
-    <Compile Include="Bot\Fnc\Core\Commons\UnixTime.cs" />
-    <Compile Include="Bot\Fnc\Core\Commons\ZenoLog.cs" />
+    <Compile Include="Bot\Fnc\Commons\UnixTime.cs" />
+    <Compile Include="Bot\Fnc\Commons\ZenoLog.cs" />
     <Compile Include="Bot\Fnc\LodestoneNews\GetLastNewsIds.cs" />
     <Compile Include="Bot\Fnc\LodestoneNews\GetLNId.cs" />
     <Compile Include="Bot\SlashCommands\Command_a_userinfo.cs" />
@@ -208,7 +208,7 @@
     <Compile Include="Bot\SlashCommands\Command_a_log.cs" />
     <Compile Include="Bot\SlashCommands\Command_cacpot.cs" />
     <Compile Include="Bot\SlashCommands\Command_botinfo.cs" />
-    <Compile Include="Bot\Fnc\Core\Commons\Create_Embed.cs" />
+    <Compile Include="Bot\Fnc\Commons\Create_Embed.cs" />
     <Compile Include="Bot\Events\Kuru_EventStarted.cs" />
     <Compile Include="Bot\Events\Kuru_UserJoined.cs" />
     <Compile Include="Bot\Events\Kuru_UserLeft.cs" />
@@ -229,9 +229,10 @@
     <Compile Include="Bot\Events\ClientDisconected.cs" />
     <Compile Include="Bot\Events\LogAsync.cs" />
     <Compile Include="Bot\Clases\ConfigZeno.cs" />
-    <Compile Include="Bot\Fnc\Core\Commons\EorzeaTime.cs" />
+    <Compile Include="Bot\Fnc\Commons\EorzeaTime.cs" />
     <Compile Include="Bot\Clases\XIV_Collect\Outfits.cs" />
     <Compile Include="Bot\SlashCommands\Command_searchoutfit.cs" />
+    <Compile Include="Bot\Fnc\Core\HasUpdated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -246,12 +247,12 @@
     <Compile Include="Bot\Clases\XIV_LodestoneNews\XIVLN.cs" />
     <Compile Include="Bot\ZenoSettings.cs" />
     <Compile Include="Bot\SlashCommands\ZenosSlashCommands.cs" />
-    <Compile Include="Bot\Fnc\Core\SlashCommands\RemoveTalkChannel.cs" />
+    <Compile Include="Bot\Fnc\SlashCommands\RemoveTalkChannel.cs" />
     <Compile Include="Bot\Clases\XIV_Collect\XIVCollect_User.cs" />
     <Compile Include="Bot\Clases\XIV_Collect\XIV_Collect.cs" />
     <Compile Include="Bot\Fnc\Core\Config_Load.cs" />
     <Compile Include="Bot\Clases\ZenoTalk.cs" />
-    <Compile Include="Bot\Fnc\Core\SlashCommands\SearchOutfit.cs" />
+    <Compile Include="Bot\Fnc\SlashCommands\SearchOutfit.cs" />
     <Compile Include="Bot\Fnc\Core\CreateShortcut.cs" />
   </ItemGroup>
   <ItemGroup>

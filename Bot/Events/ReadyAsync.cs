@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Zeno
 {
@@ -73,8 +76,10 @@ namespace Zeno
 
             XIV_LN(); //news updater
             Cacpot(); //cacpot dm noticer
-            //EventNoticer();
-
+                      //EventNoticer();
+            
+            
+#if !DEBUG
             try
             {
                 CreateShortcut();
@@ -83,7 +88,7 @@ namespace Zeno
             {
                 Print("ERROR creating shortcurt: " + ex.Message);
             }
-
+#endif
 
         }
     }
