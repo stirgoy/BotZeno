@@ -35,7 +35,6 @@ namespace Zeno
                 shortcut.Description = "Bot Zeno";
                 shortcut.Save();
 
-                shell.Refresh();
             }
         }
 
