@@ -169,6 +169,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddBadWord.cs" />
     <Compile Include="Bot\Events\EventUserAdd.cs" />
     <Compile Include="Bot\Events\EventUserRemove.cs" />
     <Compile Include="Bot\Events\Kuru_EventCanceled.cs" />
@@ -190,7 +191,7 @@
     <Compile Include="Bot\Fnc\Commands\ResetApp.cs" />
     <Compile Include="Bot\Fnc\Commons\RegExFind.cs" />
     <Compile Include="Bot\Fnc\KuruEvents\SendEventNoticer.cs" />
-    <Compile Include="Bot\Fnc\Core\SendGuide.cs" />
+    <Compile Include="Bot\Fnc\Commands\SendGuide.cs" />
     <Compile Include="Bot\Fnc\Commons\UnixTime.cs" />
     <Compile Include="Bot\Fnc\Commons\ZenoLog.cs" />
     <Compile Include="Bot\Fnc\LodestoneNews\GetLastNewsIds.cs" />
@@ -254,6 +255,9 @@
     <Compile Include="Bot\Clases\ZenoTalk.cs" />
     <Compile Include="Bot\Fnc\SlashCommands\SearchOutfit.cs" />
     <Compile Include="Bot\Fnc\Core\CreateShortcut.cs" />
+    <Compile Include="RemoveBadWord.cs" />
+    <Compile Include="WBL.cs" />
+    <Compile Include="WBL_Load.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

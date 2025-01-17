@@ -11,7 +11,6 @@ namespace Zeno
         private static void CreateShortcut()
         {
             //const int WINDOWSTYLE_NORMAL = 1;
-            const int WINDOWSTYLE_MAX = 3;
             //const int WINDOWSTYLE_MIN = 7;
 
             string GetFName = $"Zeno {Application.ProductVersion}.lnk";
@@ -20,10 +19,18 @@ namespace Zeno
 
             if (HasUpdated(fullpath, path))
             {
+#if !DEBUG
+                const int WINDOWSTYLE_MAX = 3;
+
                 var files = Directory.GetFiles(path);
                 foreach (var item in files)
                 {
-                    if (item.Contains("Zeno")) File.Delete(item);
+                    if (item.StartsWith("Zeno"))
+                    {
+                        File.Delete(item);
+                        string old = System.IO.Path.GetFileName(item);
+                        Print($"File {old} has been removed.");
+                    }
                 }
 
 
@@ -34,7 +41,7 @@ namespace Zeno
                 shortcut.WindowStyle = WINDOWSTYLE_MAX;
                 shortcut.Description = "Bot Zeno";
                 shortcut.Save();
-
+#endif
             }
         }
 

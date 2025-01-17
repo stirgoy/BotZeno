@@ -37,15 +37,14 @@ namespace Zeno
 
                     embed = CreateEmbedField_2(
                         title,
-                        "### " + item.Title + NL + NL + $"-# {tt}",
+                        "### [" + item.Title+ $"](<{item.Url}>)" + NL + NL + $"-# {tt}",
                         $"Start time: {NL + UnixTime(DateTime.Parse(item.Start), "d") + NL + UnixTime(DateTime.Parse(item.Start), "t")}",
                         st,
                         $"End time: {NL + UnixTime(DateTime.Parse(item.End), "d") + NL + UnixTime(DateTime.Parse(item.End), "t")}",
                         et,
                         StringT.LN_from,
-                        XIVLN.Config.FFLogo,
-                        item.Url,
-                        Color.Blue);
+                        XIVLN.Config.FFLogo,                        
+                        color: Color.Blue);
                 }
             }
             else

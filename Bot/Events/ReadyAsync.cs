@@ -76,19 +76,19 @@ namespace Zeno
 
             XIV_LN(); //news updater
             Cacpot(); //cacpot dm noticer
-                      //EventNoticer();
             
-            
-#if !DEBUG
+            //autostart with win + version check
             try
             {
                 CreateShortcut();
             }
             catch (Exception ex)
             {
-                Print("ERROR creating shortcurt: " + ex.Message);
+                Print("ERROR: " + ex.Message);
             }
-#endif
+            
+
+
 
         }
     }

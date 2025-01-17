@@ -60,7 +60,6 @@ namespace Zeno
                         .AddField("Name", $"{r.Name}", true)
                         .AddField("Patch", $"{r.Patch}", true)
                         .AddField("Owned by ", r.Owned, true)
-                        //.AddField("Gender", r.Gender, false)
                         .AddField("Items", oitems, false)
                         .AddField("Sources", ways, false)
                         .WithThumbnailUrl(r.Icon)
@@ -68,7 +67,7 @@ namespace Zeno
                         .Build();
                 }
                 else
-                {   //here -> (mountData.Results.Count > 1)
+                {   //here -> (Results.Count > 1)
                     string xD = "";
 
                     foreach (OutfitResult item in outfitdata.Results)
@@ -77,7 +76,6 @@ namespace Zeno
                     }
 
                     user_emb = new EmbedBuilder()
-                        //.WithTitle(Emote.Bot.Mounts + $"**Results for: __{mountname}__** ")
                         .WithFooter("Results for: " + outfitname)
                         .WithColor(Color.LightOrange)
                         .WithDescription(xD)
@@ -87,7 +85,6 @@ namespace Zeno
 
                 await command.ModifyAsync(msg => msg.Embed = user_emb);
                 await command.ModifyAsync(msg => msg.Content = "");
-                //var del = await command.ReplyAsync("", embed: user_emb, ephemeral: false);
                 BorrarMsg(command, 120);
             }
             catch (Exception ex)
@@ -101,7 +98,6 @@ namespace Zeno
                 await command.ModifyAsync(msg => msg.Embed = user_emb);
                 await command.ModifyAsync(msg => msg.Content = "");
                 BorrarMsg(command, 120);
-                //await command.FollowupAsync("", embed: user_emb, ephemeral: false);
             }
         }
     }

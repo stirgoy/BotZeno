@@ -91,6 +91,7 @@ namespace Zeno
                             if (_channel != null)
                             {
                                 await _channel.SendMessageAsync("", embed: embed);
+                                Print($"XIVLodestoneNews => new topic post: {List_Topics[i].Id}");
                             }
                             else
                             {
@@ -145,6 +146,7 @@ namespace Zeno
                             if (_channel != null)
                             {
                                 await _channel.SendMessageAsync("", embed: embed);
+                                Print($"XIVLodestoneNews => new status post: {List_Status[i].Id}");
                             }
                             else
                             {
@@ -198,6 +200,7 @@ namespace Zeno
                             if (_channel != null)
                             {
                                 await _channel.SendMessageAsync("", embed: embed);
+                                Print($"XIVLodestoneNews => new update post: {List_Updates[i].Id}");
                             }
                             else
                             {
@@ -253,6 +256,7 @@ namespace Zeno
                             if (_channel != null)
                             {
                                 await _channel.SendMessageAsync("", embed: embed);
+                                Print($"XIVLodestoneNews => new notice post: {List_Notices[i].Id}");
                             }
                             else
                             {
@@ -306,6 +310,7 @@ namespace Zeno
                             if (_channel != null)
                             {
                                 await _channel.SendMessageAsync("", embed: embed);
+                                Print($"XIVLodestoneNews => new mintenance post: {List_Maintenance[i].Id}");
                             }
                             else
                             {
@@ -360,6 +365,7 @@ namespace Zeno
                                 if (_channel != null)
                                 {
                                     await _channel.SendMessageAsync("", embed: embed);
+                                    Print($"XIVLodestoneNews => new game maintenance post: {List_Maintenance_Current.Game[i].Id}");
                                 }
                                 else
                                 {
@@ -410,6 +416,7 @@ namespace Zeno
                                 if (_channel != null)
                                 {
                                     await _channel.SendMessageAsync("", embed: embed);
+                                    Print($"XIVLodestoneNews => new lodestone maintenance post: {List_Maintenance_Current.Lodestone[i].Id}");
                                 }
                                 else
                                 {
@@ -461,6 +468,7 @@ namespace Zeno
                                 if (_channel != null)
                                 {
                                     await _channel.SendMessageAsync("", embed: embed);
+                                    Print($"XIVLodestoneNews => new game mog post: {List_Maintenance_Current.Mog[i].Id}");
                                 }
                                 else
                                 {
@@ -513,6 +521,7 @@ namespace Zeno
                                 if (_channel != null)
                                 {
                                     await _channel.SendMessageAsync("", embed: embed);
+                                    Print($"XIVLodestoneNews => new maintence companion post: {List_Maintenance_Current.Companion[i].Id}");
                                 }
                                 else
                                 {

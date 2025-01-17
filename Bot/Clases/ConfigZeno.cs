@@ -15,12 +15,11 @@ namespace Zeno
             public bool UpdateSlashCommands { get; set; } = true;
             public int MaxReconnections { get; set; } = 1; //auto reset app
             public string Playing { get; set; } = "";
-
             public NewsIds Ids { get; set; }
             public KuruCFG Channels { get; set; }
             public StringCollection CacpotIds { get; set; } = new StringCollection() { };
             public string LastCacpot { get; set; } = "";
-            public List<string[]> Events_Noticed { get; set; } = new List<string[]>(); //will save event = 0 users rest
+            public List<string[]> Events_Noticed { get; set; } = new List<string[]>(); //will save event = 0 users = rest
 
         }
 

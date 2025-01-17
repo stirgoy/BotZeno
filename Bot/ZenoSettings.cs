@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.WebSocket;
 using System;
+using System.Collections.Generic;
 
 namespace Zeno
 {
@@ -9,6 +10,7 @@ namespace Zeno
         //Config Settings
         private static string Path { get => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Zeno"; }
         private static string Json_file { get => "kuru.json"; }
+        private static string Words_file { get => "wbl.txt"; }
 
         //globals
         private static DiscordSocketClient Bot_Zeno;
@@ -45,6 +47,8 @@ namespace Zeno
         private readonly ulong Channel_greetings = 1181272233260368004; // General chat
 
 #endif
+        //word blacklist
+        private static List<string> WBL_List = new List<string>();
 
         //persistent config
         private static ConfigZeno Config = new ConfigZeno()

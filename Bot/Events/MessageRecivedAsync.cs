@@ -16,6 +16,8 @@ namespace Zeno
         *////////////////////
         private async Task MessageReceivedAsync(SocketMessage message)
         {
+            
+
             if (!Config.Channels.TalkChannel.Contains(message.Channel.Id.ToString())) return;
 
             var userMessage = message as SocketUserMessage;
@@ -109,11 +111,29 @@ namespace Zeno
 
                             break;
 
+                        case "bwadd":
+                            //Console.WriteLine(EorzeaTime());
+                            if (msg_splited.Count() < 3) break;
+
+                            await AddBadWord(msg_splited[2]);
+                            break;
+
+                        case "bwremove":
+                            //Console.WriteLine(EorzeaTime());
+                            if (msg_splited.Count() < 3) break;
+
+                            await RemoveBadWord(msg_splited[2]);
+                            break;
 #if DEBUG ///////////////////////////////////////////
 
                         case "test":
                             //Console.WriteLine(EorzeaTime());
-
+                            string ms = "";
+                            foreach (var item in WBL_List)
+                            {
+                                ms += item + NL;
+                            }
+                            await message.Channel.SendMessageAsync("data:" + NL + ms);
                             break;
 
 #endif //////////////////////////////////////////////
@@ -293,6 +313,9 @@ namespace Zeno
                 }
             }
             */
+
+            _ = Task.Run(() => WBL(message)); //why there???
+
             return;
         }
 

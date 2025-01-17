@@ -15,9 +15,11 @@ namespace Zeno
         public async Task MainAsync()
         {
             await Config_Load();
+            await WBL_Load();
 
             //Environment.SetEnvironmentVariable("ZenosT", "TOKEN", EnvironmentVariableTarget.User);
             //Environment.SetEnvironmentVariable("WUZenosT", "TOKEN", EnvironmentVariableTarget.User);
+            Skiplog = true;
 #if DEBUG
             Print("<<<<< -------\\\\\\\\\\ Zeno♥ /////------->>>>>");
             Print("                                                (DEBUG)");
@@ -34,8 +36,10 @@ namespace Zeno
             {
                 Print("Logging in...");
                 await Bot_Zeno.StartAsync();
-
+                Print("Connected :)");
             }
+
+            Skiplog = false;
 
             try
             {

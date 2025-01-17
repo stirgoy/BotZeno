@@ -14,11 +14,12 @@ namespace Zeno
         {
             if (File.Exists(fullpath))
             {
+                Print($"Zeno Version: {Application.ProductVersion}");
                 return false;
             }
             else
             {
-                Print($"An update has detected, new version: {Application.ProductVersion}");
+                Print($"An update has detected => Version: {Application.ProductVersion}");
                 var files = Directory.GetFiles(folderpath);
                 foreach (var item in files)
                 {
