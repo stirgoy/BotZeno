@@ -239,8 +239,8 @@ namespace Zeno
                     .WithDescription(StringT.Scd_desc_hmn)
                     .WithType(ApplicationCommandOptionType.Integer)
                     .WithRequired(false))
-                .Build()
-             ,
+                .Build(),
+             
             new SlashCommandBuilder()
                 .WithName("a_log")
                 .WithDescription(StringT.Scd_a_log)
@@ -260,8 +260,35 @@ namespace Zeno
             new SlashCommandBuilder()
                 .WithName("botinfo")
                 .WithDescription(StringT.Scd_botinfo)
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .WithName("badwordslist")
+                .WithDescription(StringT.Scd_dwlist)
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("addword")
+                .WithDescription(StringT.Scd_addword)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("newword")
+                    .WithDescription(StringT.Scd_addword_d)
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("removeword")
+                .WithDescription(StringT.Scd_removeword)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("word")
+                    .WithDescription(StringT.Scd_removeword_d)
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
                 .Build()
-            
             /*
             */
         };

@@ -18,7 +18,7 @@ namespace Zeno
 
             if (channels != null)
             {
-                foreach (var item in channels) { if (command.Channel.Id == ulong.Parse(item)) { canTalk = true; } }
+                foreach (var item in channels) { if (command.Channel.Id == ulong.Parse(item)) { canTalk = true; break; } }
             }
 
             var suser = Kuru.GetUser(command.User.Id);
@@ -199,6 +199,21 @@ namespace Zeno
                         if (!canTalk) { error = 3; goto default; }
                         await Command_botinfo(command);
                         break;
+
+                    case "addword":
+                        if (!isAdmin) { error = 1; goto default; }
+                        await Command_addword(command);
+                        break;
+
+                    case "removeword":
+                        if (!isAdmin) { error = 1; goto default; }
+                        await Command_removeword(command);
+                        break;
+                    
+                    case "badwordslist":
+                        if (!isAdmin) { error = 1; goto default; }
+                        await Command_badwordslist(command);
+                        break; 
                     /*
                     */
 

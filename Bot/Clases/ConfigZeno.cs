@@ -9,6 +9,7 @@ namespace Zeno
         {
 
             public bool XIV_LN_enabled { get; set; } = true;
+            public bool BadWordsBlackList { get; set; } = true;
             public bool ZenoLog { get; set; } = true;
             public bool ConsoleLog { get; set; } = true;
             public bool RunBot { get; set; } = true;

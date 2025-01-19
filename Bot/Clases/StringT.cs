@@ -63,6 +63,11 @@ namespace Zeno
         public static string Scd_a_log => "Zenos will show stored logs.";
         public static string Scd_cacpot => "Adds or removes you from my reminder list for ff cacpot.";
         public static string Scd_botinfo => "Shows information about Wind-up Zeno♥.";
+        public static string Scd_addword => "Adds bad word to list";
+        public static string Scd_addword_d => "Bad word to add";
+        public static string Scd_removeword => "Removes bad word from list";
+        public static string Scd_removeword_d => "Bad word to remove";
+        public static string Scd_dwlist => "Shows the list of bad words";
 
 
         //Commands
@@ -90,8 +95,6 @@ namespace Zeno
 
 
 
-        //public static string xxxxxx => "xxxxxxxxxxxx"; 
-        //public static string xxxxxx => "xxxxxxxxxxxx"; 
         //public static string xxxxxx => "xxxxxxxxxxxx"; 
         //public static string xxxxxx => "xxxxxxxxxxxx"; 
         //public static string xxxxxx => "xxxxxxxxxxxx"; 
