@@ -263,9 +263,9 @@ namespace Zeno
                 .Build(),
 
             new SlashCommandBuilder()
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .WithName("badwordslist")
                 .WithDescription(StringT.Scd_dwlist)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
                 .Build(),
 
             new SlashCommandBuilder()
@@ -288,6 +288,12 @@ namespace Zeno
                     .WithDescription(StringT.Scd_removeword_d)
                     .WithType(ApplicationCommandOptionType.String)
                     .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .WithName("warnlist")
+                .WithDescription(StringT.Scd_dwlist)
                 .Build()
             /*
             */

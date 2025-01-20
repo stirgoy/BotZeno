@@ -25,8 +25,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>2.3.0.0</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>2.3.0.1</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -237,6 +237,7 @@
     <Compile Include="Bot\SlashCommands\Command_addword.cs" />
     <Compile Include="Bot\SlashCommands\Command_badwordslist.cs" />
     <Compile Include="Bot\SlashCommands\Command_removeword.cs" />
+    <Compile Include="Bot\SlashCommands\Command_warnlist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -261,6 +262,8 @@
     <Compile Include="Bot\Fnc\Commands\RemoveBadWord.cs" />
     <Compile Include="Bot\Fnc\Core\WBL.cs" />
     <Compile Include="Bot\Fnc\Core\WBL_Load.cs" />
+    <Compile Include="Bot\Fnc\Core\WarnListParse.cs" />
+    <Compile Include="Bot\Fnc\Core\AsddWarn.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

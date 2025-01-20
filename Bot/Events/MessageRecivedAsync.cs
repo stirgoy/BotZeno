@@ -115,7 +115,7 @@ namespace Zeno
 
                             break;
 
-                        case "BWBL":
+                        case "warn":
                             Config.BadWordsBlackList = !Config.BadWordsBlackList;
                             await Config_Save();
                             break;

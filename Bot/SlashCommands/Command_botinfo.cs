@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.WebSocket;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Zeno
 {
@@ -25,7 +26,7 @@ namespace Zeno
             desc += $"* Post FFXIV Lodestone news.{NL}";
             desc += $"* Send a DM remembering to all interested on weekly cacpot {Emote.Bot.Cactuar}.{NL}";
             desc += $"* Send a DM at start of any server event to all interested members. {NL}";
-            desc += $"-# Tell us something if you wants help with bot or share any idea.{NL}";
+            desc += $"-# Tell us something if you wants help with bot or share any idea.{NL}-# Ver. {Application.ProductVersion}";
 
             var emb = CreateEmbed($"Hi {suser.Nickname}!", desc, color: Color.Blue);
             var msg = await command.FollowupAsync("", embed: emb, ephemeral: true);

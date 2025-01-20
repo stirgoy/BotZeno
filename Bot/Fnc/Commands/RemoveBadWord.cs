@@ -9,7 +9,7 @@ namespace Zeno
 {
     internal partial class Program
     {
-        private Task RemoveBadWord(string word)
+        private Task RemoveBadWord(string word) // currently using slash command
         {
             bool deny = false;
             

@@ -198,22 +198,32 @@ namespace Zeno
                     case "botinfo":
                         if (!canTalk) { error = 3; goto default; }
                         await Command_botinfo(command);
+
                         break;
 
                     case "addword":
                         if (!isAdmin) { error = 1; goto default; }
                         await Command_addword(command);
+
                         break;
 
                     case "removeword":
                         if (!isAdmin) { error = 1; goto default; }
                         await Command_removeword(command);
+
                         break;
                     
                     case "badwordslist":
                         if (!isAdmin) { error = 1; goto default; }
                         await Command_badwordslist(command);
-                        break; 
+
+                        break;
+
+                    case "warnlist":
+                        if (!isAdmin) { error = 1; goto default; }                        
+                        await Command_warnlist(command);
+
+                        break;
                     /*
                     */
 
@@ -221,6 +231,7 @@ namespace Zeno
                     default:
 
                         string part1 = "", part2 = "";
+                        await command.DeferAsync(ephemeral:true);
 
                         switch (error)
                         {

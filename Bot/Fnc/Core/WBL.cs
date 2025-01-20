@@ -33,7 +33,7 @@ namespace Zeno
                     string log = $"Baned word detected. User: {message.Author.Username} typed: {item} on channel: {message.Channel.Name}";
                     string logz = $"Baned word detected. User: {message.Author.Mention} typed: `{item}` on channel: {serverChannel.Mention}";
                     string loguser = $"Ops you type the banned word: `{item}` so i deleted you message on: {serverChannel.Mention} D:";
-                    
+                    await AddWarn(message.Author.Id, 1);
                     Print(log);
                     await ZenoLog(logz);
                     var userdm = await message.Author.CreateDMChannelAsync();

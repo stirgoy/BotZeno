@@ -11,6 +11,7 @@ namespace Zeno
         private static string Path { get => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Zeno"; }
         private static string Json_file { get => "kuru.json"; }
         private static string Words_file { get => "wbl.txt"; }
+        private static string Warns_file { get => "warns.txt"; }
 
         //globals
         private static DiscordSocketClient Bot_Zeno;

@@ -9,7 +9,7 @@ namespace Zeno
 {
     internal partial class Program
     {
-        private static Task AddBadWord(string badWord)
+        private static Task AddBadWord(string badWord) // currently using slash command
         {
             bool deny = false;
             if (string.IsNullOrEmpty(badWord)) { deny = true; }
