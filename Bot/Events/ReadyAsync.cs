@@ -24,6 +24,8 @@ namespace Zeno
                 return;
             }
 
+            await Kuru.DownloadUsersAsync(); //users cache
+
             string tc = "";
 
             if (Config.Channels.TalkChannel != null)
@@ -52,6 +54,7 @@ namespace Zeno
             Print($"Log channel:        {Config.Channels.LogChannel} - {Kuru.GetChannel(Config.Channels.LogChannel)}");
             Skiplog = false;
 
+
             if (!string.IsNullOrEmpty(Config.Playing))
             {
                 await Bot_Zeno.SetCustomStatusAsync(Config.Playing);
@@ -76,7 +79,6 @@ namespace Zeno
 
             XIV_LN(); //news updater
             Cacpot(); //cacpot dm noticer
-            
             //autostart with win + version check
             try
             {

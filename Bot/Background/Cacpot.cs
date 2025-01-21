@@ -33,7 +33,7 @@ namespace Zeno
                     {
                         Print("CACPOT READY SENDING MESSAGES!!!!");
                         // last notice < today for prevent multi advise
-                        await Kuru.DownloadUsersAsync(); //download all server users
+                        //await Kuru.DownloadUsersAsync(); //download all server users
 
                         foreach (string user in Config.CacpotIds)
                         {

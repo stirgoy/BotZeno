@@ -10,7 +10,7 @@ namespace Zeno
         /********************
             borrar_msg
         *//////////////////// for delete bot messages over time
-        private static void BorrarMsg(RestFollowupMessage botMessage, int tiempo = 8)
+        private static void BorrarMsg(dynamic botMessage, int tiempo = 8)
         {
             _ = Task.Run(async () =>
             {
@@ -18,14 +18,6 @@ namespace Zeno
                 try { await botMessage.DeleteAsync(); } catch (Exception ex) { Print(ex.Message); }
             });
         }
-
-        private static void BorrarMsg(IUserMessage botMessage, int tiempo = 8)
-        {
-            _ = Task.Run(async () =>
-            {
-                await Task.Delay(tiempo * 1000);
-                try { await botMessage.DeleteAsync(); } catch (Exception ex) { Print(ex.Message); }
-            });
-        }
+        
     }
 }

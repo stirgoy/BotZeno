@@ -1,7 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Zeno
@@ -19,162 +18,70 @@ namespace Zeno
 
             _ = Task.Run(() => WBL(message)); //word blacklist check
 
-            if (!Config.Channels.TalkChannel.Contains(message.Channel.Id.ToString()))
+            if (Config.Channels.TalkChannel.Contains(message.Channel.Id.ToString()))
             {
 
-            
 
-            var userMessage = message as SocketUserMessage;
-            var serveruser = Kuru.GetUser(userMessage.Author.Id);
-            var channel = Kuru.GetTextChannel(userMessage.Channel.Id);
-            if (message.Author.IsBot || userMessage == null) return;
-
+                var userMessage = message as SocketUserMessage;
+                var serveruser = Kuru.GetUser(userMessage.Author.Id);
+                var channel = Kuru.GetTextChannel(userMessage.Channel.Id);
+                if (message.Author.IsBot || userMessage == null) return;
 
 
-            //app comands
-            if (serveruser.GuildPermissions.Administrator) //only admins
-            {
-                if (message.Content.StartsWith("!del-"))
+
+                //app comands
+                if (serveruser.GuildPermissions.Administrator) //only admins
                 {
-
-                    await message.DeleteAsync();
-
-                    try
+                    if (message.Content.StartsWith("!del-"))
                     {
-                        int cant = int.Parse(message.Content.Split('-')[1]);
-                        if (cant > 0)
+
+                        await message.DeleteAsync();
+
+                        try
                         {
-                            MassDelete(message, cant);
+                            int cant = int.Parse(message.Content.Split('-')[1]);
+                            if (cant > 0)
+                            {
+                                MassDelete(message, cant);
+                            }
+
                         }
+                        catch (Exception) { }
 
                     }
-                    catch (Exception) { }
-
-                }
-                else if (message.Content.StartsWith("!AppCmd-"))
-                {
-                    string[] msg_splited = message.Content.Split('-');
-                    string command = msg_splited[1];
-
-                    string log = $"{message.Author.Username} used: {message.Content} on {Kuru.GetTextChannel(channel.Id).Name}";
-                    Print(log);
-
-                    switch (command)
+                    else if (message.Content.StartsWith("!AppCmd-"))
                     {
-                        case "reset": //restart bot
-                            await message.DeleteAsync();
-                            ResetApp();
-                            break;
+                        string[] msg_splited = message.Content.Split('-');
+                        string command = msg_splited[1];
 
-                        case "xivln": //run news, i forgot swap XIV_LN_enabled....
-                            await message.DeleteAsync();
-                            if (!Config.XIV_LN_enabled)
-                            {
-                                Config.XIV_LN_enabled = true;
-                                XIV_LN();
-                            }
-                            break;
+                        string log = $"{message.Author.Username} used: {message.Content} on {Kuru.GetTextChannel(channel.Id).Name}";
+                        Print(log);
 
-                        case "ping": //bot alive?
-                            await userMessage.ReplyAsync("Pong " + Emote.Bot.Online);
-                            break;
+                        CommandHandler(command, msg_splited, message);
 
-                        case "emote": //answers wiith bot emotes
-                            await message.DeleteAsync();
-                            SendBotEmotes(userMessage.Channel);
-
-                            break;
-                        case "reconnect": //obv
-                            await message.DeleteAsync();
-                            Reconnect();
-                            break;
-
-                        case "play": //sets custom status on bot info
-                            await message.DeleteAsync();
-                            string game = "Final Fantasy XIV";
-                            if (msg_splited.Count() >= 3)
-                            {
-                                game = "";
-                                foreach (string item in msg_splited)
-                                {
-                                    if (item != msg_splited[0] && item != msg_splited[1]) { game += item; }
-                                }
-                            }
-
-                            Config.Playing = game;
-                            await Config_Save();
-                            await Bot_Zeno.SetCustomStatusAsync(game);
-
-                            break;
-
-                        case "off": // shutdown bot
-                            await message.DeleteAsync();
-                            await message.Channel.SendMessageAsync($"Sayonara! {Emote.Bot.Disconnecting_party}");
-                            await Bot_Zeno.StopAsync();
-                            Environment.Exit(0);
-
-                            break;
-
-                        case "warn":
-                            Config.BadWordsBlackList = !Config.BadWordsBlackList;
-                            await Config_Save();
-                            break;
-
-#if DEBUG ///////////////////////////////////////////
-                        case "bwadd":
-                            //Console.WriteLine(EorzeaTime());
-                            if (msg_splited.Count() < 3) break;
-
-                            await AddBadWord(msg_splited[2]);
-                            break;
-
-                        case "bwremove":
-                            //Console.WriteLine(EorzeaTime());
-                            if (msg_splited.Count() < 3) break;
-
-                            await RemoveBadWord(msg_splited[2]);
-                            break;
-
-                        case "bwlist":
-                            //Console.WriteLine(EorzeaTime());
-                            
-                            break;
-
-                        case "test":
-
-
-                            break;
-#endif //////////////////////////////////////////////
-                        default: //lets delete any failute !AppCmd-
-                            BorrarMsg(userMessage, 0);
-
-                            break;
+                        return; // nothing more to do here
                     }
+                }// if admin
 
 
-                    return; // nothing more to do here
-                }
-            }// if admin
+                //if (!Check_Allowed_Channel(message.Channel)) { return; }
 
-
-            //if (!Check_Allowed_Channel(message.Channel)) { return; }
-
-            if (message.Content.StartsWith("!hi") && userMessage.Channel.Id == Channel_hi) //AUTOROLE
-            {
-                Autorole(serveruser, message);
-                return; // work done here
-            }
-            else if (userMessage.Channel.Id == Channel_hi) //:3 lets lock rules channel xDD jic
-            {
-                if (!serveruser.GuildPermissions.Administrator)
+                if (message.Content.StartsWith("!hi") && userMessage.Channel.Id == Channel_hi) //AUTOROLE
                 {
-                    await message.DeleteAsync();
-                    string log = $"Message deleted on: {channel.Mention + NL} Reason: Not allowed.{NL}Autor: {message.Author.Mention + NL}Content:{NL + message.Content}";
-                    Print(log);
-                    await ZenoLog($"{Emote.Bot.Boss}Auto-mod{Emote.Bot.Boss}", log, message.Author.GetAvatarUrl());
-                    return; // go home bb
+                    Autorole(serveruser, message);
+                    return; // work done here
                 }
-            }
+                else if (userMessage.Channel.Id == Channel_hi) //:3 lets lock rules channel xDD jic
+                {
+                    if (!serveruser.GuildPermissions.Administrator)
+                    {
+                        await message.DeleteAsync();
+                        string log = $"Message deleted on: {channel.Mention + NL} Reason: Not allowed.{NL}Autor: {message.Author.Mention + NL}Content:{NL + message.Content}";
+                        Print(log);
+                        await ZenoLog($"{Emote.Bot.Boss}Auto-mod{Emote.Bot.Boss}", log, message.Author.GetAvatarUrl());
+                        return; // go home bb
+                    }
+                }
 
                 if (channel.Id == Channel_zenos)
                 {// allowed CHANNEL only
@@ -322,7 +229,7 @@ namespace Zeno
             }
             */
 
-            
+
 
             return;
         }

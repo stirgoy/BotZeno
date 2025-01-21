@@ -68,6 +68,10 @@ namespace Zeno
         public static string Scd_removeword => "Removes bad word from list";
         public static string Scd_removeword_d => "Bad word to remove";
         public static string Scd_dwlist => "Shows the list of bad words";
+        public static string Scd_warnlist => "Shows the list warned users";
+        public static string Scd_warn => "Warns a user and saves it";
+        public static string Scd_warn_d1 => "User to warn";
+        public static string Scd_warn_d2 => "Reason of warn, only warned user and admins will see it";
 
 
         //Commands
@@ -81,7 +85,7 @@ namespace Zeno
         public static string Msg_err2_timestamp => "Invalid date format my friend.Use YYYY-MM-DD HH:mm:ss.";
         public static string Embed_timestamp_t => "Timestamp";
         public static string Embed_timestamp_d => $"Here's your Discord timestamp my enemy:";
-        public static string Embed_timestamp_f => $" My friend.";
+        public static string Embed_timestamp_f => $" My friend, my enemy.";
 
 
         //Cacpot

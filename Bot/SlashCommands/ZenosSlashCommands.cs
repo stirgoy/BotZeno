@@ -7,6 +7,9 @@ namespace Zeno
 
         public static ApplicationCommandProperties[] Zenos_SC = new ApplicationCommandProperties[]
         {
+
+            // admin slash commands
+
             new SlashCommandBuilder()
                 .WithName("a_answer")
                 .WithDescription(StringT.Scd_a_answer)
@@ -130,44 +133,79 @@ namespace Zeno
                     .WithRequired(true))
                 .Build(),
 
+            new SlashCommandBuilder()
+                .WithName("a_log")
+                .WithDescription(StringT.Scd_a_log)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("logname")
+                    .WithDescription(StringT.Scd_a_log_d)
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(false))
+                .Build(),
 
+            new SlashCommandBuilder()
+                .WithName("badwordslist")
+                .WithDescription(StringT.Scd_dwlist)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("addword")
+                .WithDescription(StringT.Scd_addword)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("newword")
+                    .WithDescription(StringT.Scd_addword_d)
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("removeword")
+                .WithDescription(StringT.Scd_removeword)
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("word")
+                    .WithDescription(StringT.Scd_removeword_d)
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .WithName("warnlist")
+                .WithDescription(StringT.Scd_warnlist)
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("warn")
+                .WithDefaultMemberPermissions(GuildPermission.Administrator)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("name")
+                    .WithDescription(StringT.Scd_warn_d1)
+                    .WithType(ApplicationCommandOptionType.User)
+                    .WithRequired(true))
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("reason")
+                    .WithDescription(StringT.Scd_warn_d2)
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .WithDescription(StringT.Scd_warn)
+                .Build(),
+
+
+
+            /* 
+             * user slash commands
+             */
+            
+            
             new SlashCommandBuilder()
                 .WithName("timers")
                 .WithDescription(StringT.Scd_timers)
                 .Build(),
 
-            new SlashCommandBuilder()
-                .WithName("fftopics")
-                .WithDescription(StringT.Scd_ffnews)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("number")
-                    .WithDescription(StringT.Scd_desc_hmn)
-                    .WithType(ApplicationCommandOptionType.Integer)
-                    .WithRequired(false)
-                    )
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("ffstatus")
-                .WithDescription(StringT.Scd_ffstatus)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("number")
-                    .WithDescription(StringT.Scd_desc_hmn)
-                    .WithType(ApplicationCommandOptionType.Integer)
-                    .WithRequired(false)
-                    )
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("ffmaintenance")
-                .WithDescription(StringT.Scd_ffmaintenence)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("number")
-                    .WithDescription(StringT.Scd_desc_hmn)
-                    .WithType(ApplicationCommandOptionType.Integer)
-                    .WithRequired(false)
-                    )
-                .Build(),
 
             new SlashCommandBuilder()
             .WithName("ffmaintenancenow")
@@ -179,18 +217,6 @@ namespace Zeno
                     .WithRequired(false)
                     )
                 .Build(),
-
-            new SlashCommandBuilder()
-            .WithName("ffupdates")
-            .WithDescription(StringT.Scd_ffupdates)
-            .AddOption(new SlashCommandOptionBuilder()
-                .WithName("number")
-                .WithDescription(StringT.Scd_desc_hmn)
-                .WithType(ApplicationCommandOptionType.Integer)
-                .WithRequired(false)
-                    )
-                .Build(),
-
             new SlashCommandBuilder()
                 .WithName("timestamp")
                 .WithDescription(StringT.Scd_timestamp)
@@ -232,6 +258,61 @@ namespace Zeno
                 .Build(),
 
             new SlashCommandBuilder()
+                .WithName("cacpot")
+                .WithDescription(StringT.Scd_cacpot)
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("botinfo")
+                .WithDescription(StringT.Scd_botinfo)
+                .Build()
+
+            
+            /* ff notices, updates.....
+            new SlashCommandBuilder()
+                .WithName("fftopics")
+                .WithDescription(StringT.Scd_ffnews)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("number")
+                    .WithDescription(StringT.Scd_desc_hmn)
+                    .WithType(ApplicationCommandOptionType.Integer)
+                    .WithRequired(false)
+                    )
+                .Build(),
+            new SlashCommandBuilder()
+                .WithName("ffstatus")
+                .WithDescription(StringT.Scd_ffstatus)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("number")
+                    .WithDescription(StringT.Scd_desc_hmn)
+                    .WithType(ApplicationCommandOptionType.Integer)
+                    .WithRequired(false)
+                    )
+                .Build(),
+
+            new SlashCommandBuilder()
+                .WithName("ffmaintenance")
+                .WithDescription(StringT.Scd_ffmaintenence)
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName("number")
+                    .WithDescription(StringT.Scd_desc_hmn)
+                    .WithType(ApplicationCommandOptionType.Integer)
+                    .WithRequired(false)
+                    )
+                .Build(),
+            
+            new SlashCommandBuilder()
+            .WithName("ffupdates")
+            .WithDescription(StringT.Scd_ffupdates)
+            .AddOption(new SlashCommandOptionBuilder()
+                .WithName("number")
+                .WithDescription(StringT.Scd_desc_hmn)
+                .WithType(ApplicationCommandOptionType.Integer)
+                .WithRequired(false)
+                    )
+                .Build(),
+
+            new SlashCommandBuilder()
                 .WithName("ffnotices")
                 .WithDescription(StringT.Scd_ffnotices)
                 .AddOption(new SlashCommandOptionBuilder()
@@ -240,63 +321,7 @@ namespace Zeno
                     .WithType(ApplicationCommandOptionType.Integer)
                     .WithRequired(false))
                 .Build(),
-             
-            new SlashCommandBuilder()
-                .WithName("a_log")
-                .WithDescription(StringT.Scd_a_log)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("logname")
-                    .WithDescription(StringT.Scd_a_log_d)
-                    .WithType(ApplicationCommandOptionType.String)
-                    .WithRequired(false))
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("cacpot")
-                .WithDescription(StringT.Scd_cacpot)
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("botinfo")
-                .WithDescription(StringT.Scd_botinfo)
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("badwordslist")
-                .WithDescription(StringT.Scd_dwlist)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("addword")
-                .WithDescription(StringT.Scd_addword)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("newword")
-                    .WithDescription(StringT.Scd_addword_d)
-                    .WithType(ApplicationCommandOptionType.String)
-                    .WithRequired(true))
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithName("removeword")
-                .WithDescription(StringT.Scd_removeword)
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .AddOption(new SlashCommandOptionBuilder()
-                    .WithName("word")
-                    .WithDescription(StringT.Scd_removeword_d)
-                    .WithType(ApplicationCommandOptionType.String)
-                    .WithRequired(true))
-                .Build(),
-
-            new SlashCommandBuilder()
-                .WithDefaultMemberPermissions(GuildPermission.Administrator)
-                .WithName("warnlist")
-                .WithDescription(StringT.Scd_dwlist)
-                .Build()
-            /*
-            */
+             */
         };
     }
 }

@@ -20,6 +20,10 @@ namespace Zeno
             {
                 foreach (var item in channels) { if (command.Channel.Id == ulong.Parse(item)) { canTalk = true; break; } }
             }
+            else
+            {
+                canTalk = true; //lets set up if have no config
+            }
 
             var suser = Kuru.GetUser(command.User.Id);
             if (suser != null)
@@ -28,6 +32,10 @@ namespace Zeno
                 {
                     canTalk = true;
                 }
+            }
+            else
+            {
+                Print("SlashCommand error: user is null");
             }
 
             //bool canTalk = Check_Allowed_Channel(command.Channel);
@@ -220,8 +228,14 @@ namespace Zeno
                         break;
 
                     case "warnlist":
-                        if (!isAdmin) { error = 1; goto default; }                        
+                        if (!isAdmin) { error = 1; goto default; }
                         await Command_warnlist(command);
+
+                        break;
+
+                    case "warn":
+                        if (!isAdmin) { error = 1; goto default; }
+                        await Command_warn(command);
 
                         break;
                     /*
